@@ -1,0 +1,769 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title     : TikZ Library for Structural Analysis
+% Version   : 1.10 (2013/03/03)
+%
+% Author    : Juergen HACKL
+% Engine    : PDFLaTeX
+% University: Graz University of Technology 
+%  						www.ifb.tugraz.at
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%================================================
+%		use Package
+%================================================
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{structuralanalysis}
+
+%
+%================================================
+%		use Package
+%================================================
+%
+\RequirePackage{ifthen}
+\RequirePackage{tikz}
+\RequirePackage{xargs}
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{positioning}
+\usepackage{verbatim}
+\usetikzlibrary{automata}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+\usetikzlibrary{%
+    decorations.pathreplacing,%
+    decorations.pathmorphing%
+}
+\usetikzlibrary{patterns}
+
+%
+%================================================
+%		some variables
+%================================================
+%
+
+%------------------------------------------------
+%		colors
+%------------------------------------------------
+
+\newcommand{\pathdrawcolor}{black}     	%
+\newcommand{\pathfillcolor}{white}     	%
+\newcommand{\colorGray}{gray}		%
+
+%------------------------------------------------
+%		line widths
+%------------------------------------------------
+
+\newcommand{\hugeLineWidth}{2pt}		%
+\newcommand{\bigLineWidth}{1.5pt}   %
+\newcommand{\normalLineWidth}{1pt}  %
+\newcommand{\smallLineWidth}{.7pt}  %
+\newcommand{\tinyLineWidth}{.3pt}   %
+
+%------------------------------------------------
+%		construction parameters
+%------------------------------------------------
+
+\newcommand{\scalingParameter}{1}				%
+
+\newcommand{\hingeRadius}{1.5mm}				%
+\newcommand{\hingeAxialLength}{5mm}			%
+\newcommand{\hingeAxialHeight}{3mm}			%
+\newcommand{\hingeCornerLength}{3mm}		%
+
+\newcommand{\hatchingAngle}{45}         %
+\newcommand{\hatchingAmplitude}{1.1cm}	%
+\newcommand{\hatchingLength}{1.5mm}			%
+
+\newcommand{\springLength}{10mm}      	%
+\newcommand{\springPreLength}{7pt}      %
+\newcommand{\springPostLength}{3pt}			%
+\newcommand{\springAmplitude}{2.5mm}		%
+\newcommand{\springSegmentLength}{5pt}	%
+
+\newcommand{\supportGap}{1mm}						%
+\newcommand{\supportBasicLength}{12mm}	%
+\newcommand{\supportBasicHeight}{3.5mm}	%
+\newcommand{\supportLength}{8mm}				%
+\newcommand{\supportHeight}{5mm}				%
+\newcommand{\supportHatchingLength}{20mm}	%
+\newcommand{\supportHatchingHeight}{5mm}	%
+
+\newcommand{\barGap}{1.5mm}							%
+\newcommand{\barAngle}{45}							%
+
+%------------------------------------------------
+%		load parameters
+%------------------------------------------------
+
+\newcommand{\forceDistance}{1.5mm}			%
+\newcommand{\forceLength}{10mm}					%
+\newcommand{\momentDistance}{4mm}				%
+\newcommand{\momentAngle}{270}					%
+\newcommand{\lineloadDistance}{3mm}			%
+\newcommand{\lineloadForce}{0.15}				%
+\newcommand{\lineloadInterval}{0.2}			%
+
+%------------------------------------------------
+%		temperature parameters
+%------------------------------------------------
+
+\newcommand{\temperatureHeight}{6mm}			%
+
+%------------------------------------------------
+%		dimensioning parameters
+%------------------------------------------------
+
+\newcommand{\dimensioningBar}{4mm}			%
+
+
+%------------------------------------------------
+%		help values
+%------------------------------------------------
+
+\newcommand{\helpVarA}{1}								%
+\newcommand{\helpVarB}{1}								%
+
+%
+%================================================
+%		new tikz styles
+%================================================
+%
+
+%------------------------------------------------
+%		line styles
+%------------------------------------------------
+
+\tikzstyle{hugeLine}=[line width=\hugeLineWidth,]
+\tikzstyle{bigLine}=[line width=\bigLineWidth,]
+\tikzstyle{normalLine}=[line width=\normalLineWidth,]
+\tikzstyle{smallLine}=[line width=\smallLineWidth,]
+\tikzstyle{tinyLine}=[line width=\tinyLineWidth,]
+
+%------------------------------------------------
+%		spring style
+%------------------------------------------------
+
+\tikzstyle{spring} =	[
+	normalLine,
+	decoration=
+		{
+			zigzag,
+			pre length=\springPreLength,
+			post length=\springPostLength,
+			segment length=\springSegmentLength,
+			amplitude=\springAmplitude
+		},
+		decorate,
+]
+
+%------------------------------------------------
+%		hatch style
+%------------------------------------------------
+
+\tikzstyle{hatching} =	[
+	tinyLine,
+	draw,
+	decorate,
+	decoration=
+		{
+			border,
+			angle=\hatchingAngle,
+			amplitude=\hatchingAmplitude,
+			segment length=\hatchingLength
+		}
+]
+
+%------------------------------------------------
+%		hatch style for torsional spring
+%------------------------------------------------
+
+\tikzstyle{hatchingspring} =	[
+	tinyLine,
+	draw,
+	decorate,
+	decoration=
+		{
+			border,
+			angle=\hatchingAngle,
+			amplitude=\hatchingAmplitude/2,
+			segment length=\hatchingLength/2
+		}
+]
+
+%------------------------------------------------
+%		force style
+%------------------------------------------------
+
+\tikzstyle{force}=[>=latex,normalLine]
+
+%
+%================================================
+%		library elements
+%================================================
+%
+
+%------------------------------------------------
+%		scaling
+%------------------------------------------------
+%			\scaling{scaling value}
+%	
+
+\newcommandx{\scaling}[1]{
+	\renewcommand{\scalingParameter}{#1}
+}
+
+%------------------------------------------------
+%		point
+%------------------------------------------------
+%			\point{name}{x-coordiante}{y-coordiante}
+%			
+
+\newcommandx{\point}[3]{
+	\node[coordinate][
+		shift={(#2*\scalingParameter,#3*\scalingParameter)}](#1){};
+}
+
+%------------------------------------------------
+%		beam
+%------------------------------------------------
+%			\beam{type}{initial point}{end point}[rounded initial point][rounded end point]
+
+\newcommandx{\beam}[5][4=0,5=0]{
+	\ifthenelse{\equal{#1}{1}}{		%
+		\draw [hugeLine] (#2) -- (#3);
+		\coordinate (barVarA) at ($ (#2)!\barGap!-\barAngle:(#3) $);
+		\coordinate (barVarB) at ($ (#3)!\barGap!\barAngle:(#2) $);
+		\draw [smallLine,dashed] (barVarA) -- (barVarB);
+		\ifthenelse{\equal{#4}{0}}{}
+			{\fill (#2) circle (\hugeLineWidth/2);}
+		\ifthenelse{\equal{#5}{0}}{}
+			{\fill (#3) circle (\hugeLineWidth/2);}
+	}{}
+
+	\ifthenelse{\equal{#1}{2}}{		%
+		\draw [bigLine] (#2) -- (#3);
+		\ifthenelse{\equal{#4}{0}}{}
+			{\fill (#2) circle (\bigLineWidth/2);}
+		\ifthenelse{\equal{#5}{0}}{}
+			{\fill (#3) circle (\bigLineWidth/2);}
+	}{}
+	
+	\ifthenelse{\equal{#1}{3}}{		%
+		\draw [normalLine,dashed] (#2) -- (#3);
+	}{}
+	
+	\ifthenelse{\equal{#1}{4}}{		%
+		\draw [hugeLine] (#2) -- (#3);
+		\ifthenelse{\equal{#4}{0}}{}
+			{\fill (#2) circle (\hugeLineWidth/2);}
+		\ifthenelse{\equal{#5}{0}}{}
+			{\fill (#3) circle (\hugeLineWidth/2);}
+	}{}
+}
+
+%------------------------------------------------
+%		support
+%------------------------------------------------
+%			\support{type}{insertion point}[rotation]
+%
+
+\newcommandx{\support}[3][3=0]{
+	\ifthenelse{\equal{#1}{1}}{		%
+		\begin{scope}[rotate around={#3:(#2)}]
+			\draw [normalLine] (#2) -- ++(\supportLength/2,-\supportHeight) -- ++(-\supportLength,0) -- cycle;
+			\draw [normalLine] ($(#2)+1*(\supportBasicLength/2,-\supportHeight)$) -- ++(-\supportBasicLength,0);
+			\clip ($(#2)+1*(-\supportBasicLength/2,-\supportBasicHeight-\supportHeight)$) rectangle ($(#2)+1*(\supportBasicLength/2,-\supportHeight)$);
+			\draw[hatching]($(#2)+1*(\supportHatchingLength/2,-\supportHatchingHeight)$) -- ++(-\supportHatchingLength,0);
+		\end{scope}
+	}{}
+	
+	\ifthenelse{\equal{#1}{2}}{		%
+		\begin{scope}[rotate around={#3:(#2)}]
+			\draw [normalLine] (#2) -- ++(\supportLength/2,-\supportHeight) -- ++(-\supportLength,0) -- cycle;
+			\draw [normalLine] ($(#2)+1*(\supportBasicLength/2,-\supportHeight)$) -- ++(-\supportBasicLength,0);
+			\draw [normalLine] ($(#2)+1*(\supportBasicLength/2,-\supportHeight-\supportGap)$) -- ++(-\supportBasicLength,0);
+			\clip ($(#2)+1*(-\supportBasicLength/2,-\supportBasicHeight-\supportHeight-\supportGap)$) rectangle ($(#2)+1*(\supportBasicLength/2,-\supportHeight-\supportGap)$);
+			\draw[hatching]($(#2)+1*(\supportHatchingLength/2,-\supportHatchingHeight-\supportGap)$) -- ++(-\supportHatchingLength,0);
+		\end{scope}
+	}{}
+
+	\ifthenelse{\equal{#1}{3}}{		%
+		\begin{scope}[rotate around={#3:(#2)}]
+			\draw [normalLine] ($(#2)+1*(\supportBasicLength/2,0)$) -- ++(-\supportBasicLength,0);
+			\clip ($(#2)+1*(-\supportBasicLength/2,-\supportBasicHeight)$) rectangle ($(#2)+1*(\supportBasicLength/2,0)$);
+			\draw[hatching]($(#2)+1*(\supportHatchingLength/2,0)$) -- ++(-\supportHatchingLength,0);
+		\end{scope}
+	}{}
+
+	\ifthenelse{\equal{#1}{4}}{		%
+		\begin{scope}[rotate around={#3:(#2)}]
+			\draw [normalLine] ($(#2)+1*(\supportBasicLength/2,0)$) -- ++(-\supportBasicLength,0);
+			\draw [normalLine] ($(#2)+1*(\supportBasicLength/2,-\supportGap)$) -- ++(-\supportBasicLength,0);
+			\clip ($(#2)+1*(-\supportBasicLength/2,-\supportBasicHeight-\supportGap)$) rectangle ($(#2)+1*(\supportBasicLength/2,-\supportGap)$);
+			\draw[hatching]($(#2)+1*(\supportHatchingLength/2,-\supportGap)$) -- ++(-\supportHatchingLength,0);
+		\end{scope}
+	}{}
+	
+	\ifthenelse{\equal{#1}{5}}{		%
+		\begin{scope}[rotate around={#3:(#2)}]
+			\draw [spring] (#2) -- ++(0,-\springLength);
+			\draw [normalLine] ($(#2)+1*(\supportBasicLength/2,-\springLength)$) -- ++(-\supportBasicLength,0);
+			\clip ($(#2)+1*(-\supportBasicLength/2,-\supportBasicHeight-\springLength)$) rectangle ($(#2)+1*(\supportBasicLength/2,-\springLength)$);
+			\draw[hatching]($(#2)+1*(\supportHatchingLength/2,-\springLength)$) -- ++(-\supportHatchingLength,0);
+		\end{scope}
+	}{}
+
+	\ifthenelse{\equal{#1}{6}}{		%
+		\begin{scope}[rotate around={#3:(#2)}]
+			\begin{scope}[rotate around={-90:(#2)},shift={(#2)}]
+				\draw[normalLine,scale=0.035,domain=0:18.85,variable=\t,smooth,]
+				plot({\t*sin(\t r)},{-\t*cos(\t r)});
+			\end{scope}
+			\draw [normalLine] ($(#2)+1*(-\supportBasicLength/2.5,0)$) -- ++(-\supportBasicLength/3.5,0);
+			\clip ($(#2)+1*(-\supportBasicLength/2.5,0)$) rectangle ($(#2)+1*(-\supportBasicLength/1.47,-\supportBasicHeight/2)$);
+			\draw[hatchingspring]($(#2)+1*(0,0)$) -- ++(-\supportHatchingLength/2,0);
+		\end{scope}
+	}{}
+}
+
+%------------------------------------------------
+%		hinge
+%------------------------------------------------
+%			\hinge{type}{insertion point}[rotation][initial point][end point]
+%				[rotation][initial point][end point] are optional
+%
+
+\newcommandx{\hinge}[5][3=0,4=0,5=0]{
+	\ifthenelse{\equal{#1}{1}}{		%
+		\begin{scope}[rotate around={#3:(#2)}]
+			\fill [white] (#2) circle (\hingeRadius);
+			\draw [normalLine] (#2) circle (\hingeRadius);
+		\end{scope} 
+	}{}
+	
+	\ifthenelse{\equal{#1}{2}}{		%
+		\begin{scope}[even odd rule]
+			\ifthenelse{\equal{#5}{1}}{
+				\clip (#2) circle (\hingeRadius+\normalLineWidth)
+				(#2)--(#3)--($(#3)!\hingeRadius+\normalLineWidth!-90:(#2)$)--($(#4)!\hingeRadius+\normalLineWidth!90:(#2)$)--(#4)-- cycle;
+			}{
+				\clip (#2)--(#3)--($(#3)!\hingeRadius+\normalLineWidth!-90:(#2)$)--($(#4)!\hingeRadius+\normalLineWidth!90:(#2)$)--(#4)-- cycle;
+			}
+			\filldraw [fill=white,normalLine] (#2) circle (\hingeRadius);
+		\end{scope}
+		\draw[hugeLine] ($(#2)!\hingeRadius!(#3)$)--(#2)--($(#2)!\hingeRadius!(#4)$);
+	}{}
+	
+	\ifthenelse{\equal{#1}{3}}{		%
+		\begin{scope}[rotate around={#3:(#2)}]
+			\fill [white] (#2) circle (\supportGap/1.5);
+			\draw [normalLine] ($(#2)+1*(\supportGap/2,\supportBasicLength/2)$) -- ++(0,-\supportBasicLength);
+			\draw [normalLine] ($(#2)+1*(-\supportGap/2,\supportBasicLength/2)$) -- ++(0,-\supportBasicLength);
+		\end{scope}	 
+	}{}	
+	
+	\ifthenelse{\equal{#1}{4}}{		%
+		\begin{scope}[rotate around={#3:(#2)}]
+			\fill [white] ($(#2)+1*(-\hingeAxialLength/3,\hingeAxialHeight/2)$) rectangle ($(#2)+1*(0,-\hingeAxialHeight/2)$);
+			\draw [normalLine] ($(#2)+1*(2*\hingeAxialLength/3,\hingeAxialHeight/2)$) 
+						-- ++(-\hingeAxialLength,0) 
+						-- ++(0,-\hingeAxialHeight) 
+						-- ++(\hingeAxialLength,0);
+		\end{scope}	 
+	}{}	
+
+	\ifthenelse{\equal{#1}{5}}{		%
+		\coordinate (hingeVarA) at ($ (#2)!\hingeCornerLength!(#3) $);
+		\coordinate (hingeVarB) at ($ (#2)!\hingeCornerLength!(#4) $);
+		\fill[black] (#2) -- (hingeVarA) -- (hingeVarB) -- cycle;
+		\fill[black] (#2)circle (\hugeLineWidth/2);
+	}{}
+
+}
+
+%------------------------------------------------
+%		load
+%------------------------------------------------
+%			\load{type}{insertion point}[rotation][length or included angle][load distance]
+%				[rotation][length or included angle][load distance] are optional
+%
+
+\newcommandx{\load}[5][3=0,4=0,5=0]{
+	\ifthenelse{\equal{#1}{1}}{		%
+		\ifthenelse{\equal{#5}{0}}
+			{\renewcommand{\helpVarA}{\forceDistance}}
+			{\renewcommand{\helpVarA}{#5}}
+		\ifthenelse{\equal{#4}{0}}
+			{\renewcommand{\helpVarB}{\forceLength}}
+			{\renewcommand{\helpVarB}{#4}}
+		\draw[force,<-] ($(#2)+1*(#3:\helpVarA)$) --++($(#3:\helpVarB)$);
+	}{}
+
+	\ifthenelse{\equal{#1}{2}}{		%
+		\ifthenelse{\equal{#5}{0}}
+			{\renewcommand{\helpVarA}{\momentDistance}}
+			{\renewcommand{\helpVarA}{#5}}
+		\ifthenelse{\equal{#4}{0}}
+			{\renewcommand{\helpVarB}{\momentAngle}}
+			{\renewcommand{\helpVarB}{#4}}
+		\begin{scope}[rotate around={#3:(#2)}]
+			\draw[<-,normalLine] ($(#2)+1*(\helpVarA,0)$) arc (0:\helpVarB:\helpVarA);
+		\end{scope}
+	}{}
+
+	\ifthenelse{\equal{#1}{3}}{		%
+		\ifthenelse{\equal{#5}{0}}
+			{\renewcommand{\helpVarA}{\momentDistance}}
+			{\renewcommand{\helpVarA}{#5}}
+		\ifthenelse{\equal{#4}{0}}
+			{\renewcommand{\helpVarB}{\momentAngle}}
+			{\renewcommand{\helpVarB}{#4}}
+		\begin{scope}[rotate around={#3:(#2)}]
+			\draw[->,normalLine] ($(#2)+1*(\helpVarA,0)$) arc (0:\helpVarB:\helpVarA);
+		\end{scope}
+	}{}
+	
+}
+
+%------------------------------------------------
+%		lineload
+%------------------------------------------------
+%			\lineload{type}{initial point}{end point}[initial force value][end force value][force interval]
+%				[initial force value][end force value][force interval] are optional
+%
+%			and accordingly for type 3		
+%
+%			\lineload{type}{initial point}{end point}[initial force value][end force value][lineload distance from inital point][force interval]
+%				[initial force value][end force value][lineload distance from inital point][force interval] are optional
+%
+%			and accordingly for type 4		
+%
+%			\lineload{type}{initial point}{end point}[force interval][force length]
+%				[force interval][force length] are optional
+
+\newcommandx{\lineload}[7][4=1,5=1,6=\lineloadInterval,7=\lineloadInterval]{
+	\ifthenelse{\equal{#1}{1}}{		%
+		\coordinate (lineloadVarA1) at ($ (#2)!\lineloadDistance!90:(#3) $);
+		\coordinate (lineloadVarB1) at ($ (#3)!\lineloadDistance!-90:(#2) $);
+		\coordinate (lineloadVarA2) at ($ (#2)!{\lineloadDistance +#4cm}!90:(#3) $);
+		\coordinate (lineloadVarB2) at ($ (#3)!{\lineloadDistance+#5cm}!-90:(#2) $);
+		\ifthenelse{\equal{#4}{0}}{}
+		{
+			\draw [force,->] (lineloadVarA2) -- (lineloadVarA1);
+		}
+		\ifthenelse{\equal{#5}{0}}{}
+		{
+			\draw [force,->] (lineloadVarB2) -- (lineloadVarB1);
+		}
+		\draw [smallLine] (lineloadVarA1) -- (lineloadVarB1) node(xline)[right] {};
+		\draw [normalLine] (lineloadVarA2) -- (lineloadVarB2);
+		\fill (lineloadVarA2) circle (\normalLineWidth/2);
+		\fill (lineloadVarB2) circle (\normalLineWidth/2);
+			\pgfmathsetmacro{\lineloadIntervalBegin}{#6/\scalingParameter}
+			\pgfmathsetmacro{\lineloadIntervalStep}{#6/\scalingParameter*2}
+			\pgfmathsetmacro{\lineloadIntervalEnd}{1-#6/\scalingParameter}
+		\foreach \i in {\lineloadIntervalBegin,\lineloadIntervalStep,...,\lineloadIntervalEnd}
+		\draw [force,->] ($(lineloadVarA2)!\i!(lineloadVarB2)$)-- ($(lineloadVarA1)!\i!(lineloadVarB1)$);
+	}{}
+	
+	\ifthenelse{\equal{#1}{2}}{		%
+		\coordinate (lineloadVarA1) at ($ (#2)+1*(0,\lineloadDistance) $);
+		\coordinate (lineloadVarB1) at ($ (#3)+1*(0,\lineloadDistance) $);
+		\coordinate (lineloadVarA2) at ($ (#2)+1*(0,\lineloadDistance+#4cm) $);
+		\coordinate (lineloadVarB2) at ($ (#3)+1*(0,\lineloadDistance+#5cm) $);
+		\ifthenelse{\equal{#4}{0}}{}
+		{
+			\draw [force,->] (lineloadVarA2) -- (lineloadVarA1);
+		}
+		\ifthenelse{\equal{#5}{0}}{}
+		{
+			\draw [force,->] (lineloadVarB2) -- (lineloadVarB1);
+		}
+		\draw [smallLine] (lineloadVarA1) -- (lineloadVarB1) node(xline)[right] {};
+		\draw [normalLine] (lineloadVarA2) -- (lineloadVarB2);
+		\fill (lineloadVarA2) circle (\normalLineWidth/2);
+		\fill (lineloadVarB2) circle (\normalLineWidth/2);
+			\pgfmathsetmacro{\lineloadIntervalBegin}{#6}
+			\pgfmathsetmacro{\lineloadIntervalStep}{#6*2}
+			\pgfmathsetmacro{\lineloadIntervalEnd}{1-#6}
+		\foreach \i in {\lineloadIntervalBegin,\lineloadIntervalStep,...,\lineloadIntervalEnd}
+		\draw [force,->] ($(lineloadVarA2)!\i!(lineloadVarB2)$)-- ($(lineloadVarA1)!\i!(lineloadVarB1)$);
+	}{}
+
+	\ifthenelse{\equal{#1}{3}}{		%
+		\ifthenelse{\equal{#6}{\lineloadInterval}}
+			{\renewcommand{\helpVarA}{0cm}}
+			{\renewcommand{\helpVarA}{#6cm}}
+		\path
+			let
+				\p1 = (#2),
+				\p2 = (#3)
+			in
+				coordinate (lineloadVarA1) at ($(\p1)+1*(0,\lineloadDistance+\helpVarA)$)
+				coordinate (lineloadVarB1) at ($(\x2,\y1)+1*(0,\lineloadDistance+\helpVarA)$)
+				coordinate (lineloadVarA2) at ($ (\p1)+1*(0,\lineloadDistance+\helpVarA+#4cm)$)
+				coordinate (lineloadVarB2) at ($ (\x2,\y1)+1*(0,\lineloadDistance+\helpVarA+#5cm)$);
+		\draw [tinyLine,loosely dotted] (lineloadVarA1)--($(#2)+1*(0,\hingeRadius)$);
+		\draw [tinyLine,loosely dotted] (lineloadVarB1)--($(#3)+1*(0,\hingeRadius)$);
+		\ifthenelse{\equal{#4}{0}}{}
+		{
+			\draw [force,->] (lineloadVarA2) -- (lineloadVarA1);
+		}
+		\ifthenelse{\equal{#5}{0}}{}
+		{
+			\draw [force,->] (lineloadVarB2) -- (lineloadVarB1);
+		}
+		\draw [smallLine] (lineloadVarA1) -- (lineloadVarB1) node(xline)[right] {};
+		\draw [normalLine] (lineloadVarA2) -- (lineloadVarB2);
+		\fill (lineloadVarA2) circle (\normalLineWidth/2);
+		\fill (lineloadVarB2) circle (\normalLineWidth/2);
+			\pgfmathsetmacro{\lineloadIntervalBegin}{#7}
+			\pgfmathsetmacro{\lineloadIntervalStep}{#7*2}
+			\pgfmathsetmacro{\lineloadIntervalEnd}{1-#7}
+		\foreach \i in {\lineloadIntervalBegin,\lineloadIntervalStep,...,\lineloadIntervalEnd}
+		\draw [force,->] ($(lineloadVarA2)!\i!(lineloadVarB2)$)-- ($(lineloadVarA1)!\i!(lineloadVarB1)$);
+	}{}
+	
+	\ifthenelse{\equal{#1}{4}}{		%
+		\coordinate (lineloadVarA1) at ($ (#2)+1*(0,\lineloadDistance) $);
+		\coordinate (lineloadVarB1) at ($ (#3)+1*(0,\lineloadDistance) $);
+		\ifthenelse{\equal{#4}{1}}
+			{\pgfmathsetmacro{\lineloadIntervalStep}{\lineloadInterval}
+			\pgfmathsetmacro{\lineloadIntervalEnd}{1-\lineloadInterval/2}}	
+			{\pgfmathsetmacro{\lineloadIntervalStep}{#4}
+			\pgfmathsetmacro{\lineloadIntervalEnd}{1-#4/2}}
+		\ifthenelse{\equal{#5}{1}}
+			{\pgfmathsetmacro{\lineloadForceLength}{\lineloadForce}}	
+			{\pgfmathsetmacro{\lineloadForceLength}{#5}}
+		\foreach \i in {0,\lineloadIntervalStep,...,\lineloadIntervalEnd}
+		\draw [force,->] ($(lineloadVarA1)!\i!(lineloadVarB1)$) -- ($(lineloadVarA1)!\i+\lineloadForceLength!(lineloadVarB1)$);
+	}{}
+
+}
+
+%------------------------------------------------
+%		dimensioning
+%------------------------------------------------
+%			\dimensioning{type}{initial point}{end point}{distance from point of origin}[measure]
+%
+
+\newcommandx{\dimensioning}[5][5]{
+	\ifthenelse{\equal{#1}{1}}{		%
+		\path
+			let
+				\p1 = (#2),
+				\p2 = (#3)
+			in
+				coordinate (dimensioningVarA) at (\x1,#4)
+				coordinate (dimensioningVarB) at (\x2,#4);
+		\draw [smallLine] (dimensioningVarA)--++(0,\dimensioningBar/2)--++(0,-\dimensioningBar)
+											(dimensioningVarA)--++(\dimensioningBar/4,\dimensioningBar/4)--++(-\dimensioningBar/2,-\dimensioningBar/2)
+											(dimensioningVarB)--++(0,\dimensioningBar/2)--++(0,-\dimensioningBar)
+											(dimensioningVarB)--++(\dimensioningBar/4,\dimensioningBar/4)--++(-\dimensioningBar/2,-\dimensioningBar/2)
+											(dimensioningVarA)--(dimensioningVarB) node [sloped,midway,above] {#5};
+	}{}
+
+	\ifthenelse{\equal{#1}{2}}{		%
+		\path
+			let
+				\p1 = (#2),
+				\p2 = (#3)
+			in
+				coordinate (dimensioningVarA) at (#4,\y1)
+				coordinate (dimensioningVarB) at (#4,\y2);
+		\draw [smallLine] (dimensioningVarA)--++(\dimensioningBar/2,0)--++(-\dimensioningBar,0)
+											(dimensioningVarA)--++(\dimensioningBar/4,\dimensioningBar/4)--++(-\dimensioningBar/2,-\dimensioningBar/2)
+											(dimensioningVarB)--++(\dimensioningBar/2,0)--++(-\dimensioningBar,0)
+											(dimensioningVarB)--++(\dimensioningBar/4,\dimensioningBar/4)--++(-\dimensioningBar/2,-\dimensioningBar/2)
+											(dimensioningVarA)--(dimensioningVarB) node [sloped,midway,above] {#5};
+	}{}
+	
+	\ifthenelse{\equal{#1}{3}}{		%
+		\coordinate (dimensioningVarA) at ($ (#2)!{#4cm}!90:(#3) $);
+		\coordinate (dimensioningVarB) at ($ (#3)!{#4cm}!-90:(#2) $);
+		\draw [smallLine] ($ (dimensioningVarA)!{-\dimensioningBar/3}!90:(dimensioningVarB) $) -- ($ (dimensioningVarA)!{\dimensioningBar/3}!90:(dimensioningVarB) $);
+		\draw [smallLine,<-] (dimensioningVarB) -- (dimensioningVarA)node [sloped,midway,above] {#5};
+	}{}
+}
+
+%------------------------------------------------
+%		influenceline
+%------------------------------------------------
+%			\influenceline{initial point}{end point}{distance from initial point}[arrow distance]
+%
+
+\newcommandx{\influenceline}[5][4=.5]{%
+	\path
+		let
+			\p1 = (#1),
+			\p2 = (#2)
+		in
+			coordinate (influencelineVarA) at ($(\p1)+1*(0,\lineloadDistance+#3cm)$)
+			coordinate (influencelineVarB) at ($(\x2,\y1)+1*(0,\lineloadDistance+#3cm)$);
+	\draw [smallLine] (influencelineVarA)--++(0,\dimensioningBar/2)--++(0,-\dimensioningBar)
+										(influencelineVarB)--++(0,\dimensioningBar/2)--++(0,-\dimensioningBar);
+	\draw [smallLine,<->]	(influencelineVarA)--(influencelineVarB);
+	\draw [smallLine] ($(influencelineVarA)!#4!(influencelineVarB)$)--++(\hingeRadius,0) arc (0:360:\hingeRadius);
+	\draw [force,->] ($(influencelineVarA)!#4!(influencelineVarB)+1*(0,\forceLength/2)$)
+								 --($(influencelineVarA)!#4!(influencelineVarB)+1*(0,-\forceLength/2)$);
+}
+
+%------------------------------------------------
+%		internalforces
+%------------------------------------------------
+%			\internalforces{initial point}{end point}{initial value}{end value}[parabola height][color][bend position]
+%				[parabola height][color][bend position] are optional
+%
+
+
+\newcommandx{\internalforces}[7][5=0,6=red,7=.6667]{%
+	\coordinate (internalforcesVarA) at ($ (#1)!#3cm!-90:(#2) $);
+	\coordinate (internalforcesVarB) at ($ (#2)!#4cm!90:(#1)$);
+	\coordinate (internalforcesVarAB) at ($ (internalforcesVarA)!.5!(internalforcesVarB)$);
+	\coordinate (internalforcesVarC) at ($ (internalforcesVarAB)+2*(0,#5)$);
+	\coordinate (internalforcesVarAC) at ($ (internalforcesVarA)!#7!(internalforcesVarC)$);
+	\coordinate (internalforcesVarBC) at ($ (internalforcesVarB)!#7!(internalforcesVarC)$);
+	\ifthenelse{\equal{#5}{0}}{
+		\draw [bigLine,color=#6] (#1) -- (internalforcesVarA) (internalforcesVarA) -- (internalforcesVarB) (internalforcesVarB) -- (#2);
+		\fill [color=#6] (internalforcesVarA) circle (\bigLineWidth/2);
+		\fill [color=#6] (internalforcesVarB) circle (\bigLineWidth/2);
+		\fill [color=#6] (#1) circle (\bigLineWidth/2);
+		\fill [color=#6] (#2) circle (\bigLineWidth/2);
+	}
+	{
+		%\draw [bigLine,color=#6](internalforcesVarA) parabola[parabola height=#5cm] (internalforcesVarB);
+		%\draw [bigLine,color=#6](internalforcesVarA)--(internalforcesVarAC)--(internalforcesVarBC)--(internalforcesVarB);
+		%\draw [bigLine,color=blue](internalforcesVarA)--(internalforcesVarB)
+		%(internalforcesVarAB) -- (internalforcesVarC);
+		\draw [bigLine,color=#6] (#1) -- (internalforcesVarA) (internalforcesVarA) .. controls (internalforcesVarAC) and (internalforcesVarBC) .. (internalforcesVarB) (internalforcesVarB) -- (#2);
+		\fill [color=#6] (internalforcesVarA) circle (\bigLineWidth/2);
+		\fill [color=#6] (internalforcesVarB) circle (\bigLineWidth/2);
+		\fill [color=#6] (#1) circle (\bigLineWidth/2);
+		\fill [color=#6] (#2) circle (\bigLineWidth/2);
+	}
+	
+}
+
+%------------------------------------------------
+%		temperature
+%------------------------------------------------
+%			\temperature{initial point}{end point}{temperature below}{temperature above}[temperature position][temperature value below][temperature value above][text orientation below][text orientation above]
+%				[temperature position][temperature value above][temperature value below][text orientation below][text orientation above] are optional
+%
+
+\newcommandx{\temperature}[9][5=.5,6,7,8=below,9=above]{
+	\coordinate (temperatureVarA1) at ($ (#1)!#5!(#2) $);
+	\coordinate (temperatureVarB1) at ($ (temperatureVarA1)!\temperatureHeight/2!90:(#2) $);
+	\coordinate (temperatureVarB2) at ($ (temperatureVarA1)!-\temperatureHeight/2!90:(#2) $);
+	\coordinate (temperatureVarC1) at ($ (temperatureVarB2)!-#3!90:(temperatureVarB1) $);
+	\coordinate (temperatureVarC2) at ($ (temperatureVarB1)!#4!90:(temperatureVarB2) $);
+	
+	\filldraw[fill=\colorGray!20!white,smallLine] (temperatureVarB1) -- (temperatureVarC2) -- (temperatureVarC1) -- (temperatureVarB2) -- cycle;
+	
+	\draw (temperatureVarC1) node [#8]{#6};
+	\draw (temperatureVarC2) node [#9]{#7};
+}
+
+%------------------------------------------------
+%		addon
+%------------------------------------------------
+%			\addon{type}{insertion point}{}{}[]
+%				[] are optional
+%
+
+\newcommandx{\addon}[5][5=1]{
+	\ifthenelse{\equal{#1}{1}}{		% \addon{type}{insertion point}{end point}{position}
+		\coordinate (addonVarA1) at ($ (#2)!#4!(#3) $);
+		\coordinate (addonVarB1) at ($ (addonVarA1)!\dimensioningBar/2!45:(#3) $);
+		\coordinate (addonVarB2) at ($ (addonVarA1)!\dimensioningBar/2!225:(#3) $);
+		\draw[smallLine] (addonVarB1)--(addonVarB2)
+		($(addonVarB1)+1*(\supportGap,0)$)--($(addonVarB2)+1*(\supportGap,0)$);
+	}{}
+	
+	\ifthenelse{\equal{#1}{2}}{		% \addon{type}{insertion point}{initial point}{end point}[position-1/+1]
+		\coordinate (addonVarA1) at ($ (#2)!\dimensioningBar!(#3) $);
+		\coordinate (addonVarB1) at ($ (#2)!\dimensioningBar!(#4) $);
+		\ifthenelse{\equal{#5}{1}}
+		{
+			\coordinate (addonVarC1) at ($ (addonVarA1)!\dimensioningBar!90:(#3) $);
+			\coordinate (addonVarD1) at ($ (#2)!1.414*\dimensioningBar/2!45:(#3) $);
+		}
+		{
+			\coordinate (addonVarC1) at ($ (addonVarA1)!\dimensioningBar!-90:(#3) $);
+			\coordinate (addonVarD1) at ($ (#2)!1.414*\dimensioningBar/2!-45:(#3) $);
+		}
+		\draw[smallLine] (addonVarA1)--(addonVarC1)-- (addonVarB1);
+		\filldraw (addonVarD1) circle (\smallLineWidth);
+	}{}
+	
+	\ifthenelse{\equal{#1}{3}}{		% \addon{type}{insertion point}{initial point}{end point}[position-1/+1]
+		\begin{scope}[even odd rule]
+			\ifthenelse{\equal{#5}{1}}{
+				\clip (#2) circle (\dimensioningBar+\normalLineWidth)
+				(#2)--(#3)--($(#3)!\dimensioningBar+\normalLineWidth!-90:(#2)$)--($(#4)!\dimensioningBar+\normalLineWidth!90:(#2)$)--(#4)-- cycle;
+			}{
+				\clip (#2)--(#3)--($(#3)!\dimensioningBar+\normalLineWidth!-90:(#2)$)--($(#4)!\dimensioningBar+\normalLineWidth!90:(#2)$)--(#4)-- cycle;
+			}
+			\draw [smallLine] (#2) circle (\dimensioningBar)
+												(#2) circle (\dimensioningBar-\normalLineWidth-\normalLineWidth);
+		\end{scope}
+	}{}
+	
+}
+
+%------------------------------------------------
+%		notation
+%------------------------------------------------
+%			\notation{type}{insertion point}{}[][][]
+%				[] are optional
+%
+
+\newcommandx{\notation}[7][4=above right,5=.5,6=above,7=sloped]{
+	\ifthenelse{\equal{#1}{1}}{		% \notation{1}{insertion point}{labelling}[orientation];
+		\begin{scope}
+			\draw (#2) node [#4]{#3};
+		\end{scope}
+	}{}
+	
+	\ifthenelse{\equal{#1}{2}}{		% \notation{2}{insertion point}{labelling}[orientation];
+		\begin{scope}
+		\draw (#2) node [#4]{#3};
+		\draw[bigLine] (#2)--++(0,\dimensioningBar/2)--++(0,-\dimensioningBar);
+		\end{scope}
+	}{}
+	
+	\ifthenelse{\equal{#1}{3}}{		%
+		\coordinate (notationVarA1) at ($ (#2)!#5!(#3) $);
+		\coordinate (notationVarB1) at ($ (notationVarA1)!\dimensioningBar/2!90:(#3) $);
+		\coordinate (notationVarB2) at ($ (notationVarA1)!\dimensioningBar/2!-90:(#3) $);
+		\draw[bigLine] (notationVarB1)--(notationVarB2);
+		\draw (notationVarA1) node [#6]{#4};
+	}{}
+		
+	\ifthenelse{\equal{#1}{4}}{		%
+		\ifthenelse{\equal{#7}{1}}
+			{\renewcommand{\helpVarB}{}}
+			{\renewcommand{\helpVarB}{sloped}}
+		\begin{scope}
+		\path (#2) -- (#3) node[inner sep=0mm,rectangle,smallLine,fill=white,draw,minimum size=2.5*\hingeRadius,midway,#6,\helpVarB,pos=#5] {#4};
+		\end{scope}
+	}{}	
+	
+	\ifthenelse{\equal{#1}{5}}{		%
+		\ifthenelse{\equal{#7}{1}}
+			{\renewcommand{\helpVarB}{}}
+			{\renewcommand{\helpVarB}{sloped}}
+		\begin{scope}
+		\path (#2) -- (#3) node[midway,#6,\helpVarB,pos=#5] {#4};
+		\end{scope}
+	}{}
+
+	\ifthenelse{\equal{#1}{6}}{		%
+		\begin{scope}
+		\draw (#2) node [inner sep=0mm,circle,smallLine,fill=white,draw,minimum size=2.5*\hingeRadius]{#3};
+		\end{scope}
+	}{}
+	
+}

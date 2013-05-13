@@ -1,0 +1,1347 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title     : TikZ 3D Library for Structural Analysis
+% Version   : 2.00 (2011/02/11)
+%
+% Author    : Juergen HACKL
+% Engine    : PDFLaTeX
+% University: Graz University of Technology 
+%  						www.ifb.tugraz.at
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%================================================
+%		Package
+%================================================
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{3dstructuralanalysis}
+
+%
+%================================================
+%		use Package
+%================================================
+%
+\RequirePackage{ifthen}
+\RequirePackage{tikz}
+\RequirePackage{xargs}
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{positioning}
+\usepackage{verbatim}
+%\usepackage{pgfmath}
+\usetikzlibrary{automata}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc,3d}
+\usetikzlibrary{%
+    decorations.pathreplacing,%
+    decorations.pathmorphing%
+}
+\usetikzlibrary{patterns}
+
+%
+%================================================
+%		some variables
+%================================================
+%
+
+%------------------------------------------------
+%		line widths
+%------------------------------------------------
+
+\newcommand{\DhugeLineWidth}{2pt}
+\newcommand{\DbigLineWidth}{1.5pt}
+\newcommand{\DnormalLineWidth}{1pt}
+\newcommand{\DsmallLineWidth}{.7pt}
+\newcommand{\DtinyLineWidth}{.3pt}
+
+%------------------------------------------------
+%		coords parameters
+%------------------------------------------------
+
+\newcommand{\DxAngle}{-12}
+\newcommand{\DxLength}{1}
+\newcommand{\DyAngle}{37}
+\newcommand{\DyLength}{1}
+\newcommand{\DzAngle}{90}
+\newcommand{\DzLength}{1}
+
+%------------------------------------------------
+%		axis parameters
+%------------------------------------------------
+
+\newcommand{\DxVarA}{$x$}
+\newcommand{\DyVarA}{$y$}
+\newcommand{\DzVarA}{$z$}
+
+\newcommand{\DxVarB}{$x^\prime$}
+\newcommand{\DyVarB}{$y^\prime$}
+\newcommand{\DzVarB}{$z^\prime$}
+
+\newcommand{\DxNodePos}{below}
+\newcommand{\DyNodePos}{left}
+\newcommand{\DzNodePos}{above}
+
+%------------------------------------------------
+%		construction parameters
+%------------------------------------------------
+
+\newcommand{\DscalingParameter}{1}
+\newcommand{\DshowPointParameter}{0}
+
+\newcommand{\DhingeBigRadius}{1.5mm}
+\newcommand{\DhingeRadius}{1mm}
+\newcommand{\DhingeAxialLength}{.5}
+\newcommand{\DhingeAxialHeight}{.4}
+\newcommand{\DhingeCornerLength}{3mm}
+
+\newcommand{\DspringLength}{10mm}
+\newcommand{\DspringPreLength}{7pt}
+\newcommand{\DspringPostLength}{5pt}
+\newcommand{\DspringAmplitude}{1.5mm}
+\newcommand{\DspringSegmentLength}{3pt}
+
+\newcommand{\DsupportGap}{1mm}
+\newcommand{\DsupportLength}{1}
+
+\newcommand{\DaxisLength}{1.5}
+\newcommand{\DlocalaxisLength}{.5}
+\newcommand{\DaxisDistance}{.2}
+
+%------------------------------------------------
+%		load parameters
+%------------------------------------------------
+
+\newcommand{\DforceDistance}{.15}
+\newcommand{\DforceLength}{1.0}
+\newcommand{\DlineloadDistance}{.3}
+\newcommand{\DlineloadForce}{0.15}
+\newcommand{\DlineloadInterval}{0.2}
+\newcommand{\DlineloadDistanceMM}{3mm}
+
+%------------------------------------------------
+%		dimensioning parameters
+%------------------------------------------------
+
+\newcommand{\DdimensioningBar}{4mm}
+\newcommand{\DnoteRadius}{1.5mm}
+
+%------------------------------------------------
+%		addon parameters
+%------------------------------------------------
+
+\newcommand{\DaddonLength}{4mm}
+
+%------------------------------------------------
+%		help values
+%------------------------------------------------
+
+\newcommand{\DhelpVarA}{1}
+\newcommand{\DhelpVarB}{1}
+\newcommand{\DhelpVarC}{1}
+
+%
+%================================================
+%		new tikz styles
+%================================================
+%
+
+%------------------------------------------------
+%		line styles
+%------------------------------------------------
+
+\tikzstyle{hugeLine}=[line width=\DhugeLineWidth,]
+\tikzstyle{bigLine}=[line width=\DbigLineWidth,]
+\tikzstyle{normalLine}=[line width=\DnormalLineWidth,]
+\tikzstyle{smallLine}=[line width=\DsmallLineWidth,]
+\tikzstyle{tinyLine}=[line width=\DtinyLineWidth,]
+
+%------------------------------------------------
+%		coords styles
+%------------------------------------------------
+
+\tikzset{coords/.style={x={(\DxAngle:\DxLength cm)}, y={(\DyAngle:\DyLength cm)}, z={(\DzAngle:\DzLength cm)}}}
+
+%------------------------------------------------
+%		axis styles
+%------------------------------------------------
+
+\tikzstyle{axisarrow}=[>=open triangle 45 ,normalLine]
+
+%------------------------------------------------
+%		dspring style
+%------------------------------------------------
+
+\tikzstyle{Dspring} =	[
+	normalLine,
+	decoration=
+		{
+			zigzag,
+			pre length=\DspringPreLength,
+			post length=\DspringPostLength,
+			segment length=\DspringSegmentLength,
+			amplitude=\DspringAmplitude
+		},
+		decorate,
+]
+
+%------------------------------------------------
+%		force style
+%------------------------------------------------
+
+\tikzstyle{force}=[>=latex,normalLine]
+
+%
+%================================================
+%		library elements
+%================================================
+%
+
+%------------------------------------------------
+%		setcoords
+%------------------------------------------------
+%			\setcoords{x-angle}{y-angle}[x-direction][y-direction][z-direction][z-angle];
+%
+
+\newcommandx{\setcoords}[6][3=1,4=1,5=1,6=90]{
+	\renewcommand{\DxAngle}{#1}
+	\renewcommand{\DxLength}{#3}
+	\renewcommand{\DyAngle}{#2}
+	\renewcommand{\DyLength}{#4}
+	\renewcommand{\DzAngle}{#6}
+	\renewcommand{\DzLength}{#5}
+}
+
+%------------------------------------------------
+%		setaxis
+%------------------------------------------------
+%			\setaxis{type}[][][][][][];
+%	
+%		Type 1
+%			\setaxis{1};
+%						set global axis to xyz and local axis to x'y'z'
+%		Type 2
+%			\setaxis{2};
+%						set global axis to XYZ and local axis to xyz
+%		Type 3
+%			\setaxis{3}[X-labelling][Y-labelling][Z-labelling][x-labelling][y-labelling][z-labelling];
+%						set global axis to [][][] and local axis to [][][]
+%		Type 4
+%			\setaxis{4}[x-orientation][y-orientation][z-orientation];
+%						Change the xyz-orientation from \daxis{4}  
+
+\newcommandx{\setaxis}[7][2,3,4,5,6,7]{
+	\ifthenelse{\equal{#1}{1}}{
+		\renewcommand{\DxVarA}{$x$}
+		\renewcommand{\DyVarA}{$y$}
+		\renewcommand{\DzVarA}{$z$}
+		\renewcommand{\DxVarB}{$x^\prime$}
+		\renewcommand{\DyVarB}{$y^\prime$}
+		\renewcommand{\DzVarB}{$z^\prime$}
+	}{}
+	
+	\ifthenelse{\equal{#1}{2}}{
+		\renewcommand{\DxVarA}{$X$}
+		\renewcommand{\DyVarA}{$Y$}
+		\renewcommand{\DzVarA}{$Z$}
+		\renewcommand{\DxVarB}{$x$}
+		\renewcommand{\DyVarB}{$y$}
+		\renewcommand{\DzVarB}{$z$}
+	}{}
+	
+	\ifthenelse{\equal{#1}{3}}{
+		\renewcommand{\DxVarA}{#2}
+		\renewcommand{\DyVarA}{#3}
+		\renewcommand{\DzVarA}{#4}
+		\renewcommand{\DxVarB}{#5}
+		\renewcommand{\DyVarB}{#6}
+		\renewcommand{\DzVarB}{#7}
+	}{}
+	
+	\ifthenelse{\equal{#1}{4}}{
+		\renewcommand{\DxNodePos}{#2}
+		\renewcommand{\DyNodePos}{#3}
+		\renewcommand{\DzNodePos}{#4}
+	}{}
+}
+
+%------------------------------------------------
+%		showpoint
+%------------------------------------------------
+%			\showpoint
+%	
+
+\newcommandx{\showpoint}{
+	\renewcommand{\DshowPointParameter}{1}
+}
+
+%------------------------------------------------
+%		dscaling
+%------------------------------------------------
+%			\dscaling{type}{scaling value};
+%	
+%		Type 1
+%			\dscaling{1}{scaling value};
+%						scaling the distance between two points
+%		Type 2
+%			\dscaling{2}{scaling value};
+%						scaling supports and hinges
+%		Type 3
+%			\dscaling{3}{scaling value};
+%						scaling axis
+%		Type 4
+%			\dscaling{4}{scaling value};
+%						scaling loads and lineloads
+%		Type 5
+%			\dscaling{5}{scaling value};
+%						scaling the dimensionings
+%		Type 6
+%			\dscaling{6}{scaling value};
+%						scaling the addons
+
+\newcommandx{\dscaling}[2]{
+	\ifthenelse{\equal{#1}{1}}{
+		\renewcommand{\DscalingParameter}{#2}
+	}{}
+	
+	\ifthenelse{\equal{#1}{2}}{
+		\pgfmathsetmacro{\DhingeBigRadiusPTtoMM}{\DhingeBigRadius/2.83527}
+		\pgfmathsetmacro{\DhingeRadiusPTtoMM}{\DhingeRadius/2.83527}
+		\pgfmathsetmacro{\DhingeAxialLengthPT}{\DhingeAxialLength}
+		\pgfmathsetmacro{\DhingeAxialHeightPT}{\DhingeAxialHeight}
+		\pgfmathsetmacro{\DhingeCornerLengthPTtoMM}{\DhingeCornerLength/2.83527}
+		%
+		\renewcommand{\DhingeBigRadius}{\DhingeBigRadiusPTtoMM*#2mm}
+		\renewcommand{\DhingeRadius}{\DhingeRadiusPTtoMM*#2mm}
+		\renewcommand{\DhingeAxialLength}{\DhingeAxialLengthPT*#2}
+		\renewcommand{\DhingeAxialHeight}{\DhingeAxialHeightPT*#2}
+		\renewcommand{\DhingeCornerLength}{\DhingeCornerLengthPTtoMM*#2mm}
+		%
+		\pgfmathsetmacro{\DspringLengthPTtoMM}{\DspringLength/2.83527}
+		\pgfmathsetmacro{\DspringPreLengthPT}{\DspringPreLength}
+		\pgfmathsetmacro{\DspringPostLengthPT}{\DspringPostLength}
+		\pgfmathsetmacro{\DspringAmplitudePTtoMM}{\DspringAmplitude/2.83527}
+		\pgfmathsetmacro{\DspringSegmentLengthPT}{\DspringSegmentLength}
+		%
+		\renewcommand{\DspringLength}{\DspringLengthPTtoMM*#2mm}
+		\renewcommand{\DspringPreLength}{\DspringPreLengthPT*#2}
+		\renewcommand{\DspringPostLength}{\DspringPostLengthPT*#2}
+		\renewcommand{\DspringAmplitude}{\DspringAmplitudePTtoMM*#2mm}
+		\renewcommand{\DspringSegmentLength}{\DspringSegmentLengthPT*#2}
+		%
+		\pgfmathsetmacro{\DsupportGapPTtoMM}{\DsupportGap/2.83527}
+		\pgfmathsetmacro{\DsupportLengthPT}{\DsupportLength}
+		%
+		\renewcommand{\DsupportGap}{\DsupportGapPTtoMM*#2mm}
+		\renewcommand{\DsupportLength}{\DsupportLengthPT*#2}
+	}{}
+	
+	\ifthenelse{\equal{#1}{3}}{
+		\pgfmathsetmacro{\DaxisLengthPT}{\DaxisLength}
+		\pgfmathsetmacro{\DlocalaxisLengthPT}{\DlocalaxisLength}
+		\pgfmathsetmacro{\DaxisDistancePT}{\DaxisDistance}
+		%
+		\renewcommand{\DaxisLength}{\DaxisLengthPT*#2}
+		\renewcommand{\DlocalaxisLength}{\DlocalaxisLengthPT*#2}
+		\renewcommand{\DaxisDistance}{\DaxisDistancePT*#2}
+	}{}
+	
+	\ifthenelse{\equal{#1}{4}}{
+		\pgfmathsetmacro{\DforceDistancePT}{\DforceDistance}
+		\pgfmathsetmacro{\DforceLengthPT}{\DforceLength}
+		\pgfmathsetmacro{\DlineloadDistancePT}{\DlineloadDistance}
+		\pgfmathsetmacro{\DlineloadForcePT}{\DlineloadForce}
+		\pgfmathsetmacro{\DlineloadIntervalPT}{\DlineloadInterval}
+		\pgfmathsetmacro{\DlineloadDistanceMMPTtoMM}{\DlineloadDistanceMM/2.83527}
+		%
+		\renewcommand{\DforceDistance}{\DforceDistancePT*#2}
+		\renewcommand{\DforceLength}{\DforceLengthPT*#2}
+		\renewcommand{\DlineloadDistance}{\DlineloadDistancePT*#2}
+		\renewcommand{\DlineloadForce}{\DlineloadForcePT*#2}
+		\renewcommand{\DlineloadInterval}{\DlineloadIntervalPT*#2}
+		\renewcommand{\DlineloadDistanceMM}{\DlineloadDistanceMMPTtoMM*#2mm}
+	}{}
+
+	\ifthenelse{\equal{#1}{5}}{
+		\pgfmathsetmacro{\DdimensioningBarPTtoMM}{\DdimensioningBar/2.83527}
+		%
+		\renewcommand{\DdimensioningBar}{\DdimensioningBarPTtoMM*#2mm}
+	}{}
+
+	\ifthenelse{\equal{#1}{6}}{
+		\pgfmathsetmacro{\DaddonLengthPTtoMM}{\DaddonLength/2.83527}
+		%
+		\renewcommand{\DaddonLength}{\DaddonLengthPTtoMM*#2mm}
+	}{}
+}
+
+%------------------------------------------------
+%		3dpoint
+%------------------------------------------------
+%			\point{name}{x-coordiante}{y-coordiante}{z-coordiante};
+%
+
+\newcommandx{\dpoint}[4]{
+	\node[coordinate][
+		shift={(#2*\DscalingParameter,#3*\DscalingParameter,#4*\DscalingParameter)}](#1){};
+  \ifthenelse{\equal{\DshowPointParameter}{1}}{
+      \draw (#2*\DscalingParameter,#3*\DscalingParameter,#4*\DscalingParameter) node [above,red]{#1};
+  }{}
+}
+
+%------------------------------------------------
+%		3daxis
+%------------------------------------------------
+%			\daxis{type}{}[][][][][][][];
+%	
+%		Type 1: Global Axis
+%			\daxis{1}{insertion point}[X-orientation][Y-orientation][Z-orientation];
+%						
+%		Type 2: Local Axis in plane
+%			\daxis{2}{plane}[insertion point][end point][position][x-orientation][y-orientation][z-orientation][change y with z];
+%						plane e.g. xy, yx, xz, zx, yz or zy
+%		Type 3: Local Axis in space
+%			\daxis{3}{rotation A}[insertion point][end point][position][rotation 1][rotation 2][rotation 3][rotation B];
+%						rotation A and B to positioning the local axis around the beam (spherical coordinates) 
+%						rotation 1 about the world z axis,
+%						rotation 2 about the (unrotated) world y axis, and
+%						rotation 3 about the (unrotated) world z axis.
+%						to change the xyz-orientation use \setaxis{4}[x-orientation][y-orientation][z-orientation];
+
+\newcommandx{\daxis}[9][3,4,5=.5,6=right,7=below,8=left,9=0]{
+	\ifthenelse{\equal{#1}{1}}{		%
+		\ifthenelse{\equal{#3}{}}
+			{\renewcommand{\DhelpVarA}{below}}
+			{\renewcommand{\DhelpVarA}{#3}}
+		\ifthenelse{\equal{#4}{}}
+			{\renewcommand{\DhelpVarB}{above}}
+			{\renewcommand{\DhelpVarB}{#4}}
+		\ifthenelse{\equal{#5}{.5}}
+			{\renewcommand{\DhelpVarC}{above}}
+			{\renewcommand{\DhelpVarC}{#5}}
+		\draw[axisarrow,->] (#2) --++ (\DaxisLength,0,0)node[\DhelpVarA] {\DxVarA};
+		\draw[axisarrow,->] (#2) --++ (0,\DaxisLength,0)node[\DhelpVarB] {\DyVarA};
+		\draw[axisarrow,->] (#2) --++ (0,0,\DaxisLength)node[\DhelpVarC] {\DzVarA};
+	}{}
+
+	\ifthenelse{\equal{#1}{2}}{		%
+		\ifthenelse{\equal{#2}{xy}}
+			{\renewcommand{\DhelpVarA}{z}}{}
+		\ifthenelse{\equal{#2}{yx}}
+			{\renewcommand{\DhelpVarA}{z}}{}
+		\ifthenelse{\equal{#2}{xz}}
+			{\renewcommand{\DhelpVarA}{y}}{}
+		\ifthenelse{\equal{#2}{zx}}
+			{\renewcommand{\DhelpVarA}{y}}{}
+		\ifthenelse{\equal{#2}{yz}}
+			{\renewcommand{\DhelpVarA}{x}}{}
+		\ifthenelse{\equal{#2}{zy}}
+			{\renewcommand{\DhelpVarA}{x}}{}
+
+		\ifthenelse{\equal{#2}{xy}}{
+			\begin{scope}[canvas is yx plane at \DhelpVarA=0]}
+			{\begin{scope}[canvas is #2 plane at \DhelpVarA=0]}
+
+				\pgfmathsetmacro{\DaxisDistanceLO}{\DaxisDistance/0.283527}
+
+				\ifthenelse{\equal{#2}{xy}}
+					{\renewcommand{\DhelpVarA}{\DaxisDistanceLO*-3mm}}
+					{\renewcommand{\DhelpVarA}{\DaxisDistanceLO*3mm}}
+
+				\pgfmathsetmacro{\DlocalaxisLengthLO}{\DlocalaxisLength/0.283527}
+				\renewcommand{\DhelpVarB}{\DlocalaxisLengthLO*3mm}
+
+				\coordinate (axisVarA1) at ($ (#3)!#5!(#4) $);
+				\coordinate (axisVarB1) at ($ (axisVarA1)!{\DhelpVarB}!(#4) $);
+				\coordinate (axisVarA2) at ($ (axisVarA1)!\DhelpVarA!90:(#4) $);
+				\coordinate (axisVarB2) at ($ (axisVarB1)!\DhelpVarA!90:(#4) $);
+				\coordinate (axisVarC2) at ($ (axisVarA2)!1!90:(axisVarB2) $);
+
+				\ifthenelse{\equal{#9}{0}}
+					{\renewcommand{\DhelpVarB}{\DyVarB}}
+					{\renewcommand{\DhelpVarB}{\DzVarB}}
+
+				\draw[thin,->] (axisVarA2) -- (axisVarB2)node[#6] {\DxVarB};
+				\draw[thin,->] (axisVarA2) -- (axisVarC2)node[#7] {\DhelpVarB};
+			\end{scope}
+
+		\ifthenelse{\equal{#9}{0}}
+			{\renewcommand{\DhelpVarB}{\DzVarB}}
+			{\renewcommand{\DhelpVarB}{\DyVarB}}
+
+		\ifthenelse{\equal{#2}{xy}}
+			{\draw[thin,->] (axisVarA2) --++ (0,0,-\DlocalaxisLength)node[#8] {\DhelpVarB};}{}
+		\ifthenelse{\equal{#2}{yx}}
+			{\draw[thin,->] (axisVarA2) --++ (0,0,-\DlocalaxisLength)node[#8] {\DhelpVarB};}{}
+		\ifthenelse{\equal{#2}{xz}}
+			{\draw[thin,->] (axisVarA2) --++ (0,-\DlocalaxisLength,0)node[#8] {\DhelpVarB};}{}
+		\ifthenelse{\equal{#2}{zx}}
+			{\draw[thin,->] (axisVarA2) --++ (0,\DlocalaxisLength,0)node[#8] {\DhelpVarB};}{}
+		\ifthenelse{\equal{#2}{yz}}
+			{\draw[thin,->] (axisVarA2) --++ (\DlocalaxisLength,0,0)node[#8] {\DhelpVarB};}{}
+		\ifthenelse{\equal{#2}{zy}}
+			{\draw[thin,->] (axisVarA2) --++ (-\DlocalaxisLength,0,0)node[#8] {\DhelpVarB};}{}
+	}{}
+	
+	\ifthenelse{\equal{#1}{3}}{
+		\ifthenelse{\equal{#6}{right}}
+			{\renewcommand{\DhelpVarA}{0}}
+			{\renewcommand{\DhelpVarA}{#6}}
+
+		\ifthenelse{\equal{#7}{below}}
+			{\renewcommand{\DhelpVarB}{0}}
+			{\renewcommand{\DhelpVarB}{#7}}
+
+		\ifthenelse{\equal{#8}{left}}
+			{\renewcommand{\DhelpVarC}{0}}
+			{\renewcommand{\DhelpVarC}{#8}}
+
+		\coordinate (axisVarA1) at ($ (#3)!#5!(#4) $);
+		\coordinate (axisVarA2) at ($(axisVarA1)+1*({\DaxisDistance*cos(#9)*sin(#2)},{\DaxisDistance*sin(#9)*sin(#2)},{\DaxisDistance*cos(#2)})$);
+
+		\tdplotsetrotatedcoords{\DhelpVarA}{\DhelpVarB}{\DhelpVarC};
+
+		\tdplotsetrotatedcoordsorigin{(axisVarA2)}
+		\draw[thin,tdplot_rotated_coords,->] (0,0,0) -- (.5,0,0) node[\DxNodePos]{\DxVarB};
+		\draw[thin,tdplot_rotated_coords,->] (0,0,0) -- (0,.5,0) node[\DyNodePos]{\DyVarB};
+		\draw[thin,tdplot_rotated_coords,->] (0,0,0) -- (0,0,.5) node[\DzNodePos]{\DzVarB};
+	}{}
+}
+
+%------------------------------------------------
+%		3dbeam
+%------------------------------------------------
+%			\dbeam{type}{initial point}{end point}[rounded initial point][rounded end point];
+%						with rounded initial point or/and rounded end point: 1 or nothing = true, 0=false,
+
+\newcommandx{\dbeam}[5][4=1,5=1]{
+	\ifthenelse{\equal{#1}{1}}{		%
+		\draw [hugeLine] (#2) -- (#3);
+		\ifthenelse{\equal{#4}{0}}{}
+			{\fill (#2) circle (\DhugeLineWidth/2);}
+		\ifthenelse{\equal{#5}{0}}{}
+			{\fill (#3) circle (\DhugeLineWidth/2);}
+	}{}
+	
+	\ifthenelse{\equal{#1}{2}}{		%
+		\draw [bigLine] (#2) -- (#3);
+		\ifthenelse{\equal{#4}{0}}{}
+			{\fill (#2) circle (\DbigLineWidth/2);}
+		\ifthenelse{\equal{#5}{0}}{}
+			{\fill (#3) circle (\DbigLineWidth/2);}
+	}{}
+	
+	\ifthenelse{\equal{#1}{3}}{		%
+		\draw [normalLine,dashed] (#2) -- (#3);
+	}{}
+}
+
+%------------------------------------------------
+%		3dsupport
+%------------------------------------------------
+%			\dsupport{type}{insertion point}[][][][];
+%		
+%		Type 1
+%			\dsupport{1}{insertion point}[x-direction][y-direction][z-direction];
+%						with xyz-direction: 1=true, 0=false, -1=other direction
+%		Type 2
+%			\dsupport{2}{insertion point}[plane][normal-direction];
+%
+%		Type 3
+%			\dsupport{3}{insertion point}[x-direction][y-direction][z-direction];
+%						in combination with \dhinge{3}
+%						with xyz-direction: 1=true, 0=false, -1=other direction
+%		Type 4
+%			\dsupport{4}{insertion point}[x-direction][y-direction][z-direction];
+%						same as type 1 but with springs
+%		Type 5
+%			\dsupport{5}{insertion point}[x-direction][y-direction][z-direction];
+%						same as type 3 but with springs
+
+\newcommandx{\dsupport}[6][3=1,4=1,5=1,6=1]{
+	\ifthenelse{\equal{#1}{1}}{		%
+		\ifthenelse{\equal{#3}{0}}{}{
+			\draw [normalLine] (#2)-- ++(-\DsupportLength*#3,0,0);
+			\filldraw [normalLine,fill=white] ($(#2)+1*(-\DsupportLength*#3,0,0)$) circle (\DhingeRadius);
+		}
+		\ifthenelse{\equal{#4}{0}}{}{
+			\draw [normalLine] (#2)-- ++(0,-\DsupportLength*#4,0);
+			\filldraw [normalLine,fill=white] ($(#2)+1*(0,-\DsupportLength*#4,0)$) circle (\DhingeRadius);
+		}
+		\ifthenelse{\equal{#5}{0}}{}{
+			\draw [normalLine] (#2)-- ++(0,0,-\DsupportLength*#5);
+			\filldraw [normalLine,fill=white] ($(#2)+1*(0,0,-\DsupportLength*#5)$) circle (\DhingeRadius);
+		}
+	}{}
+		
+	\ifthenelse{\equal{#1}{2}}{		%
+		\ifthenelse{\equal{#3}{xy}}
+			{\renewcommand{\DhelpVarA}{z}}{}
+		\ifthenelse{\equal{#3}{yx}}
+			{\renewcommand{\DhelpVarA}{z}}{}
+		\ifthenelse{\equal{#3}{xz}}
+			{\renewcommand{\DhelpVarA}{y}}{}
+		\ifthenelse{\equal{#3}{zx}}
+			{\renewcommand{\DhelpVarA}{y}}{}
+		\ifthenelse{\equal{#3}{yz}}
+			{\renewcommand{\DhelpVarA}{x}}{}
+		\ifthenelse{\equal{#3}{zy}}
+			{\renewcommand{\DhelpVarA}{x}}{}
+
+			\begin{scope}[canvas is #3 plane at \DhelpVarA=#4]
+				\draw [hugeLine] (#2)-- ++(-\DsupportLength/2,0)--++(\DsupportLength,0);
+				\draw [hugeLine] (#2)-- ++(0,-\DsupportLength/2)--++(0,\DsupportLength);
+			\end{scope}
+	}{}
+	
+	\ifthenelse{\equal{#1}{3}}{		%
+		
+		\ifthenelse{\equal{#3}{0}}{}{
+			\draw [normalLine] ($(#2)+1*(0,0,-\DhingeAxialHeight*2/3)$)-- ++(-\DsupportLength*#3,0,0);
+			\filldraw [normalLine,fill=white] ($(#2)+1*(-\DsupportLength*#3,0,-\DhingeAxialHeight*2/3)$) circle (\DhingeRadius);
+		}
+		\ifthenelse{\equal{#4}{0}}{}{
+			\draw [normalLine] ($(#2)+1*(0,0,-\DhingeAxialHeight*2/3)$)-- ++(0,-\DsupportLength*#4,0);
+			\filldraw [normalLine,fill=white] ($(#2)+1*(0,-\DsupportLength*#4,-\DhingeAxialHeight*2/3)$) circle (\DhingeRadius);
+		}
+		\ifthenelse{\equal{#5}{0}}{}{
+			\draw [normalLine] ($(#2)+1*(0,0,-\DhingeAxialHeight/2.5)$)-- ++(0,0,-\DsupportLength*#5+\DhingeAxialHeight/2);
+			\filldraw [normalLine,fill=white] ($(#2)+1*(0,0,-\DsupportLength*#5)$) circle (\DhingeRadius);
+		}
+		
+	}{}	
+		
+	\ifthenelse{\equal{#1}{4}}{		%
+		\ifthenelse{\equal{#3}{0}}{}{
+			\draw [Dspring] (#2)-- ++(-\DsupportLength*#3,0,0);
+			\filldraw [normalLine,fill=white] ($(#2)+1*(-\DsupportLength*#3,0,0)$) circle (\DhingeRadius);
+		}
+		\ifthenelse{\equal{#4}{0}}{}{
+			\draw [Dspring] (#2)-- ++(0,-\DsupportLength*#4,0);
+			\filldraw [normalLine,fill=white] ($(#2)+1*(0,-\DsupportLength*#4,0)$) circle (\DhingeRadius);
+		}
+		\ifthenelse{\equal{#5}{0}}{}{
+			\draw [Dspring] (#2)-- ++(0,0,-\DsupportLength*#5);
+			\filldraw [normalLine,fill=white] ($(#2)+1*(0,0,-\DsupportLength*#5)$) circle (\DhingeRadius);
+		}
+		
+	}{}
+	
+	\ifthenelse{\equal{#1}{5}}{		%
+		
+		\ifthenelse{\equal{#3}{0}}{}{
+			\draw [Dspring] ($(#2)+1*(0,0,-\DhingeAxialHeight*2/3)$)-- ++(-\DsupportLength*#3,0,0);
+			\filldraw [normalLine,fill=white] ($(#2)+1*(-\DsupportLength*#3,0,-\DhingeAxialHeight*2/3)$) circle (\DhingeRadius);
+		}
+		\ifthenelse{\equal{#4}{0}}{}{
+			\draw [Dspring] ($(#2)+1*(0,0,-\DhingeAxialHeight*2/3)$)-- ++(0,-\DsupportLength*#4,0);
+			\filldraw [normalLine,fill=white] ($(#2)+1*(0,-\DsupportLength*#4,-\DhingeAxialHeight*2/3)$) circle (\DhingeRadius);
+		}
+		\ifthenelse{\equal{#5}{0}}{}{
+			\draw [Dspring] ($(#2)+1*(0,0,-\DhingeAxialHeight/2.5)$)-- ++(0,0,-\DsupportLength*#5+\DhingeAxialHeight/2);
+			\filldraw [normalLine,fill=white] ($(#2)+1*(0,0,-\DsupportLength*#5)$) circle (\DhingeRadius);
+		}
+	}{}	
+}
+
+%------------------------------------------------
+%		3dhinge
+%------------------------------------------------
+%			\dhinge{type}{insertion point}[][][];
+%		
+%		Type 1
+%			\dhinge{1}{insertion point};
+%						
+%		Type 2
+%			\dhinge{2}{insertion point}[initial point][end point][orientation];
+%						with orientation: 0=standard, 1=other direction
+%		Type 3
+%			\dhinge{3}{insertion point}[rotation];
+%						in combination with \dsupport{3}
+%		Type 4
+%			\dhinge{4}{insertion point}[initial point][end point];
+%						
+
+\newcommandx{\dhinge}[5][3=0,4=0,5=0]{
+	\ifthenelse{\equal{#1}{1}}{		%
+		\begin{scope}[rotate around={#3:(#2)}]
+			\fill [white] (#2) circle (\DhingeRadius);
+			\draw [normalLine] (#2) circle (\DhingeRadius);
+		\end{scope} 
+	}{}
+	
+	\ifthenelse{\equal{#1}{2}}{		%
+		\begin{scope}[even odd rule]
+			\ifthenelse{\equal{#5}{1}}{
+				\clip (#2) circle (\DhingeBigRadius+\DnormalLineWidth)
+				(#2)--(#3)--($(#3)!\DhingeBigRadius+\DnormalLineWidth!-90:(#2)$)--($(#4)!\DhingeBigRadius+\DnormalLineWidth!90:(#2)$)--(#4)-- cycle;
+			}{
+				\clip (#2)--(#3)--($(#3)!\DhingeBigRadius+\DnormalLineWidth!-90:(#2)$)--($(#4)!\DhingeBigRadius+\DnormalLineWidth!90:(#2)$)--(#4)-- cycle;
+			}
+			\filldraw [fill=white,normalLine] (#2) circle (\DhingeBigRadius);
+		\end{scope}
+		\draw[hugeLine] ($(#2)!\DhingeBigRadius!(#3)$)--(#2)--($(#2)!\DhingeBigRadius!(#4)$);
+	}{}
+	
+	\ifthenelse{\equal{#1}{3}}{		%
+		\begin{scope}
+			\draw [normalLine] ($(#2)+1*({0*cos(#3+90)-\DhingeAxialHeight/2*sin(#3+90)},{0*sin(#3+90)+\DhingeAxialHeight/2*cos(#3+90)},2*\DhingeAxialLength/3)$) 
+						-- ++(0,0,-\DhingeAxialLength) 
+						-- ++({0*cos(#3+90)+\DhingeAxialHeight*sin(#3+90)},{0*sin(#3+90)-\DhingeAxialHeight*cos(#3+90)})
+						-- ++(0,0,\DhingeAxialLength);
+		\end{scope}
+	}{}
+	
+	\ifthenelse{\equal{#1}{4}}{		%
+		\coordinate (hingeVarA) at ($ (#2)!\DhingeCornerLength!(#3) $);
+		\coordinate (hingeVarB) at ($ (#2)!\DhingeCornerLength!(#4) $);
+		\fill[black] (#2) -- (hingeVarA) -- (hingeVarB) -- cycle;
+		\fill[black] (#2)circle (\DhugeLineWidth/2);
+	}{}
+}
+
+%------------------------------------------------
+%		3dload
+%------------------------------------------------
+%			\dload{type}{insertion point}[rotation A][rotation B][load length][load distance];
+%						rotation A and B to positioning the load around the insertion point (spherical coordinates) 
+%
+
+\newcommandx{\dload}[6][3=0,4=0,5=0,6=0]{
+	\ifthenelse{\equal{#1}{1}}{		%
+		\ifthenelse{\equal{#6}{0}}
+			{\renewcommand{\DhelpVarA}{\DforceDistance}}
+			{\renewcommand{\DhelpVarA}{#6}}
+		\ifthenelse{\equal{#5}{0}}
+			{\renewcommand{\DhelpVarB}{\DforceLength}}
+			{\renewcommand{\DhelpVarB}{#5}}
+		\draw[force,<-] ($(#2)+1*({\DhelpVarA*cos(#4)*sin(#3)},{\DhelpVarA*sin(#4)*sin(#3)},{\DhelpVarA*cos(#3)})$) --++({\DhelpVarB*cos(#4)*sin(#3)},{\DhelpVarB*sin(#4)*sin(#3)},{\DhelpVarB*cos(#3)});
+	}{}
+		
+		
+	\ifthenelse{\equal{#1}{2}}{		%
+		\ifthenelse{\equal{#6}{0}}
+			{\renewcommand{\DhelpVarA}{\DforceDistance}}
+			{\renewcommand{\DhelpVarA}{#6}}
+		\ifthenelse{\equal{#5}{0}}
+			{\renewcommand{\DhelpVarB}{\DforceLength}}
+			{\renewcommand{\DhelpVarB}{#5}}
+		\draw[force,->] ($(#2)+1*({\DhelpVarA*cos(#4)*sin(#3)},{\DhelpVarA*sin(#4)*sin(#3)},{\DhelpVarA*cos(#3)})$) --++({\DhelpVarB*cos(#4)*sin(#3)},{\DhelpVarB*sin(#4)*sin(#3)},{\DhelpVarB*cos(#3)});
+	}{}
+		
+	\ifthenelse{\equal{#1}{3}}{		%
+		\ifthenelse{\equal{#6}{0}}
+			{\renewcommand{\DhelpVarA}{\DforceDistance}}
+			{\renewcommand{\DhelpVarA}{#6}}
+		\ifthenelse{\equal{#5}{0}}
+			{\renewcommand{\DhelpVarB}{\DforceLength}}
+			{\renewcommand{\DhelpVarB}{#5}}
+		\draw[force,<<-] ($(#2)+1*({\DhelpVarA*cos(#4)*sin(#3)},{\DhelpVarA*sin(#4)*sin(#3)},{\DhelpVarA*cos(#3)})$) --++({\DhelpVarB*cos(#4)*sin(#3)},{\DhelpVarB*sin(#4)*sin(#3)},{\DhelpVarB*cos(#3)});
+	}{}
+		
+	\ifthenelse{\equal{#1}{4}}{		%
+		\ifthenelse{\equal{#6}{0}}
+			{\renewcommand{\DhelpVarA}{\DforceDistance}}
+			{\renewcommand{\DhelpVarA}{#6}}
+		\ifthenelse{\equal{#5}{0}}
+			{\renewcommand{\DhelpVarB}{\DforceLength}}
+			{\renewcommand{\DhelpVarB}{#5}}
+		\draw[force,->>] ($(#2)+1*({\DhelpVarA*cos(#4)*sin(#3)},{\DhelpVarA*sin(#4)*sin(#3)},{\DhelpVarA*cos(#3)})$) --++({\DhelpVarB*cos(#4)*sin(#3)},{\DhelpVarB*sin(#4)*sin(#3)},{\DhelpVarB*cos(#3)});
+	}{}
+	
+}
+
+%------------------------------------------------
+%		3dlineload
+%------------------------------------------------
+%			\dlineload{type}{}[]{initial point}{end point}[][][][];
+%		
+%		Type 1: in plane
+%			\dlineload{1}{plane}[plane distance]{initial point}{end point}[initial force value][end force value][force interval];
+%						
+%		Type 2: in plane
+%			\dlineload{2}{plane}[plane distance]{initial point}{end point}[initial force value][end force value][force interval];
+%						
+%		Type 3: in plane
+%			\dlineload{3}{plane}[plane distance]{initial point}{end point}[initial force value][end force value][lineload distance from inital point][force interval];
+%						
+%		Type 4: in plane
+%			\dlineload{4}{plane}[plane distance]{initial point}{end point}[force interval][force length];
+%						
+%		Type 5: in space
+%			\dlineload{5}{rotation A}[rotation B]{initial point}{end point}[initial force value][end force value][force interval];
+%						rotation A and B to positioning the lineload around the initial point (spherical coordinates) 
+%		Type 6: in space
+%			\dlineload{6}{rotation A}[rotation B]{initial point}{end point}[force interval][force length];
+%						rotation A and B to positioning the lineload around the initial point (spherical coordinates) 
+
+\newcommandx{\dlineload}[9][3=0,6=1,7=1,8=\DlineloadInterval,9=\DlineloadInterval]{
+	%
+	\ifthenelse{\equal{#2}{xy}}
+		{\renewcommand{\DhelpVarA}{z}}{}
+	\ifthenelse{\equal{#2}{yx}}
+		{\renewcommand{\DhelpVarA}{z}}{}
+	\ifthenelse{\equal{#2}{xz}}
+		{\renewcommand{\DhelpVarA}{y}}{}
+	\ifthenelse{\equal{#2}{zx}}
+		{\renewcommand{\DhelpVarA}{y}}{}
+	\ifthenelse{\equal{#2}{yz}}
+		{\renewcommand{\DhelpVarA}{x}}{}
+	\ifthenelse{\equal{#2}{zy}}
+		{\renewcommand{\DhelpVarA}{x}}{}
+	%
+	\ifthenelse{\equal{#1}{5}}
+		{\sublineload{#1}{#4}{#5}[#6][#7][#8][#9][#2][#3];}
+		{\ifthenelse{\equal{#1}{6}}
+			{\sublineload{#1}{#4}{#5}[#6][#7][#8][#9][#2][#3];}
+			{
+				\begin{scope}[canvas is #2 plane at \DhelpVarA=#3]
+					\sublineload{#1}{#4}{#5}[#6][#7][#8][#9];
+				\end{scope}
+			}
+		}
+}
+
+\newcommandx{\sublineload}[9][4=1,5=1,6=\DlineloadInterval,7=\DlineloadInterval,8=0,9=0]{
+	\ifthenelse{\equal{#1}{1}}{		%
+		\coordinate (lineloadVarA1) at ($ (#2)!\DlineloadDistanceMM!90:(#3) $);
+		\coordinate (lineloadVarB1) at ($ (#3)!\DlineloadDistanceMM!-90:(#2) $);
+		\coordinate (lineloadVarA2) at ($ (#2)!{\DlineloadDistanceMM +#4cm}!90:(#3) $);
+		\coordinate (lineloadVarB2) at ($ (#3)!{\DlineloadDistanceMM+#5cm}!-90:(#2) $);
+		\ifthenelse{\equal{#4}{0}}{}
+		{
+			\draw [force,->] (lineloadVarA2) -- (lineloadVarA1);
+		}
+		\ifthenelse{\equal{#5}{0}}{}
+		{
+			\draw [force,->] (lineloadVarB2) -- (lineloadVarB1);
+		}
+		\draw [smallLine] (lineloadVarA1) -- (lineloadVarB1) node(xline)[right] {};
+		\draw [normalLine] (lineloadVarA2) -- (lineloadVarB2);
+		\fill (lineloadVarA2) circle (\DnormalLineWidth/2);
+		\fill (lineloadVarB2) circle (\DnormalLineWidth/2);
+			\pgfmathsetmacro{\lineloadIntervalBegin}{#6/\DscalingParameter}
+			\pgfmathsetmacro{\lineloadIntervalStep}{#6/\DscalingParameter*2}
+			\pgfmathsetmacro{\lineloadIntervalEnd}{1-#6/\DscalingParameter}
+		\foreach \i in {\lineloadIntervalBegin,\lineloadIntervalStep,...,\lineloadIntervalEnd}
+		\draw [force,->] ($(lineloadVarA2)!\i!(lineloadVarB2)$)-- ($(lineloadVarA1)!\i!(lineloadVarB1)$);
+	}{}
+	
+	\ifthenelse{\equal{#1}{2}}{		%
+		\coordinate (lineloadVarA1) at ($ (#2)+1*(0,\DlineloadDistanceMM) $);
+		\coordinate (lineloadVarB1) at ($ (#3)+1*(0,\DlineloadDistanceMM) $);
+		\coordinate (lineloadVarA2) at ($ (#2)+1*(0,\DlineloadDistanceMM+#4cm) $);
+		\coordinate (lineloadVarB2) at ($ (#3)+1*(0,\DlineloadDistanceMM+#5cm) $);
+		\ifthenelse{\equal{#4}{0}}{}
+		{
+			\draw [force,->] (lineloadVarA2) -- (lineloadVarA1);
+		}
+		\ifthenelse{\equal{#5}{0}}{}
+		{
+			\draw [force,->] (lineloadVarB2) -- (lineloadVarB1);
+		}
+		\draw [smallLine] (lineloadVarA1) -- (lineloadVarB1) node(xline)[right] {};
+		\draw [normalLine] (lineloadVarA2) -- (lineloadVarB2);
+		\fill (lineloadVarA2) circle (\DnormalLineWidth/2);
+		\fill (lineloadVarB2) circle (\DnormalLineWidth/2);
+			\pgfmathsetmacro{\lineloadIntervalBegin}{#6}
+			\pgfmathsetmacro{\lineloadIntervalStep}{#6*2}
+			\pgfmathsetmacro{\lineloadIntervalEnd}{1-#6}
+		\foreach \i in {\lineloadIntervalBegin,\lineloadIntervalStep,...,\lineloadIntervalEnd}
+		\draw [force,->] ($(lineloadVarA2)!\i!(lineloadVarB2)$)-- ($(lineloadVarA1)!\i!(lineloadVarB1)$);
+	}{}
+
+	\ifthenelse{\equal{#1}{3}}{		%
+		\ifthenelse{\equal{#6}{\DlineloadInterval}}
+			{\renewcommand{\DhelpVarA}{0cm}}
+			{\renewcommand{\DhelpVarA}{#6cm}}
+		\path
+			let
+				\p1 = (#2),
+				\p2 = (#3)
+			in
+				coordinate (lineloadVarA1) at ($(\p1)+1*(0,\DlineloadDistanceMM+\DhelpVarA)$)
+				coordinate (lineloadVarB1) at ($(\x2,\y1)+1*(0,\DlineloadDistanceMM+\DhelpVarA)$)
+				coordinate (lineloadVarA2) at ($ (\p1)+1*(0,\DlineloadDistanceMM+\DhelpVarA+#4cm)$)
+				coordinate (lineloadVarB2) at ($ (\x2,\y1)+1*(0,\DlineloadDistanceMM+\DhelpVarA+#5cm)$);
+		\draw [tinyLine,loosely dotted] (lineloadVarA1)--($(#2)+1*(0,\DhingeBigRadius)$);
+		\draw [tinyLine,loosely dotted] (lineloadVarB1)--($(#3)+1*(0,\DhingeBigRadius)$);
+		\ifthenelse{\equal{#4}{0}}{}
+		{
+			\draw [force,->] (lineloadVarA2) -- (lineloadVarA1);
+		}
+		\ifthenelse{\equal{#5}{0}}{}
+		{
+			\draw [force,->] (lineloadVarB2) -- (lineloadVarB1);
+		}
+		\draw [smallLine] (lineloadVarA1) -- (lineloadVarB1) node(xline)[right] {};
+		\draw [normalLine] (lineloadVarA2) -- (lineloadVarB2);
+		\fill (lineloadVarA2) circle (\DnormalLineWidth/2);
+		\fill (lineloadVarB2) circle (\DnormalLineWidth/2);
+			\pgfmathsetmacro{\lineloadIntervalBegin}{#7}
+			\pgfmathsetmacro{\lineloadIntervalStep}{#7*2}
+			\pgfmathsetmacro{\lineloadIntervalEnd}{1-#7}
+		\foreach \i in {\lineloadIntervalBegin,\lineloadIntervalStep,...,\lineloadIntervalEnd}
+		\draw [force,->] ($(lineloadVarA2)!\i!(lineloadVarB2)$)-- ($(lineloadVarA1)!\i!(lineloadVarB1)$);
+	}{}
+	
+	\ifthenelse{\equal{#1}{4}}{		%
+		\coordinate (lineloadVarA1) at ($ (#2)+1*(0,\DlineloadDistanceMM) $);
+		\coordinate (lineloadVarB1) at ($ (#3)+1*(0,\DlineloadDistanceMM) $);
+		\ifthenelse{\equal{#4}{1}}
+			{\pgfmathsetmacro{\lineloadIntervalStep}{\DlineloadInterval}
+			\pgfmathsetmacro{\lineloadIntervalEnd}{1-\DlineloadInterval/2}}	
+			{\pgfmathsetmacro{\lineloadIntervalStep}{#4}
+			\pgfmathsetmacro{\lineloadIntervalEnd}{1-#4/2}}
+		\ifthenelse{\equal{#5}{1}}
+			{\pgfmathsetmacro{\lineloadForceLength}{\DlineloadForce}}	
+			{\pgfmathsetmacro{\lineloadForceLength}{#5}}
+		\foreach \i in {0,\lineloadIntervalStep,...,\lineloadIntervalEnd}
+		\draw [force,->] ($(lineloadVarA1)!\i!(lineloadVarB1)$) -- ($(lineloadVarA1)!\i+\lineloadForceLength!(lineloadVarB1)$);
+	}{}
+
+\ifthenelse{\equal{#1}{5}}{		%
+		\coordinate (lineloadVarA1) at ($(#2)+1*({\DlineloadDistance*cos(#9)*sin(#8)},{\DlineloadDistance*sin(#9)*sin(#8)},{\DlineloadDistance*cos(#8)})$);
+		\coordinate (lineloadVarB1) at ($(#3)+1*({\DlineloadDistance*cos(#9)*sin(#8)},{\DlineloadDistance*sin(#9)*sin(#8)},{\DlineloadDistance*cos(#8)})$);
+		\coordinate (lineloadVarA2) at ($(#2)+1*({(\DlineloadDistance+#4)*cos(#9)*sin(#8)},{(\DlineloadDistance+#4)*sin(#9)*sin(#8)},{(\DlineloadDistance+#4)*cos(#8)})$);
+		\coordinate (lineloadVarB2) at ($(#3)+1*({(\DlineloadDistance+#5)*cos(#9)*sin(#8)},{(\DlineloadDistance+#5)*sin(#9)*sin(#8)},{(\DlineloadDistance+#5)*cos(#8)})$);
+		\ifthenelse{\equal{#4}{0}}{}
+		{
+			\draw [force,->] (lineloadVarA2) -- (lineloadVarA1);
+		}
+		\ifthenelse{\equal{#5}{0}}{}
+		{
+			\draw [force,->] (lineloadVarB2) -- (lineloadVarB1);
+		}
+		\draw [smallLine] (lineloadVarA1) -- (lineloadVarB1) node(xline)[right] {};
+		\draw [normalLine] (lineloadVarA2) -- (lineloadVarB2);
+		\fill (lineloadVarA2) circle (\DnormalLineWidth/2);
+		\fill (lineloadVarB2) circle (\DnormalLineWidth/2);
+			\pgfmathsetmacro{\lineloadIntervalBegin}{#6/\DscalingParameter}
+			\pgfmathsetmacro{\lineloadIntervalStep}{#6/\DscalingParameter*2}
+			\pgfmathsetmacro{\lineloadIntervalEnd}{1-#6/\DscalingParameter}
+		\foreach \i in {\lineloadIntervalBegin,\lineloadIntervalStep,...,\lineloadIntervalEnd}
+		\draw [force,->] ($(lineloadVarA2)!\i!(lineloadVarB2)$)-- ($(lineloadVarA1)!\i!(lineloadVarB1)$);
+	}{}
+
+
+	\ifthenelse{\equal{#1}{6}}{		%
+		\coordinate (lineloadVarA1) at ($(#2)+1*({\DlineloadDistance*cos(#9)*sin(#8)},{\DlineloadDistance*sin(#9)*sin(#8)},{\DlineloadDistance*cos(#8)})$);
+		\coordinate (lineloadVarB1) at ($(#3)+1*({\DlineloadDistance*cos(#9)*sin(#8)},{\DlineloadDistance*sin(#9)*sin(#8)},{\DlineloadDistance*cos(#8)})$);
+		\ifthenelse{\equal{#4}{1}}
+			{\pgfmathsetmacro{\lineloadIntervalStep}{\DlineloadInterval}
+			\pgfmathsetmacro{\lineloadIntervalEnd}{1-\DlineloadInterval/2}}	
+			{\pgfmathsetmacro{\lineloadIntervalStep}{#4}
+			\pgfmathsetmacro{\lineloadIntervalEnd}{1-#4/2}}
+		\ifthenelse{\equal{#5}{1}}
+			{\pgfmathsetmacro{\lineloadForceLength}{\DlineloadForce}}	
+			{\pgfmathsetmacro{\lineloadForceLength}{#5}}
+		\foreach \i in {0,\lineloadIntervalStep,...,\lineloadIntervalEnd}
+		\draw [force,->] ($(lineloadVarA1)!\i!(lineloadVarB1)$) -- ($(lineloadVarA1)!\i+\lineloadForceLength!(lineloadVarB1)$);
+	}{}
+
+}
+
+%------------------------------------------------
+%		3dinternalforces
+%------------------------------------------------
+%			\dinternalforces{plane}[plane distance]{initial point}{end point}{initial value}{end value}[parabola height][color][bend position];
+%
+
+\newcommandx{\dinternalforces}[9][2=0,7=0,8=red,9=.6667]{
+	%
+	\ifthenelse{\equal{#1}{xy}}
+		{\renewcommand{\DhelpVarA}{z}}{}
+	\ifthenelse{\equal{#1}{yx}}
+		{\renewcommand{\DhelpVarA}{z}}{}
+	\ifthenelse{\equal{#1}{xz}}
+		{\renewcommand{\DhelpVarA}{y}}{}
+	\ifthenelse{\equal{#1}{zx}}
+		{\renewcommand{\DhelpVarA}{y}}{}
+	\ifthenelse{\equal{#1}{yz}}
+		{\renewcommand{\DhelpVarA}{x}}{}
+	\ifthenelse{\equal{#1}{zy}}
+		{\renewcommand{\DhelpVarA}{x}}{}
+
+	\begin{scope}[canvas is #1 plane at \DhelpVarA=#2]
+		\subinternalforces{#3}{#4}{#5}{#6}[#7][#8][#9];
+	\end{scope}
+}
+
+\newcommandx{\subinternalforces}[7][5=0,6=red,7=.6667]{%
+	\coordinate (internalforcesVarA) at ($ (#1)!#3cm!-90:(#2) $);
+	\coordinate (internalforcesVarB) at ($ (#2)!#4cm!90:(#1)$);
+	\coordinate (internalforcesVarAB) at ($ (internalforcesVarA)!.5!(internalforcesVarB)$);
+	\coordinate (internalforcesVarC) at ($ (internalforcesVarAB)+2*(0,#5)$);
+	\coordinate (internalforcesVarAC) at ($ (internalforcesVarA)!#7!(internalforcesVarC)$);
+	\coordinate (internalforcesVarBC) at ($ (internalforcesVarB)!#7!(internalforcesVarC)$);
+	\ifthenelse{\equal{#5}{0}}{
+		\draw [bigLine,color=#6] (#1) -- (internalforcesVarA) (internalforcesVarA) -- (internalforcesVarB) (internalforcesVarB) -- (#2);
+		\fill [color=#6] (internalforcesVarA) circle (\DbigLineWidth/2);
+		\fill [color=#6] (internalforcesVarB) circle (\DbigLineWidth/2);
+		\fill [color=#6] (#1) circle (\DbigLineWidth/2);
+		\fill [color=#6] (#2) circle (\DbigLineWidth/2);
+	}
+	{
+		\draw [bigLine,color=#6] (#1) -- (internalforcesVarA) (internalforcesVarA) .. controls (internalforcesVarAC) and (internalforcesVarBC) .. (internalforcesVarB) (internalforcesVarB) -- (#2);
+		\fill [color=#6] (internalforcesVarA) circle (\DbigLineWidth/2);
+		\fill [color=#6] (internalforcesVarB) circle (\DbigLineWidth/2);
+		\fill [color=#6] (#1) circle (\DbigLineWidth/2);
+		\fill [color=#6] (#2) circle (\DbigLineWidth/2);
+	}
+	
+}
+
+%------------------------------------------------
+%		3ddimensioning
+%------------------------------------------------
+%			\ddimensioning{plane}[plane distance]{initial point}{end point}{distance from point of origin}[measure][help line length];
+%
+
+\newcommandx{\ddimensioning}[7][2=0,6,7=0]{
+	%
+	\ifthenelse{\equal{#1}{xy}}
+		{\renewcommand{\DhelpVarA}{z}}{}
+	\ifthenelse{\equal{#1}{yx}}
+		{\renewcommand{\DhelpVarA}{z}}{}
+	\ifthenelse{\equal{#1}{xz}}
+		{\renewcommand{\DhelpVarA}{y}}{}
+	\ifthenelse{\equal{#1}{zx}}
+		{\renewcommand{\DhelpVarA}{y}}{}
+	\ifthenelse{\equal{#1}{yz}}
+		{\renewcommand{\DhelpVarA}{x}}{}
+	\ifthenelse{\equal{#1}{zy}}
+		{\renewcommand{\DhelpVarA}{x}}{}
+
+	\subdimensioning{#1}{#3}{#4}{#5}[#6][#7][#2][\DhelpVarA];
+}
+
+\newcommandx{\subdimensioning}[8][5,6=0,7=0,8]{
+	\ifthenelse{\equal{#1}{xy}}{
+		\begin{scope}[canvas is yx plane at #8=#7]
+		\path
+			let
+				\p1 = (#2),
+				\p2 = (#3)
+			in
+				coordinate (dimensioningVarA) at (#4,\y1)
+				coordinate (dimensioningVarB) at (#4,\y2);
+		\draw [smallLine] (dimensioningVarA)--++(\DdimensioningBar/2,0)--++(-\DdimensioningBar,0)
+											(dimensioningVarA)--++(\DdimensioningBar/4,\DdimensioningBar/4)--++(-\DdimensioningBar/2,-\DdimensioningBar/2)
+											(dimensioningVarB)--++(\DdimensioningBar/2,0)--++(-\DdimensioningBar,0)
+											(dimensioningVarB)--++(\DdimensioningBar/4,\DdimensioningBar/4)--++(-\DdimensioningBar/2,-\DdimensioningBar/2);
+		\end{scope}
+		\draw [smallLine] (dimensioningVarA)--(dimensioningVarB) node [sloped,midway,above] {#5};
+		\draw [tinyLine,dotted] (dimensioningVarA)--($ (dimensioningVarA)!{#6cm}!(#2) $)
+											(dimensioningVarB)--($ (dimensioningVarB)!{#6cm}!(#3) $);
+	}{
+	\begin{scope}[canvas is #1 plane at #8=#7]
+		\path
+			let
+				\p1 = (#2),
+				\p2 = (#3)
+			in
+				coordinate (dimensioningVarA) at (\x1,#4)
+				coordinate (dimensioningVarB) at (\x2,#4);
+		\draw [smallLine] (dimensioningVarA)--++(0,\DdimensioningBar/2)--++(0,-\DdimensioningBar)
+											(dimensioningVarA)--++(\DdimensioningBar/4,\DdimensioningBar/4)--++(-\DdimensioningBar/2,-\DdimensioningBar/2)
+											(dimensioningVarB)--++(0,\DdimensioningBar/2)--++(0,-\DdimensioningBar)
+											(dimensioningVarB)--++(\DdimensioningBar/4,\DdimensioningBar/4)--++(-\DdimensioningBar/2,-\DdimensioningBar/2);
+	\end{scope}
+		\draw [smallLine] (dimensioningVarA)--(dimensioningVarB) node [sloped,midway,above] {#5};
+		\draw [tinyLine,dotted] (dimensioningVarA)--($ (dimensioningVarA)!{#6cm}!(#2) $)
+											(dimensioningVarB)--($ (dimensioningVarB)!{#6cm}!(#3) $);
+	}
+}
+
+%------------------------------------------------
+%		3dnotation
+%------------------------------------------------
+%			\dnotation{type}{insertion point}{}[][][];
+%		
+%		Type 1
+%			\dnotation{1}{insertion point}{labelling}[orientation];
+%						
+%		Type 2
+%			\dnotation{2}{insertion point}{labelling}[orientation];
+%						
+%		Type 3
+%			\dnotation{3}{initial point}{end point}[labelling][position][orientation];
+%						
+%		Type 4
+%			\dnotation{4}{initial point}{end point}[labelling][position][orientation][text orientation];
+%						with text orientation: 0 or nothing = parallel to beam, 1=parallel to axis
+%		Type 5
+%			\dnotation{5}{initial point}{end point}[labelling][position][orientation][text orientation];
+%						with text orientation: 0 or nothing = parallel to beam, 1=parallel to axis
+%		Type 6
+%			\dnotation{6}{insertion point}{labelling};
+%						
+
+\newcommandx{\dnotation}[7][4=above right,5=.5,6=above,7=sloped]{
+	\ifthenelse{\equal{#1}{1}}{
+		\begin{scope}
+			\draw (#2) node [#4]{#3};
+		\end{scope}
+	}{}
+	
+	\ifthenelse{\equal{#1}{2}}{
+		\begin{scope}
+		\draw (#2) node [#4]{#3};
+		\draw[bigLine] (#2)--++(0,\DdimensioningBar/2)--++(0,-\DdimensioningBar);
+		\end{scope}
+	}{}
+	
+	\ifthenelse{\equal{#1}{3}}{
+		\coordinate (notationVarA1) at ($ (#2)!#5!(#3) $);
+		\coordinate (notationVarB1) at ($ (notationVarA1)!\DdimensioningBar/2!90:(#3) $);
+		\coordinate (notationVarB2) at ($ (notationVarA1)!\DdimensioningBar/2!-90:(#3) $);
+		\draw[bigLine] (notationVarB1)--(notationVarB2);
+		\draw (notationVarA1) node [#6]{#4};
+	}{}
+		
+	\ifthenelse{\equal{#1}{4}}{
+		\ifthenelse{\equal{#7}{1}}
+			{\renewcommand{\DhelpVarB}{}}
+			{\renewcommand{\DhelpVarB}{sloped}}
+		\begin{scope}
+		\path (#2) -- (#3) node[inner sep=0mm,rectangle,smallLine,fill=white,draw,minimum size=2.5*\DnoteRadius,midway,#6,\DhelpVarB,pos=#5] {#4};
+		\end{scope}
+	}{}	
+	
+	\ifthenelse{\equal{#1}{5}}{
+		\ifthenelse{\equal{#7}{1}}
+			{\renewcommand{\DhelpVarB}{}}
+			{\renewcommand{\DhelpVarB}{sloped}}
+		\begin{scope}
+		\path (#2) -- (#3) node[midway,#6,\DhelpVarB,pos=#5] {#4};
+		\end{scope}
+	}{}
+
+	\ifthenelse{\equal{#1}{6}}{
+		\begin{scope}
+		\draw (#2) node [inner sep=0mm,circle,smallLine,fill=white,draw,minimum size=2.5*\DnoteRadius]{#3};
+		\end{scope}
+	}{}
+	
+}
+
+%------------------------------------------------
+%		3daddon
+%------------------------------------------------
+%			\daddon{type}{plane}[plane distance]{}{}{}[];
+%		
+%		Type 1
+%			\daddon{1}{plane}[plane distance]{insertion point}{end point}{position};
+%						
+%		Type 2
+%			\daddon{2}{plane}[plane distance]{insertion point}{initial point}{end point}[orientation];
+%						with orientation: 1=standard, -1 or 0 = other direction
+%		Type 3
+%			\daddon{3}{plane}[plane distance]{insertion point}{initial point}{end point}[orientation];
+%						with orientation: 1=standard, -1 or 0 = other direction
+
+\newcommandx{\daddon}[7][3=0,7=1]{
+
+	\ifthenelse{\equal{#2}{xy}}
+		{\renewcommand{\DhelpVarA}{z}}{}
+	\ifthenelse{\equal{#2}{yx}}
+		{\renewcommand{\DhelpVarA}{z}}{}
+	\ifthenelse{\equal{#2}{xz}}
+		{\renewcommand{\DhelpVarA}{y}}{}
+	\ifthenelse{\equal{#2}{zx}}
+		{\renewcommand{\DhelpVarA}{y}}{}
+	\ifthenelse{\equal{#2}{yz}}
+		{\renewcommand{\DhelpVarA}{x}}{}
+	\ifthenelse{\equal{#2}{zy}}
+		{\renewcommand{\DhelpVarA}{x}}{}
+
+	\begin{scope}[canvas is #2 plane at \DhelpVarA=#3]
+		\subaddon{#1}{#4}{#5}{#6}[#7];
+	\end{scope}
+}
+
+\newcommandx{\subaddon}[5][5=1]{
+	\ifthenelse{\equal{#1}{1}}{
+		\coordinate (addonVarA1) at ($ (#2)!#4!(#3) $);
+		\coordinate (addonVarB1) at ($ (addonVarA1)!\DaddonLength/2!45:(#3) $);
+		\coordinate (addonVarB2) at ($ (addonVarA1)!\DaddonLength/2!225:(#3) $);
+		\draw[smallLine] (addonVarB1)--(addonVarB2)
+		($(addonVarB1)+1*(\DsupportGap,0)$)--($(addonVarB2)+1*(\DsupportGap,0)$);
+	}{}
+	
+	\ifthenelse{\equal{#1}{2}}{
+		\coordinate (addonVarA1) at ($ (#2)!\DaddonLength!(#3) $);
+		\coordinate (addonVarB1) at ($ (#2)!\DaddonLength!(#4) $);
+		\ifthenelse{\equal{#5}{1}}
+		{
+			\coordinate (addonVarC1) at ($ (addonVarA1)!\DaddonLength!90:(#3) $);
+			\coordinate (addonVarD1) at ($ (#2)!1.414*\DaddonLength/2!45:(#3) $);
+		}
+		{
+			\coordinate (addonVarC1) at ($ (addonVarA1)!\DaddonLength!-90:(#3) $);
+			\coordinate (addonVarD1) at ($ (#2)!1.414*\DaddonLength/2!-45:(#3) $);
+		}
+		\draw[smallLine] (addonVarA1)--(addonVarC1)-- (addonVarB1);
+		\filldraw (addonVarD1) circle (\DsmallLineWidth);
+	}{}
+	
+	\ifthenelse{\equal{#1}{3}}{
+		\begin{scope}[even odd rule]
+			\ifthenelse{\equal{#5}{1}}{
+				\clip (#2) circle (\DdimensioningBar+\DnormalLineWidth)
+				(#2)--(#3)--($(#3)!\DaddonLength+\DnormalLineWidth!-90:(#2)$)--($(#4)!\DaddonLength+\DnormalLineWidth!90:(#2)$)--(#4)-- cycle;
+			}{
+				\clip (#2)--(#3)--($(#3)!\DaddonLength+\DnormalLineWidth!-90:(#2)$)--($(#4)!\DaddonLength+\DnormalLineWidth!90:(#2)$)--(#4)-- cycle;
+			}
+			\draw [smallLine] (#2) circle (\DaddonLength)
+												(#2) circle (\DaddonLength-\DnormalLineWidth-\DnormalLineWidth);
+		\end{scope}
+	}{}
+	
+}
+
+
+%================================================
+%		Commands from 3dplot.sty by Jeff Hein 2009
+%================================================
+
+%------------------------------------------------
+%		\tdplotsinandcos{sin}{cos}{theta}
+%------------------------------------------------
+%determines the sin and cos of the specified angle (in degrees).
+%#1: returns sin(#3)
+%#2: returns cos(#3)
+%#3: user-specified angle
+\newcommand{\tdplotsinandcos}[3]{%
+\pgfmathsetmacro{#1}{sin(#3)}%
+\pgfmathsetmacro{#2}{cos(#3)}%
+}
+
+%------------------------------------------------
+%		\tdplotmult{result}{multiplicand}{multiplicator}
+%------------------------------------------------
+%determines the multiplication of specified values.
+%#1: returns #2*#3
+%#2: user-specified multiplicand
+%#3: user-specified multiplicator
+\newcommand{\tdplotmult}[3]{%
+\pgfmathsetmacro{#1}{#2*#3}%
+}
+
+%------------------------------------------------
+%		\tdplotsetrotatedcoords{\alpha}{\beta}{\gamma}
+%------------------------------------------------
+%generates the coordinate transformation for the rotated coordinate system within the display coordinate system.  This should be called only after the display coordinate system has been defined.  If the display coordinate system changes, this will have to be updated.
+%#1: user-specified euler angle \alpha.
+%#2: user-specified euler angle \beta.
+%#3: user-specified euler angle \gamma.
+\newcommand{\tdplotsetrotatedcoords}[3]{%
+%
+\pgfmathsetmacro{\alphaeul}{#1}
+\pgfmathsetmacro{\betaeul}{#2}
+\pgfmathsetmacro{\gammaeul}{#3}
+%
+%perform some trig for the Euler transformation
+\tdplotsinandcos{\sinalpha}{\cosalpha}{\alphaeul} 
+\tdplotsinandcos{\sinbeta}{\cosbeta}{\betaeul}
+\tdplotsinandcos{\singamma}{\cosgamma}{\gammaeul}
+%
+\tdplotmult{\sasb}{\sinalpha}{\sinbeta}
+\tdplotmult{\sbsg}{\sinbeta}{\singamma}
+\tdplotmult{\sasg}{\sinalpha}{\singamma}
+\tdplotmult{\sasbsg}{\sasb}{\singamma}
+%
+\tdplotmult{\sacb}{\sinalpha}{\cosbeta}
+\tdplotmult{\sacg}{\sinalpha}{\cosgamma}
+\tdplotmult{\sbcg}{\sinbeta}{\cosgamma}
+\tdplotmult{\sacbsg}{\sacb}{\singamma}
+\tdplotmult{\sacbcg}{\sacb}{\cosgamma}
+%
+\tdplotmult{\casb}{\cosalpha}{\sinbeta}
+\tdplotmult{\cacb}{\cosalpha}{\cosbeta}
+\tdplotmult{\cacg}{\cosalpha}{\cosgamma}
+\tdplotmult{\casg}{\cosalpha}{\singamma}
+%
+\tdplotmult{\cacbsg}{\cacb}{\singamma}
+\tdplotmult{\cacbcg}{\cacb}{\cosgamma}
+%
+%determine rotation matrix elements for Euler transformation
+\pgfmathsetmacro{\raaeul}{\cacbcg - \sasg}
+\pgfmathsetmacro{\rabeul}{-\cacbsg - \sacg}
+\pgfmathsetmacro{\raceul}{\casb}
+\pgfmathsetmacro{\rbaeul}{\sacbcg + \casg}
+\pgfmathsetmacro{\rbbeul}{-\sacbsg + \cacg}
+\pgfmathsetmacro{\rbceul}{\sasb}
+\pgfmathsetmacro{\rcaeul}{-\sbcg}
+\pgfmathsetmacro{\rcbeul}{\sbsg}
+\pgfmathsetmacro{\rcceul}{\cosbeta}
+%
+% transformation from polar coordinates to Cartesian coordinates 
+\pgfmathsetmacro{\xxcart}{\DxLength*cos(\DxAngle)}
+\pgfmathsetmacro{\xycart}{\DxLength*sin(\DxAngle)}
+\pgfmathsetmacro{\yxcart}{\DyLength*cos(\DyAngle)}
+\pgfmathsetmacro{\yycart}{\DyLength*sin(\DyAngle)}
+\pgfmathsetmacro{\zxcart}{\DzLength*cos(\DzAngle)}
+\pgfmathsetmacro{\zycart}{\DzLength*sin(\DzAngle)}
+%
+\pgfmathsetmacro{\raarot}{\xxcart}
+\pgfmathsetmacro{\rbarot}{\xycart}
+\pgfmathsetmacro{\rabrot}{\yxcart}
+\pgfmathsetmacro{\rbbrot}{\yycart}
+\pgfmathsetmacro{\racrot}{\zxcart}
+\pgfmathsetmacro{\rbcrot}{\zycart}
+%
+%now, determine master rotation matrix to define euler-rotated coordinates within the display coordinate frame
+\tdplotmult{\raaeaa}{\raarot}{\raaeul}
+\tdplotmult{\rabeba}{\rabrot}{\rbaeul}
+\tdplotmult{\raceca}{\racrot}{\rcaeul}
+%
+\tdplotmult{\raaeab}{\raarot}{\rabeul}
+\tdplotmult{\rabebb}{\rabrot}{\rbbeul}
+\tdplotmult{\racecb}{\racrot}{\rcbeul}
+%
+\tdplotmult{\raaeac}{\raarot}{\raceul}
+\tdplotmult{\rabebc}{\rabrot}{\rbceul}
+\tdplotmult{\racecc}{\racrot}{\rcceul}
+%
+\tdplotmult{\rbaeaa}{\rbarot}{\raaeul}
+\tdplotmult{\rbbeba}{\rbbrot}{\rbaeul}
+\tdplotmult{\rbceca}{\rbcrot}{\rcaeul}
+%
+\tdplotmult{\rbaeab}{\rbarot}{\rabeul}
+\tdplotmult{\rbbebb}{\rbbrot}{\rbbeul}
+\tdplotmult{\rbcecb}{\rbcrot}{\rcbeul}
+%
+\tdplotmult{\rbaeac}{\rbarot}{\raceul}
+\tdplotmult{\rbbebc}{\rbbrot}{\rbceul}
+\tdplotmult{\rbcecc}{\rbcrot}{\rcceul}
+%
+%set up the master rotation matrix elements
+\pgfmathsetmacro{\raarc}{\raaeaa + \rabeba + \raceca}
+\pgfmathsetmacro{\rabrc}{\raaeab + \rabebb + \racecb}
+\pgfmathsetmacro{\racrc}{\raaeac + \rabebc + \racecc}
+\pgfmathsetmacro{\rbarc}{\rbaeaa + \rbbeba + \rbceca}
+\pgfmathsetmacro{\rbbrc}{\rbaeab + \rbbebb + \rbcecb}
+\pgfmathsetmacro{\rbcrc}{\rbaeac + \rbbebc + \rbcecc}
+%
+\tikzset{tdplot_rotated_coords/.append style={x={(\raarc cm,\rbarc cm)},y={(\rabrc cm, \rbbrc cm)},z={(\racrc cm, \rbcrc cm)}}}%
+}
+
+%------------------------------------------------
+%		\tdplotsetrotatedcoordsorigin{point}
+%------------------------------------------------
+%this translates the rotated coordinate system to the specified point.
+%#1: user-specified coordinate
+\newcommand{\tdplotsetrotatedcoordsorigin}[1]{%
+%\pgfmathsetmacro{\tdplotrotatedcoordsorigin}{#1}%
+\tikzset{tdplot_rotated_coords/.append style={shift=#1}}%
+}
+
+%------------------------------------------------
+%		\tdplotresetrotatedcoordsorigin
+%------------------------------------------------
+%this resets the rotated coordinate system translation back to the origin of the main coordinate system
+\newcommand{\tdplotresetrotatedcoordsorigin}{%
+%\pgfmathsetmacro{\tdplotrotatedcoordsorigin}{#1}%
+\tikzset{tdplot_rotated_coords/.append style={shift={(0,0,0)}}}%
+}

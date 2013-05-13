@@ -1,0 +1,137 @@
+\documentclass[a4paper,10pt]{scrartcl}
+
+\usepackage[utf8]{inputenc}
+\usepackage{structuralanalysis}
+\usepackage{3dstructuralanalysis}
+
+\setlength{\paperheight}{30cm}
+\setlength{\textheight}{24.5cm}
+\setlength{\paperwidth}{21cm}
+\setlength{\textwidth}{16.8cm}
+\setlength{\oddsidemargin}{-0.3cm}
+\setlength{\evensidemargin}{-0.3cm}
+\setlength{\parindent}{0cm}
+\setlength{\topmargin}{-1.9cm}
+\setlength{\headsep}{1.3cm}
+\setlength{\footskip}{1.5cm}
+
+\begin{document}
+
+\vspace*{2cm}
+
+\begin{tikzpicture}
+	\scaling{.65};
+	
+	\point{a}{0}{1};
+	\point{b}{3}{1};
+	\point{c}{11}{3};
+	\point{d}{19}{1};
+	\point{e}{22}{1};
+	\point{f}{3}{0};
+	\point{g}{11}{-2};
+	\point{h}{19}{0};
+		
+	\beam{1}{a}{b}[0][1];
+	\beam{1}{b}{c}[1][1];
+	\beam{1}{c}{d}[1][1];
+	\beam{1}{d}{e}[1][0];
+	\beam{1}{f}{b};
+	\beam{1}{d}{h};
+	\beam{2}{f}{g};
+	\beam{2}{g}{h};
+	\beam{2}{g}{c};
+	
+	\support{1}{f};
+	\support{2}{h};
+	
+	\hinge{1}{f};
+	\hinge{1}{h};
+	\hinge{1}{g};
+	\hinge{2}{c}[b][d];
+	
+	\lineload{2}{a}{b}[1][1][.5];
+	\lineload{2}{b}{c};
+	
+	\dimensioning{1}{a}{b}{-2.5}[$3,0$];
+	\dimensioning{1}{b}{c}{-2.5}[$8,0$];
+	\dimensioning{1}{c}{d}{-2.5}[$8,0$];
+	\dimensioning{1}{d}{e}{-2.5}[$3,0$];
+	\dimensioning{2}{f}{a}{-1}[$1,0$];
+	\dimensioning{2}{g}{f}{-1}[$2,0$];
+	\dimensioning{2}{a}{c}{-1}[$2,0$];
+	
+	\influenceline{a}{e}{3}[.3];
+	
+	\notation{1}{a}{$1$}[left];
+	\notation{1}{b}{$2$}[below right=2mm];
+	\notation{1}{c}{$3$};
+	\notation{1}{d}{$4$}[above];
+	\notation{1}{e}{$5$}[above];
+	\notation{1}{f}{$6$}[left=2mm];
+	\notation{1}{g}{$7$}[below=2mm];
+	\notation{1}{h}{$8$}[right=2mm];
+		
+	\notation{4}{f}{g}[$S$];
+	
+\end{tikzpicture}
+
+\vspace{5cm}
+
+\setcoords{-25}{10}[1][1.2] 
+\setaxis{2} 
+%\showpoint 
+\begin{tikzpicture}[coords] 
+
+\dpoint{a}{0}{0}{0}; 
+\dpoint{b}{3}{0}{0}; 
+\dpoint{c}{6}{0}{0}; 
+\dpoint{d}{9}{0}{0}; 
+\dpoint{e}{12}{0}{0}; 
+\dpoint{f}{0}{3}{0}; 
+\dpoint{g}{3}{3}{0}; 
+\dpoint{h}{6}{3}{0}; 
+\dpoint{i}{9}{3}{0}; 
+\dpoint{j}{12}{3}{0}; 
+
+\daxis{1}{a}; 
+
+\dbeam{1}{f}{b};
+\dbeam{1}{b}{h};
+\dbeam{1}{h}{d};
+\dbeam{1}{d}{j};
+\dbeam{3}{a}{e};
+\dbeam{3}{f}{j};
+\dbeam{3}{a}{f};
+\dbeam{3}{b}{g};
+\dbeam{3}{c}{h};
+\dbeam{3}{d}{i};
+\dbeam{3}{e}{j};
+
+\dsupport{1}{b};
+\dsupport{1}{h}[0][0];
+\dsupport{1}{d}[0];
+
+\dhinge{2}{b}[f][h][1];
+\dhinge{2}{h}[b][d][1];
+\dhinge{2}{d}[h][j][1];
+
+\dlineload{5}{0}{f}{b}[.5][.5][.11];
+\dlineload{5}{0}{b}{h}[.5][.5][.11];
+\dlineload{5}{0}{h}{d}[.5][.5][.11];
+\dlineload{5}{0}{d}{j}[.5][.5][.11];
+
+\ddimensioning{xy}{f}{g}{4.5}[$3~m$];
+\ddimensioning{xy}{g}{h}{4.5}[$3~m$];
+\ddimensioning{xy}{h}{i}{4.5}[$3~m$];
+\ddimensioning{xy}{i}{j}{4.5}[$3~m$];
+\ddimensioning{yx}{e}{j}{13}[$3~m$];
+
+\dnotation{1}{f}{$q=10~kN/m$}[above left=3
+mm];
+\dnotation{1}{b}{$A$}[below left];
+\dnotation{1}{h}{$C$}[right=2mm];
+\dnotation{1}{d}{$B$}[below left];
+
+\end{tikzpicture}
+
+\end{document}
