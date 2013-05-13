@@ -52,7 +52,7 @@ Installation
 Clone this (or a forked version of this) repository. ::
 
     $ cd ~
-    $ git clone Clone https://github.com/hackl/TikZ-StructuralAnalysis.git
+    $ git clone https://github.com/hackl/TikZ-StructuralAnalysis.git
 
 Put the .sty file in the right directory and add it to the LaTeX file like: ::
 
