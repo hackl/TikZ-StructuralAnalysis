@@ -121,7 +121,9 @@ generated. In the manual both examples are explained in detail.
 2D Simplified Roof
 ------------------
 
-::
+By using the library ``structuralanalysis``, the following graph can be created
+in a very short time: ::
+
    \begin{tikzpicture}
      \scaling{.65};
 
