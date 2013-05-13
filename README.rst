@@ -256,6 +256,6 @@ List of References
 
 
 
-.. _`Institute for Structural Analysis`: http://www.ifb.tugraz.at/‎
+.. _`Institute for Structural Analysis`: http://portal.tugraz.at/portal/page/portal/TU_Graz/Einrichtungen/Institute/i2020
 
 .. _`Graz University of Technology`: http://tugraz.at/
