@@ -8,7 +8,7 @@ TikZ Library for Structural Analysis
 :Web site: https://github.com/hackl/TikZ-StructuralAnalysis/
 :Documentation: http://www.latex-community.org/know-how/472-tikz-structural-analysis
 :Copyright: This document has been placed in the public domain.
-:License: PyRe is released under the GNU General Public Licence.
+:License: GNU General Public Licence.
 :Version: 2.0
 
 
