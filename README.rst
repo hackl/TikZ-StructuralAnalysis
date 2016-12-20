@@ -2,7 +2,7 @@
 TikZ Library for Structural Analysis
 ************************************
 
-:Date: 12 May 2013
+:Date: 20 Dec 2016
 :Authors: Jürgen Hackl
 :Contact: hackl.j@gmx.at
 :Web site: https://github.com/hackl/TikZ-StructuralAnalysis/
@@ -26,8 +26,8 @@ for teaching. For this reason I developed, in cooperation with the
 
 
 There are two different types of libraries available: one for 2D structures
-(``structuralanalysis.sty``) and one for 3D structures
-(``3dstructuralanalysis.sty``). In the following article only the 2D library
+(``stanli.sty``) and one for 3D structures
+(``stanli3d.sty``). In the following article only the 2D library
 will be discussed, but the principles and methods are the same for 3D
 structures.
 
@@ -56,7 +56,12 @@ Clone this (or a forked version of this) repository. ::
 
 Put the .sty file in the right directory and add it to the LaTeX file like: ::
 
-    \usepackage{structuralanalysis}
+    \usepackage{stanli}
+
+Note
+----
+
+   The liberaries were submitted to `CTAN`_ and should be public available soon.
 
 LaTeX Environment
 -----------------
@@ -121,7 +126,7 @@ generated. In the manual both examples are explained in detail.
 2D Simplified Roof
 ------------------
 
-By using the library ``structuralanalysis``, the following graph can be created
+By using the library ``stanli``, the following graph can be created
 in a very short time: ::
 
    \begin{tikzpicture}
@@ -186,7 +191,7 @@ in a very short time: ::
 3D Support Construction
 -----------------------
 
-By using the library ``3dstructuralanalysis``, the following graph can be created
+By using the library ``stanli3d``, the following graph can be created
 in a very short time: ::
 
   \setcoords{-25}{10}[1][1.2]
@@ -259,3 +264,5 @@ List of References
 .. _`Institute for Structural Analysis`: http://portal.tugraz.at/portal/page/portal/TU_Graz/Einrichtungen/Institute/i2020
 
 .. _`Graz University of Technology`: http://tugraz.at/
+
+.. _`CTAN`: https://www.ctan.org/
