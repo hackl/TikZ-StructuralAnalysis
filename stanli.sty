@@ -420,6 +420,18 @@
 		\fill[black] (#2)circle (\hugeLineWidth/2);
 	}{}
 
+	\ifthenelse{\equal{#1}{6}}{		%
+		\begin{scope}[rotate around={#3:(#2)}]
+			\draw [normalLine] ($(#2)+1*(\hingeRadius*0.5,\supportBasicLength/2)$) -- ++(0,-\supportBasicLength);
+			\draw [normalLine] ($(#2)+1*(-\hingeRadius*0.5,\supportBasicLength/2)$) -- ++(0,-\supportBasicLength);
+			\fill [white] ($(#2)+1*(0,\supportBasicLength*0.35)$)  circle (\hingeRadius*0.5);
+			\draw [normalLine] ($(#2)+1*(0,\supportBasicLength*0.35)$)  circle (\hingeRadius*0.5);
+			\fill [white] ($(#2)+1*(0,0)$)  circle (\hingeRadius*0.5);
+			\draw [normalLine] ($(#2)+1*(0,0)$)  circle (\hingeRadius*0.5);
+			\fill [white] ($(#2)+1*(0,-\supportBasicLength*0.35)$)  circle (\hingeRadius*0.5);
+			\draw [normalLine] ($(#2)+1*(0,-\supportBasicLength*0.35)$)  circle (\hingeRadius*0.5);
+		\end{scope}	 
+	}{}	
 }
 
 %------------------------------------------------

@@ -1349,6 +1349,32 @@ Another important note is, that every \tikzsym command has to be completed with 
 
 \endgroup
 
+\begingroup
+\hspace{7mm}\lstinline[emph={hinge}]|\hinge{6}{insertion point}[rotation];|
+
+\leftskip=14mm Type $6$ is an alternative representation of type $3$.
+
+\leftskip=14mm\begin{minipage}[c]{0.3\linewidth}
+	\begin{tikzpicture}[framed]
+	\point{a}{0}{0};
+	\point{b}{2}{0};
+	\point{c}{4}{0};
+	\beam{1}{a}{b};
+	\beam{1}{b}{c};
+	\hinge{6}{b};
+	\end{tikzpicture}
+\end{minipage}
+\begin{minipage}{0.61\linewidth}\begin{lstlisting}
+	\begin{tikzpicture}
+	\point{a}{0}{0};	\point{b}{2}{0};	\point{c}{4}{0};
+	\beam{1}{a}{b};	\beam{1}{b}{c};
+	\hinge{6}{b};
+	\end{tikzpicture}\end{lstlisting}\vspace{-7mm}
+\end{minipage}
+
+\endgroup
+
+
 %------------------------------------------------
 %		load
 %------------------------------------------------
