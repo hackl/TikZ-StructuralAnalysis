@@ -364,6 +364,25 @@
 			-- ++(-\supportHatchingLength,0);
 		\end{scope}
 	}{}
+	
+	\ifthenelse{\equal{#1}{8}}{		%
+		\begin{scope}[rotate around={#3:(#2)}]
+			\fill [white] ($(#2)+1*(0,-\supportGap)$)  circle (-\supportGap);
+			\draw [normalLine] ($(#2)+1*(0,-\supportGap)$)  circle (-\supportGap)
+			;
+			\fill [white] ($(#2)+1*(\supportBasicLength*0.35,-\supportGap)$)  circle (-\supportGap);
+			\draw [normalLine] ($(#2)+1*(\supportBasicLength*0.35,-\supportGap)$)  circle (-\supportGap)
+			;
+			\fill [white] ($(#2)+1*(-\supportBasicLength*0.35,-\supportGap)$)  circle (-\supportGap);
+			\draw [normalLine] ($(#2)+1*(-\supportBasicLength*0.35,-\supportGap)$)  circle (-\supportGap)
+			;
+			\draw [normalLine] ($(#2)+1*(\supportBasicLength/2,0)$) -- ++(-\supportBasicLength,0);
+			\draw [normalLine] ($(#2)+1*(\supportBasicLength/2,-\supportGap*2)$) -- ++(-\supportBasicLength,0);
+			\clip ($(#2)+1*(-\supportBasicLength/2,-\supportBasicHeight-\supportGap*2)$) rectangle ($(#2)+1*(\supportBasicLength/2,-\supportGap*2)$);
+			\draw[hatching]($(#2)+1*(\supportHatchingLength/2,-\supportGap*2)$) -- ++(-\supportHatchingLength,0)
+			;
+		\end{scope}
+	}{}
 
 }
 

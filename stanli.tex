@@ -1207,6 +1207,26 @@ Another important note is, that every \tikzsym command has to be completed with 
 
 \endgroup
 
+\begingroup
+\hspace{7mm}\lstinline[emph={support}]|\support{8}{insertion point}[rotation];|
+
+\leftskip=14mm Type $8$ is identical to type $4$ but drawn with "rollers".
+
+\leftskip=14mm\begin{minipage}[c]{0.3\linewidth}
+	\begin{tikzpicture}[framed]
+	\point{a}{0}{0};
+	\support{8}{a}[90];
+	\end{tikzpicture}
+\end{minipage}
+\begin{minipage}{0.61\linewidth}\begin{lstlisting}
+	\begin{tikzpicture}
+	\point{a}{0}{0};
+	\support{8}{a}[90];
+	\end{tikzpicture}\end{lstlisting}\vspace{-7mm}
+\end{minipage}
+
+\endgroup
+
 %------------------------------------------------
 %		hinge
 %------------------------------------------------
