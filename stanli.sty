@@ -221,7 +221,7 @@
 %------------------------------------------------
 %		point
 %------------------------------------------------
-%			\point{name}{x-coordiante}{y-coordiante}
+%			\point{name}{x-coordinate}{y-coordinate}
 %			
 
 \newcommandx{\point}[3]{
@@ -330,6 +330,60 @@
 			\draw[hatchingspring]($(#2)+1*(0,0)$) -- ++(-\supportHatchingLength/2,0);
 		\end{scope}
 	}{}
+	\ifthenelse{\equal{#1}{7}}{   %
+		\begin{scope}[rotate around={#3:(#2)}]
+			\draw [normalLine]
+			(#2)
+			-- ++(\supportLength/2,-\supportHeight)
+			-- ++(-\supportLength,0)
+			-- cycle;
+			\draw [normalLine]
+			($(#2)+(\supportBasicLength/2,-\supportHeight-2*\supportGap)$)
+			-- ++(-\supportBasicLength,0)
+			;
+			% rollers
+			\draw [normalLine, fill=white]
+			($(#2)+(\supportLength/2-\supportGap,-\supportHeight-\supportGap)$)
+			circle (\supportGap)
+			;
+			\draw [normalLine, fill=white]
+			($(#2)+(0,-\supportHeight-\supportGap)$)
+			circle (\supportGap)
+			;
+			\draw [normalLine, fill=white]
+			($(#2)+(-\supportLength/2+\supportGap,-\supportHeight-\supportGap)$)
+			circle (\supportGap)
+			;
+			\clip
+			($(#2)+(-\supportBasicLength/2,-\supportBasicHeight-\supportHeight-2*\supportGap)$)
+			rectangle
+			($(#2)+(\supportBasicLength/2,-\supportHeight-2*\supportGap)$)
+			;
+			\draw[hatching]
+			($(#2)+(\supportHatchingLength/2,-\supportHatchingHeight-2*\supportGap)$)
+			-- ++(-\supportHatchingLength,0);
+		\end{scope}
+	}{}
+	
+	\ifthenelse{\equal{#1}{8}}{		%
+		\begin{scope}[rotate around={#3:(#2)}]
+			\fill [white] ($(#2)+1*(0,-\supportGap)$)  circle (-\supportGap);
+			\draw [normalLine] ($(#2)+1*(0,-\supportGap)$)  circle (-\supportGap)
+			;
+			\fill [white] ($(#2)+1*(\supportBasicLength*0.35,-\supportGap)$)  circle (-\supportGap);
+			\draw [normalLine] ($(#2)+1*(\supportBasicLength*0.35,-\supportGap)$)  circle (-\supportGap)
+			;
+			\fill [white] ($(#2)+1*(-\supportBasicLength*0.35,-\supportGap)$)  circle (-\supportGap);
+			\draw [normalLine] ($(#2)+1*(-\supportBasicLength*0.35,-\supportGap)$)  circle (-\supportGap)
+			;
+			\draw [normalLine] ($(#2)+1*(\supportBasicLength/2,0)$) -- ++(-\supportBasicLength,0);
+			\draw [normalLine] ($(#2)+1*(\supportBasicLength/2,-\supportGap*2)$) -- ++(-\supportBasicLength,0);
+			\clip ($(#2)+1*(-\supportBasicLength/2,-\supportBasicHeight-\supportGap*2)$) rectangle ($(#2)+1*(\supportBasicLength/2,-\supportGap*2)$);
+			\draw[hatching]($(#2)+1*(\supportHatchingLength/2,-\supportGap*2)$) -- ++(-\supportHatchingLength,0)
+			;
+		\end{scope}
+	}{}
+
 }
 
 %------------------------------------------------
@@ -385,6 +439,18 @@
 		\fill[black] (#2)circle (\hugeLineWidth/2);
 	}{}
 
+	\ifthenelse{\equal{#1}{6}}{		%
+		\begin{scope}[rotate around={#3:(#2)}]
+			\draw [normalLine] ($(#2)+1*(\hingeRadius*0.5,\supportBasicLength/2)$) -- ++(0,-\supportBasicLength);
+			\draw [normalLine] ($(#2)+1*(-\hingeRadius*0.5,\supportBasicLength/2)$) -- ++(0,-\supportBasicLength);
+			\fill [white] ($(#2)+1*(0,\supportBasicLength*0.35)$)  circle (\hingeRadius*0.5);
+			\draw [normalLine] ($(#2)+1*(0,\supportBasicLength*0.35)$)  circle (\hingeRadius*0.5);
+			\fill [white] ($(#2)+1*(0,0)$)  circle (\hingeRadius*0.5);
+			\draw [normalLine] ($(#2)+1*(0,0)$)  circle (\hingeRadius*0.5);
+			\fill [white] ($(#2)+1*(0,-\supportBasicLength*0.35)$)  circle (\hingeRadius*0.5);
+			\draw [normalLine] ($(#2)+1*(0,-\supportBasicLength*0.35)$)  circle (\hingeRadius*0.5);
+		\end{scope}	 
+	}{}	
 }
 
 %------------------------------------------------
@@ -1125,7 +1191,7 @@
 %------------------------------------------------
 %		3dpoint
 %------------------------------------------------
-%			\point{name}{x-coordiante}{y-coordiante}{z-coordiante};
+%			\point{name}{x-coordinate}{y-coordinate}{z-coordinate};
 %
 
 \newcommandx{\dpoint}[4]{
