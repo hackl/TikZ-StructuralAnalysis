@@ -2014,6 +2014,26 @@
 	
 }
 
+% ================================================
+% Some definitions below are borrowed from tikz-3dplot/3dplot packages.
+% Use stanli's own copy only if they are not available.
+% ================================================
+
+\IfFileExists{tikz-3dplot.sty}{% Current package name at CTAN
+  \RequirePackage{tikz-3dplot}%
+  \expandafter\endinput%
+}{
+  \message{stanli: tikz-3dplot package not found. Trying 3dplot.}
+}
+
+\IfFileExists{3dplot.sty}{% Old package name
+  \RequirePackage{3dplot}%
+  \expandafter\endinput%
+}{
+  \message{stanli: 3dplot package not found.}
+}
+
+\message{stanli: None of tikz-3dplot or 3dplot packages found. Using stanli's own definitions.}
 
 %================================================
 %		Commands from 3dplot.sty by Jeff Hein 2009
