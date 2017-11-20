@@ -1083,24 +1083,39 @@ Another important note is, that every \tikzsym command has to be completed with 
 \endgroup
 
 \begingroup
-\hspace{7mm}\lstinline[emph={support}]|\support{2}{insertion point}[rotation];|
-
-\leftskip=14mm Type $2$ is a floating bearing, which can absorb forces only in one direction and no moments.
+\hspace{7mm}\begin{lstlisting}[emph={support},backgroundcolor=\color{white},xleftmargin=7mm,belowskip=-0.5cm]
+\support{2}{insertion point}[rotation];
+\support{2oo}{insertion point}[rotation];
+\support{2ooo}{insertion point}[rotation];
+\end{lstlisting}
+\leftskip=14mm Type $2$ is a floating bearing, which can absorb forces
+only in one direction and no moments.
+It has three alternative representations, (\texttt{2}) will use a
+slider, (\texttt{2oo}) two rollers and (\texttt{2ooo}) three rollers. 
 
 \leftskip=14mm\begin{minipage}[c]{0.3\linewidth}
-	\begin{tikzpicture}[framed]
-			\point{a}{0}{0};
-			\support{2}{a};
-	\end{tikzpicture}
+  \begin{tikzpicture}[framed]
+    \point{a}{0}{0};
+    \point{b}{1.5}{0};
+    \point{c}{3.0}{0};
+    \support{2}{a};
+    \support{2oo}{b};
+    \support{2ooo}{c};
+  \end{tikzpicture}
 \end{minipage}
 \begin{minipage}{0.61\linewidth}\begin{lstlisting}
 	\begin{tikzpicture}
-		\point{a}{0}{0};
-		\support{2}{a};
+    \point{a}{0}{0};
+    \point{b}{1.5}{0};
+    \point{c}{3.0}{0};
+    \support{2}{a};
+    \support{2oo}{b};
+    \support{2ooo}{c};
 	\end{tikzpicture}\end{lstlisting}\vspace{-7mm}
-\end{minipage}
-
+    \end{minipage}
+    
 \endgroup
+\newpage % May minipages for each block be better?
 
 \begingroup
 \hspace{7mm}\lstinline[emph={support}]|\support{3}{insertion point}[rotation];|
