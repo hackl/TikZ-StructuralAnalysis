@@ -2,7 +2,7 @@
 % File:  stanli.tex -- Structural Analysis Library based on PGF/TikZ 
 % Author(s): Juergen Hackl <hackl.j@gmx.at>
 % Creation:  21 Dec 2016
-% Time-stamp: <Mit 2016-12-21 09:42 juergen>
+% Time-stamp: <Die 2017-11-21 15:48 juergen>
 % Version: 3.0 (2016-12-21)
 %
 % Copyright (c) 2016 Juergen Hackl <hackl.j@gmx.at>
@@ -1312,12 +1312,12 @@
 		\coordinate (axisVarA1) at ($ (#3)!#5!(#4) $);
 		\coordinate (axisVarA2) at ($(axisVarA1)+1*({\DaxisDistance*cos(#9)*sin(#2)},{\DaxisDistance*sin(#9)*sin(#2)},{\DaxisDistance*cos(#2)})$);
 
-		\tdplotsetrotatedcoords{\DhelpVarA}{\DhelpVarB}{\DhelpVarC};
+		\xtdplotsetrotatedcoords{\DhelpVarA}{\DhelpVarB}{\DhelpVarC};
 
-		\tdplotsetrotatedcoordsorigin{(axisVarA2)}
-		\draw[thin,tdplot_rotated_coords,->] (0,0,0) -- (.5,0,0) node[\DxNodePos]{\DxVarB};
-		\draw[thin,tdplot_rotated_coords,->] (0,0,0) -- (0,.5,0) node[\DyNodePos]{\DyVarB};
-		\draw[thin,tdplot_rotated_coords,->] (0,0,0) -- (0,0,.5) node[\DzNodePos]{\DzVarB};
+		\xtdplotsetrotatedcoordsorigin{(axisVarA2)}
+		\draw[thin,xtdplot_rotated_coords,->] (0,0,0) -- (.5,0,0) node[\DxNodePos]{\DxVarB};
+		\draw[thin,xtdplot_rotated_coords,->] (0,0,0) -- (0,.5,0) node[\DyNodePos]{\DyVarB};
+		\draw[thin,xtdplot_rotated_coords,->] (0,0,0) -- (0,0,.5) node[\DzNodePos]{\DzVarB};
 	}{}
 }
 
@@ -2014,90 +2014,69 @@
 	
 }
 
-% ================================================
-% Some definitions below are borrowed from tikz-3dplot/3dplot packages.
-% Use stanli's own copy only if they are not available.
-% ================================================
-
-\IfFileExists{tikz-3dplot.sty}{% Current package name at CTAN
-  \RequirePackage{tikz-3dplot}%
-  \expandafter\endinput%
-}{
-  \message{stanli: tikz-3dplot package not found. Trying 3dplot.}
-}
-
-\IfFileExists{3dplot.sty}{% Old package name
-  \RequirePackage{3dplot}%
-  \expandafter\endinput%
-}{
-  \message{stanli: 3dplot package not found.}
-}
-
-\message{stanli: None of tikz-3dplot or 3dplot packages found. Using stanli's own definitions.}
-
 %================================================
-%		Commands from 3dplot.sty by Jeff Hein 2009
+%		Modified commands of the 3dplot.sty by Jeff Hein 2009
 %================================================
 
 %------------------------------------------------
-%		\tdplotsinandcos{sin}{cos}{theta}
+%		\xtdplotsinandcos{sin}{cos}{theta}
 %------------------------------------------------
 %determines the sin and cos of the specified angle (in degrees).
 %#1: returns sin(#3)
 %#2: returns cos(#3)
 %#3: user-specified angle
-\newcommand{\tdplotsinandcos}[3]{%
+\newcommand{\xtdplotsinandcos}[3]{%
 \pgfmathsetmacro{#1}{sin(#3)}%
 \pgfmathsetmacro{#2}{cos(#3)}%
 }
 
 %------------------------------------------------
-%		\tdplotmult{result}{multiplicand}{multiplicator}
+%		\xtdplotmult{result}{multiplicand}{multiplicator}
 %------------------------------------------------
 %determines the multiplication of specified values.
 %#1: returns #2*#3
 %#2: user-specified multiplicand
 %#3: user-specified multiplicator
-\newcommand{\tdplotmult}[3]{%
+\newcommand{\xtdplotmult}[3]{%
 \pgfmathsetmacro{#1}{#2*#3}%
 }
 
 %------------------------------------------------
-%		\tdplotsetrotatedcoords{\alpha}{\beta}{\gamma}
+%		\xtdplotsetrotatedcoords{\alpha}{\beta}{\gamma}
 %------------------------------------------------
 %generates the coordinate transformation for the rotated coordinate system within the display coordinate system.  This should be called only after the display coordinate system has been defined.  If the display coordinate system changes, this will have to be updated.
 %#1: user-specified euler angle \alpha.
 %#2: user-specified euler angle \beta.
 %#3: user-specified euler angle \gamma.
-\newcommand{\tdplotsetrotatedcoords}[3]{%
+\newcommand{\xtdplotsetrotatedcoords}[3]{%
 %
 \pgfmathsetmacro{\alphaeul}{#1}
 \pgfmathsetmacro{\betaeul}{#2}
 \pgfmathsetmacro{\gammaeul}{#3}
 %
 %perform some trig for the Euler transformation
-\tdplotsinandcos{\sinalpha}{\cosalpha}{\alphaeul} 
-\tdplotsinandcos{\sinbeta}{\cosbeta}{\betaeul}
-\tdplotsinandcos{\singamma}{\cosgamma}{\gammaeul}
+\xtdplotsinandcos{\sinalpha}{\cosalpha}{\alphaeul} 
+\xtdplotsinandcos{\sinbeta}{\cosbeta}{\betaeul}
+\xtdplotsinandcos{\singamma}{\cosgamma}{\gammaeul}
 %
-\tdplotmult{\sasb}{\sinalpha}{\sinbeta}
-\tdplotmult{\sbsg}{\sinbeta}{\singamma}
-\tdplotmult{\sasg}{\sinalpha}{\singamma}
-\tdplotmult{\sasbsg}{\sasb}{\singamma}
+\xtdplotmult{\sasb}{\sinalpha}{\sinbeta}
+\xtdplotmult{\sbsg}{\sinbeta}{\singamma}
+\xtdplotmult{\sasg}{\sinalpha}{\singamma}
+\xtdplotmult{\sasbsg}{\sasb}{\singamma}
 %
-\tdplotmult{\sacb}{\sinalpha}{\cosbeta}
-\tdplotmult{\sacg}{\sinalpha}{\cosgamma}
-\tdplotmult{\sbcg}{\sinbeta}{\cosgamma}
-\tdplotmult{\sacbsg}{\sacb}{\singamma}
-\tdplotmult{\sacbcg}{\sacb}{\cosgamma}
+\xtdplotmult{\sacb}{\sinalpha}{\cosbeta}
+\xtdplotmult{\sacg}{\sinalpha}{\cosgamma}
+\xtdplotmult{\sbcg}{\sinbeta}{\cosgamma}
+\xtdplotmult{\sacbsg}{\sacb}{\singamma}
+\xtdplotmult{\sacbcg}{\sacb}{\cosgamma}
 %
-\tdplotmult{\casb}{\cosalpha}{\sinbeta}
-\tdplotmult{\cacb}{\cosalpha}{\cosbeta}
-\tdplotmult{\cacg}{\cosalpha}{\cosgamma}
-\tdplotmult{\casg}{\cosalpha}{\singamma}
+\xtdplotmult{\casb}{\cosalpha}{\sinbeta}
+\xtdplotmult{\cacb}{\cosalpha}{\cosbeta}
+\xtdplotmult{\cacg}{\cosalpha}{\cosgamma}
+\xtdplotmult{\casg}{\cosalpha}{\singamma}
 %
-\tdplotmult{\cacbsg}{\cacb}{\singamma}
-\tdplotmult{\cacbcg}{\cacb}{\cosgamma}
+\xtdplotmult{\cacbsg}{\cacb}{\singamma}
+\xtdplotmult{\cacbcg}{\cacb}{\cosgamma}
 %
 %determine rotation matrix elements for Euler transformation
 \pgfmathsetmacro{\raaeul}{\cacbcg - \sasg}
@@ -2126,29 +2105,29 @@
 \pgfmathsetmacro{\rbcrot}{\zycart}
 %
 %now, determine master rotation matrix to define euler-rotated coordinates within the display coordinate frame
-\tdplotmult{\raaeaa}{\raarot}{\raaeul}
-\tdplotmult{\rabeba}{\rabrot}{\rbaeul}
-\tdplotmult{\raceca}{\racrot}{\rcaeul}
+\xtdplotmult{\raaeaa}{\raarot}{\raaeul}
+\xtdplotmult{\rabeba}{\rabrot}{\rbaeul}
+\xtdplotmult{\raceca}{\racrot}{\rcaeul}
 %
-\tdplotmult{\raaeab}{\raarot}{\rabeul}
-\tdplotmult{\rabebb}{\rabrot}{\rbbeul}
-\tdplotmult{\racecb}{\racrot}{\rcbeul}
+\xtdplotmult{\raaeab}{\raarot}{\rabeul}
+\xtdplotmult{\rabebb}{\rabrot}{\rbbeul}
+\xtdplotmult{\racecb}{\racrot}{\rcbeul}
 %
-\tdplotmult{\raaeac}{\raarot}{\raceul}
-\tdplotmult{\rabebc}{\rabrot}{\rbceul}
-\tdplotmult{\racecc}{\racrot}{\rcceul}
+\xtdplotmult{\raaeac}{\raarot}{\raceul}
+\xtdplotmult{\rabebc}{\rabrot}{\rbceul}
+\xtdplotmult{\racecc}{\racrot}{\rcceul}
 %
-\tdplotmult{\rbaeaa}{\rbarot}{\raaeul}
-\tdplotmult{\rbbeba}{\rbbrot}{\rbaeul}
-\tdplotmult{\rbceca}{\rbcrot}{\rcaeul}
+\xtdplotmult{\rbaeaa}{\rbarot}{\raaeul}
+\xtdplotmult{\rbbeba}{\rbbrot}{\rbaeul}
+\xtdplotmult{\rbceca}{\rbcrot}{\rcaeul}
 %
-\tdplotmult{\rbaeab}{\rbarot}{\rabeul}
-\tdplotmult{\rbbebb}{\rbbrot}{\rbbeul}
-\tdplotmult{\rbcecb}{\rbcrot}{\rcbeul}
+\xtdplotmult{\rbaeab}{\rbarot}{\rabeul}
+\xtdplotmult{\rbbebb}{\rbbrot}{\rbbeul}
+\xtdplotmult{\rbcecb}{\rbcrot}{\rcbeul}
 %
-\tdplotmult{\rbaeac}{\rbarot}{\raceul}
-\tdplotmult{\rbbebc}{\rbbrot}{\rbceul}
-\tdplotmult{\rbcecc}{\rbcrot}{\rcceul}
+\xtdplotmult{\rbaeac}{\rbarot}{\raceul}
+\xtdplotmult{\rbbebc}{\rbbrot}{\rbceul}
+\xtdplotmult{\rbcecc}{\rbcrot}{\rcceul}
 %
 %set up the master rotation matrix elements
 \pgfmathsetmacro{\raarc}{\raaeaa + \rabeba + \raceca}
@@ -2158,26 +2137,26 @@
 \pgfmathsetmacro{\rbbrc}{\rbaeab + \rbbebb + \rbcecb}
 \pgfmathsetmacro{\rbcrc}{\rbaeac + \rbbebc + \rbcecc}
 %
-\tikzset{tdplot_rotated_coords/.append style={x={(\raarc cm,\rbarc cm)},y={(\rabrc cm, \rbbrc cm)},z={(\racrc cm, \rbcrc cm)}}}%
+\tikzset{xtdplot_rotated_coords/.append style={x={(\raarc cm,\rbarc cm)},y={(\rabrc cm, \rbbrc cm)},z={(\racrc cm, \rbcrc cm)}}}%
 }
 
 %------------------------------------------------
-%		\tdplotsetrotatedcoordsorigin{point}
+%		\xtdplotsetrotatedcoordsorigin{point}
 %------------------------------------------------
 %this translates the rotated coordinate system to the specified point.
 %#1: user-specified coordinate
-\newcommand{\tdplotsetrotatedcoordsorigin}[1]{%
-%\pgfmathsetmacro{\tdplotrotatedcoordsorigin}{#1}%
-\tikzset{tdplot_rotated_coords/.append style={shift=#1}}%
+\newcommand{\xtdplotsetrotatedcoordsorigin}[1]{%
+%\pgfmathsetmacro{\xtdplotrotatedcoordsorigin}{#1}%
+\tikzset{xtdplot_rotated_coords/.append style={shift=#1}}%
 }
 
 %------------------------------------------------
-%		\tdplotresetrotatedcoordsorigin
+%		\xtdplotresetrotatedcoordsorigin
 %------------------------------------------------
 %this resets the rotated coordinate system translation back to the origin of the main coordinate system
-\newcommand{\tdplotresetrotatedcoordsorigin}{%
-%\pgfmathsetmacro{\tdplotrotatedcoordsorigin}{#1}%
-\tikzset{tdplot_rotated_coords/.append style={shift={(0,0,0)}}}%
+\newcommand{\xtdplotresetrotatedcoordsorigin}{%
+%\pgfmathsetmacro{\xtdplotrotatedcoordsorigin}{#1}%
+\tikzset{xtdplot_rotated_coords/.append style={shift={(0,0,0)}}}%
 }
 
 %=============================================================================
