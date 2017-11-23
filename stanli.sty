@@ -354,40 +354,6 @@
 			\draw[hatchingspring]($(#2)+1*(0,0)$) -- ++(-\supportHatchingLength/2,0);
 		\end{scope}
 	}{}
-	\ifthenelse{\equal{#1}{7}}{   %
-		\begin{scope}[rotate around={#3:(#2)}]
-			\draw [normalLine]
-			(#2)
-			-- ++(\supportLength/2,-\supportHeight)
-			-- ++(-\supportLength,0)
-			-- cycle;
-			\draw [normalLine]
-			($(#2)+(\supportBasicLength/2,-\supportHeight-2*\supportGap)$)
-			-- ++(-\supportBasicLength,0)
-			;
-			% rollers
-			\draw [normalLine, fill=white]
-			($(#2)+(\supportLength/2-\supportGap,-\supportHeight-\supportGap)$)
-			circle (\supportGap)
-			;
-			\draw [normalLine, fill=white]
-			($(#2)+(0,-\supportHeight-\supportGap)$)
-			circle (\supportGap)
-			;
-			\draw [normalLine, fill=white]
-			($(#2)+(-\supportLength/2+\supportGap,-\supportHeight-\supportGap)$)
-			circle (\supportGap)
-			;
-			\clip
-			($(#2)+(-\supportBasicLength/2,-\supportBasicHeight-\supportHeight-2*\supportGap)$)
-			rectangle
-			($(#2)+(\supportBasicLength/2,-\supportHeight-2*\supportGap)$)
-			;
-			\draw[hatching]
-			($(#2)+(\supportHatchingLength/2,-\supportHatchingHeight-2*\supportGap)$)
-			-- ++(-\supportHatchingLength,0);
-		\end{scope}
-	}{}
 	
 	\ifthenelse{\equal{#1}{8}}{		%
 		\begin{scope}[rotate around={#3:(#2)}]
