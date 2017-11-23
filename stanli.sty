@@ -325,12 +325,32 @@
 		\end{scope}
 	}{}
 
-	\ifthenelse{\equal{#1}{4}}{		%
+        % 4*: Fixed supports
+	\ifthenelse{\equal{#1}{4}}{ % 4: Fixed support: Basic representation with slider
 		\begin{scope}[rotate around={#3:(#2)}]
 			\draw [normalLine] ($(#2)+1*(\supportBasicLength/2,0)$) -- ++(-\supportBasicLength,0);
 			\draw [normalLine] ($(#2)+1*(\supportBasicLength/2,-\supportGap)$) -- ++(-\supportBasicLength,0);
 			\clip ($(#2)+1*(-\supportBasicLength/2,-\supportBasicHeight-\supportGap)$) rectangle ($(#2)+1*(\supportBasicLength/2,-\supportGap)$);
 			\draw[hatching]($(#2)+1*(\supportHatchingLength/2,-\supportGap)$) -- ++(-\supportHatchingLength,0);
+		\end{scope}
+	}{}
+	
+	\ifthenelse{\equal{#1}{4ooo}}{  % 4: Fixed support with three rollers
+		\begin{scope}[rotate around={#3:(#2)}]
+			\fill [white] ($(#2)+1*(0,-\supportGap)$)  circle (-\supportGap);
+			\draw [normalLine] ($(#2)+1*(0,-\supportGap)$)  circle (-\supportGap)
+			;
+			\fill [white] ($(#2)+1*(\supportBasicLength*0.35,-\supportGap)$)  circle (-\supportGap);
+			\draw [normalLine] ($(#2)+1*(\supportBasicLength*0.35,-\supportGap)$)  circle (-\supportGap)
+			;
+			\fill [white] ($(#2)+1*(-\supportBasicLength*0.35,-\supportGap)$)  circle (-\supportGap);
+			\draw [normalLine] ($(#2)+1*(-\supportBasicLength*0.35,-\supportGap)$)  circle (-\supportGap)
+			;
+			\draw [normalLine] ($(#2)+1*(\supportBasicLength/2,0)$) -- ++(-\supportBasicLength,0);
+			\draw [normalLine] ($(#2)+1*(\supportBasicLength/2,-\supportGap*2)$) -- ++(-\supportBasicLength,0);
+			\clip ($(#2)+1*(-\supportBasicLength/2,-\supportBasicHeight-\supportGap*2)$) rectangle ($(#2)+1*(\supportBasicLength/2,-\supportGap*2)$);
+			\draw[hatching]($(#2)+1*(\supportHatchingLength/2,-\supportGap*2)$) -- ++(-\supportHatchingLength,0)
+			;
 		\end{scope}
 	}{}
 	
@@ -352,25 +372,6 @@
 			\draw [normalLine] ($(#2)+1*(-\supportBasicLength/2.5,0)$) -- ++(-\supportBasicLength/3.5,0);
 			\clip ($(#2)+1*(-\supportBasicLength/2.5,0)$) rectangle ($(#2)+1*(-\supportBasicLength/1.47,-\supportBasicHeight/2)$);
 			\draw[hatchingspring]($(#2)+1*(0,0)$) -- ++(-\supportHatchingLength/2,0);
-		\end{scope}
-	}{}
-	
-	\ifthenelse{\equal{#1}{8}}{		%
-		\begin{scope}[rotate around={#3:(#2)}]
-			\fill [white] ($(#2)+1*(0,-\supportGap)$)  circle (-\supportGap);
-			\draw [normalLine] ($(#2)+1*(0,-\supportGap)$)  circle (-\supportGap)
-			;
-			\fill [white] ($(#2)+1*(\supportBasicLength*0.35,-\supportGap)$)  circle (-\supportGap);
-			\draw [normalLine] ($(#2)+1*(\supportBasicLength*0.35,-\supportGap)$)  circle (-\supportGap)
-			;
-			\fill [white] ($(#2)+1*(-\supportBasicLength*0.35,-\supportGap)$)  circle (-\supportGap);
-			\draw [normalLine] ($(#2)+1*(-\supportBasicLength*0.35,-\supportGap)$)  circle (-\supportGap)
-			;
-			\draw [normalLine] ($(#2)+1*(\supportBasicLength/2,0)$) -- ++(-\supportBasicLength,0);
-			\draw [normalLine] ($(#2)+1*(\supportBasicLength/2,-\supportGap*2)$) -- ++(-\supportBasicLength,0);
-			\clip ($(#2)+1*(-\supportBasicLength/2,-\supportBasicHeight-\supportGap*2)$) rectangle ($(#2)+1*(\supportBasicLength/2,-\supportGap*2)$);
-			\draw[hatching]($(#2)+1*(\supportHatchingLength/2,-\supportGap*2)$) -- ++(-\supportHatchingLength,0)
-			;
 		\end{scope}
 	}{}
 
