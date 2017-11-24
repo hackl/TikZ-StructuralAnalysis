@@ -1273,9 +1273,13 @@ Two variants are available, (\texttt{4}) with a slider and (\texttt{4ooo}) with 
 \endgroup
 
 \begingroup
-\hspace{7mm}\lstinline[emph={hinge}]|\hinge{3}{insertion point}[rotation];|
 
+\begin{lstlisting}[emph={hinge},backgroundcolor=\color{white},xleftmargin=7mm,belowskip=-0.5cm]
+\hinge{3}{insertion point}[rotation];
+\hinge{3ooo}{insertion point}[rotation];
+\end{lstlisting}
 \leftskip=14mm Type $3$ describes a shear hinge. There is an additional option for rotating the hinge. The rotation works similar to the rotation of the supports.
+Type \texttt{3ooo} is an alternative representation for type $3$.
 
 \leftskip=14mm\begin{minipage}[c]{0.3\linewidth}
 	\begin{tikzpicture}[framed]
@@ -1292,6 +1296,24 @@ Two variants are available, (\texttt{4}) with a slider and (\texttt{4ooo}) with 
 		\point{a}{0}{0};	\point{b}{2}{0};	\point{c}{4}{0};
 		\beam{1}{a}{b};	\beam{1}{b}{c};
 		\hinge{3}{b};
+	\end{tikzpicture}\end{lstlisting}\vspace{-7mm}
+\end{minipage}
+    
+\leftskip=14mm\begin{minipage}[c]{0.3\linewidth}
+	\begin{tikzpicture}[framed]
+	\point{a}{0}{0};
+	\point{b}{2}{0};
+	\point{c}{4}{0};
+	\beam{1}{a}{b};
+	\beam{1}{b}{c};
+	\hinge{3ooo}{b};
+	\end{tikzpicture}
+\end{minipage}
+\begin{minipage}{0.61\linewidth}\begin{lstlisting}
+	\begin{tikzpicture}
+	\point{a}{0}{0};	\point{b}{2}{0};	\point{c}{4}{0};
+	\beam{1}{a}{b};	\beam{1}{b}{c};
+	\hinge{3ooo}{b};
 	\end{tikzpicture}\end{lstlisting}\vspace{-7mm}
 \end{minipage}
 
@@ -1343,31 +1365,6 @@ Two variants are available, (\texttt{4}) with a slider and (\texttt{4ooo}) with 
 		\point{a}{0}{0};	\point{b}{2}{1};	\point{c}{4}{.5};
 		\beam{1}{a}{b}[0][1];	\beam{1}{b}{c}[1];
 		\hinge{5}{b}[a][c];
-	\end{tikzpicture}\end{lstlisting}\vspace{-7mm}
-\end{minipage}
-
-\endgroup
-
-\begingroup
-\hspace{7mm}\lstinline[emph={hinge}]|\hinge{6}{insertion point}[rotation];|
-
-\leftskip=14mm Type $6$ is an alternative representation of type $3$.
-
-\leftskip=14mm\begin{minipage}[c]{0.3\linewidth}
-	\begin{tikzpicture}[framed]
-	\point{a}{0}{0};
-	\point{b}{2}{0};
-	\point{c}{4}{0};
-	\beam{1}{a}{b};
-	\beam{1}{b}{c};
-	\hinge{6}{b};
-	\end{tikzpicture}
-\end{minipage}
-\begin{minipage}{0.61\linewidth}\begin{lstlisting}
-	\begin{tikzpicture}
-	\point{a}{0}{0};	\point{b}{2}{0};	\point{c}{4}{0};
-	\beam{1}{a}{b};	\beam{1}{b}{c};
-	\hinge{6}{b};
 	\end{tikzpicture}\end{lstlisting}\vspace{-7mm}
 \end{minipage}
 
