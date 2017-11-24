@@ -98,6 +98,7 @@
 \newcommand{\supportHeight}{5mm}				%
 \newcommand{\supportHatchingLength}{20mm}	%
 \newcommand{\supportHatchingHeight}{5mm}	%
+\newcommand{\springTorsionRadius}{6mm}      % Maximum radius of torsional spring
 
 \newcommand{\barGap}{1.5mm}							%
 \newcommand{\barAngle}{45}							%
@@ -432,16 +433,56 @@
           \end{scope}
 	}{}
 
-	\ifthenelse{\equal{#1}{6}}{		%
-		\begin{scope}[rotate around={#3:(#2)}]
-			\begin{scope}[rotate around={-90:(#2)},shift={(#2)}]
-				\draw[normalLine,scale=0.035,domain=0:18.85,variable=\t,smooth,]
-				plot({\t*sin(\t r)},{-\t*cos(\t r)});
-			\end{scope}
-			\draw [normalLine] ($(#2)+1*(-\supportBasicLength/2.5,0)$) -- ++(-\supportBasicLength/3.5,0);
-			\clip ($(#2)+1*(-\supportBasicLength/2.5,0)$) rectangle ($(#2)+1*(-\supportBasicLength/1.47,-\supportBasicHeight/2)$);
-			\draw[hatchingspring]($(#2)+1*(0,0)$) -- ++(-\supportHatchingLength/2,0);
-		\end{scope}
+	\ifthenelse{\equal{#1}{6}}{ % Torsion spring
+          \begin{scope}[rotate around={#3:(#2)}]
+            % Will convert \springTorsionRadius to pt before calc
+            % 17.007874pt are 6mm
+            \pgfmathsetmacro{\SpiralScale}{\springTorsionRadius/17.007874}
+            \begin{scope}[scale=\SpiralScale]
+              \draw (#2) [normalLine] % A fake spiral
+                arc [start angle=-180,end angle=0,radius=0.6mm]
+                arc [start angle=0,end angle=180,radius=1.2mm]
+                arc [start angle=-180,end angle=0,radius=2mm]
+                arc [start angle=0,end angle=180,radius=3mm]
+                arc [start angle=-180,end angle=0,radius=4.2mm]
+                arc [start angle=0,end angle=180,radius=5.6mm];
+            \end{scope}
+            \draw [normalLine]
+              ($(#2)+1*(-\springTorsionRadius -\supportBasicLength/6, 0)$)
+              -- ++(\supportBasicLength/3, 0);
+            \clip
+              ($(#2)+1*(-\springTorsionRadius-\supportBasicLength/6,0)$)
+              rectangle ++(\supportBasicLength/3,-\supportBasicHeight/2);
+            \draw[hatchingspring]
+              ($(#2)+1*(0,0)$)
+              -- ++(-\supportHatchingLength/2,0);
+          \end{scope}
+	}{}
+
+	\ifthenelse{\equal{#1}{6cw}}{ % Torsion spring
+          \begin{scope}[rotate around={#3:(#2)}]
+            % Will convert \springTorsionRadius to pt before calc
+            % 17.007874pt are 6mm
+            \pgfmathsetmacro{\SpiralScale}{\springTorsionRadius/17.007874}
+            \begin{scope}[scale=\SpiralScale]
+              \draw (#2) [normalLine] % A fake spiral
+                arc [start angle=0,end angle=-180,radius=0.6mm]
+                arc [start angle=180,end angle=0,radius=1.2mm]
+                arc [start angle=0,end angle=-180,radius=2mm]
+                arc [start angle=180,end angle=0,radius=3mm]
+                arc [start angle=0,end angle=-180,radius=4.2mm]
+                arc [start angle=180,end angle=0,radius=5.6mm];
+            \end{scope}
+            \draw [normalLine]
+              ($(#2)+1*(\springTorsionRadius -\supportBasicLength/6, 0)$)
+              -- ++(\supportBasicLength/3, 0);
+            \clip
+              ($(#2)+1*(\springTorsionRadius-\supportBasicLength/6,0)$)
+              rectangle ++(\supportBasicLength/3,-\supportBasicHeight/2);
+            \draw[hatchingspring]
+              ($(#2)+1*(\springTorsionRadius + \supportHatchingLength/2 -\supportBasicLength/3 ,0)$)
+              -- ++(-\supportHatchingLength/2,0);
+          \end{scope}
 	}{}
 
 }

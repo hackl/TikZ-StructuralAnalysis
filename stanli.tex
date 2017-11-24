@@ -1194,20 +1194,27 @@ zig-zag line and (\texttt{5c}) a coil.
 \endgroup
 
 \begingroup
-\hspace{7mm}\lstinline[emph={support}]|\support{6}{insertion point}[rotation];|
-
+\begin{lstlisting}[emph={support},backgroundcolor=\color{white},xleftmargin=7mm,belowskip=-0.5cm]
+\support{6}{insertion point}[rotation];
+\support{6cw}{insertion point}[rotation];
+\end{lstlisting}
 \leftskip=14mm Type $6$ describes a torsion spring.
+Type \texttt{6cw} provides a clockwise variant.
 
 \leftskip=14mm\begin{minipage}[c]{0.3\linewidth}
 	\begin{tikzpicture}[framed]
 			\point{a}{0}{0};
+			\point{b}{1.5}{0};
 			\support{6}{a}[-45];
+			\support{6cw}{b}[-45];
 	\end{tikzpicture}
 \end{minipage}
 \begin{minipage}{0.61\linewidth}\begin{lstlisting}
 	\begin{tikzpicture}
 		\point{a}{0}{0};
+		\point{b}{1.5}{0};
 		\support{6}{a}[-45];
+		\support{6cw}{b}[-45];
 	\end{tikzpicture}\end{lstlisting}\vspace{-7mm}
 \end{minipage}
 
