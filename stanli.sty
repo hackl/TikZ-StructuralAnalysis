@@ -276,10 +276,17 @@
 \newcommandx{\support}[3][3=0]{
 	\ifthenelse{\equal{#1}{1}}{		%
 		\begin{scope}[rotate around={#3:(#2)}]
-			\draw [normalLine] (#2) -- ++(\supportLength/2,-\supportHeight) -- ++(-\supportLength,0) -- cycle;
-			\draw [normalLine] ($(#2)+1*(\supportBasicLength/2,-\supportHeight)$) -- ++(-\supportBasicLength,0);
-			\clip ($(#2)+1*(-\supportBasicLength/2,-\supportBasicHeight-\supportHeight)$) rectangle ($(#2)+1*(\supportBasicLength/2,-\supportHeight)$);
-			\draw[hatching]($(#2)+1*(\supportHatchingLength/2,-\supportHatchingHeight)$) -- ++(-\supportHatchingLength,0);
+                        \draw [normalLine] (#2)
+                          -- ++(\supportLength/2,-\supportHeight-\supportGap)
+                          -- ++(-\supportLength,0) -- cycle;
+                        \draw [normalLine] ($(#2)+1*(\supportBasicLength/2,-\supportHeight-\supportGap)$)
+                          -- ++(-\supportBasicLength,0);
+                        \clip
+                          ($(#2)+1*(-\supportBasicLength/2,-\supportBasicHeight-\supportHeight-\supportGap)$)
+                          rectangle ($(#2)+1*(\supportBasicLength/2,-\supportHeight-\supportGap)$);
+                        \draw[hatching]
+                          ($(#2)+1*(\supportHatchingLength/2,-\supportHatchingHeight-\supportGap)$)
+                          -- ++(-\supportHatchingLength,0);
 		\end{scope}
 	}{}
 
