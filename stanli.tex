@@ -1704,16 +1704,16 @@ Here the angle is counted from the x-axis.
 			\point{c}{4}{.5};
 			\beam{1}{a}{b}[0][1];
 			\beam{1}{b}{c}[1];
-			\dimensioning{1}{a}{b}{-.5}[$2~m$];
-			\dimensioning{1}{b}{c}{-.5}[$2~m$];
+			\dimensioning{1}{a}{b}{-.5}[$2$\,m];
+			\dimensioning{1}{b}{c}{-.5}[$2$\,m];
 	\end{tikzpicture}
 \end{minipage}
 \begin{minipage}{0.61\linewidth}\begin{lstlisting}
 	\begin{tikzpicture}
 		\point{a}{0}{0};	\point{b}{2}{1};	\point{c}{4}{.5};
 		\beam{1}{a}{b}[0][1];	\beam{1}{b}{c}[1];
-		\dimensioning{1}{a}{b}{-.5}[$2~m$];
-		\dimensioning{1}{b}{c}{-.5}[$2~m$];
+		\dimensioning{1}{a}{b}{-.5}[$2$\,m];
+		\dimensioning{1}{b}{c}{-.5}[$2$\,m];
 	\end{tikzpicture}\end{lstlisting}\vspace{-7mm}
 \end{minipage}
 
@@ -1729,7 +1729,7 @@ Here the angle is counted from the x-axis.
 			\point{a}{0}{0};
 			\point{b}{2}{1};
 			\beam{1}{a}{b};
-			\dimensioning{2}{a}{b}{-.5}[$1~m$];
+			\dimensioning{2}{a}{b}{-.5}[$1$\,m];
 	\end{tikzpicture}
 \end{minipage}
 \begin{minipage}{0.61\linewidth}\begin{lstlisting}
@@ -1737,7 +1737,7 @@ Here the angle is counted from the x-axis.
 		\point{a}{0}{0};
 		\point{b}{2}{1};
 		\beam{1}{a}{b};
-		\dimensioning{2}{a}{b}{-.5}[$1~m$];
+		\dimensioning{2}{a}{b}{-.5}[$1$\,m];
 	\end{tikzpicture}\end{lstlisting}\vspace{-7mm}
 \end{minipage}
 
@@ -3946,10 +3946,10 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 		\dpoint{c}{1.5}{3}{-1};
 		\dbeam{1}{a}{b}[0][1];
 		\dbeam{1}{b}{c};
-		\ddimensioning{yz}{a}{b}{.5}[$3m$];
-		\ddimensioning{zy}{a}{b}{3.3}[$1m$];
-		\ddimensioning{xz}[3]{b}{c}{.5}[$1.5m$][1.5];
-		\ddimensioning{xy}[-1]{b}{c}{0}[$1.5m$][3];
+		\ddimensioning{yz}{a}{b}{.5}[$3$\,m];
+		\ddimensioning{zy}{a}{b}{3.3}[$1$\,m];
+		\ddimensioning{xz}[3]{b}{c}{.5}[$1.5$\,m][1.5];
+		\ddimensioning{xy}[-1]{b}{c}{0}[$1.5$\,m][3];
 	\end{tikzpicture}
 \end{minipage}
 \begin{minipage}{0.61\linewidth}\begin{lstlisting}
@@ -3959,10 +3959,10 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 		\dpoint{c}{1.5}{3}{-1};
 		\dbeam{1}{a}{b}[0][1];	
 		\dbeam{1}{b}{c};
-		\ddimensioning{yz}{a}{b}{.5}[$3m$];
-		\ddimensioning{zy}{a}{b}{3.3}[$1m$];
-		\ddimensioning{xz}[3]{b}{c}{.5}[$1.5m$][1.5];
-		\ddimensioning{xy}[-1]{b}{c}{0}[$1.5m$][3];
+		\ddimensioning{yz}{a}{b}{.5}[$3$\,m];
+		\ddimensioning{zy}{a}{b}{3.3}[$1$\,m];
+		\ddimensioning{xz}[3]{b}{c}{.5}[$1.5$\,m][1.5];
+		\ddimensioning{xy}[-1]{b}{c}{0}[$1.5$\,m][3];
 	\end{tikzpicture}\end{lstlisting}\vspace{-7mm}
 \end{minipage}
 
@@ -4785,13 +4785,13 @@ In this tutorial, the basic principles of designing 3D structures with \tikzsym 
 	\dlineload{5}{0}{h}{d}[.5][.5][.11];
 	\dlineload{5}{0}{d}{j}[.5][.5][.11];
 
-	\ddimensioning{xy}{f}{g}{4.5}[$3~m$];
-	\ddimensioning{xy}{g}{h}{4.5}[$3~m$];
-	\ddimensioning{xy}{h}{i}{4.5}[$3~m$];
-	\ddimensioning{xy}{i}{j}{4.5}[$3~m$];
-	\ddimensioning{yx}{e}{j}{13}[$3~m$];
+	\ddimensioning{xy}{f}{g}{4.5}[$3$\,m];
+	\ddimensioning{xy}{g}{h}{4.5}[$3$\,m];
+	\ddimensioning{xy}{h}{i}{4.5}[$3$\,m];
+	\ddimensioning{xy}{i}{j}{4.5}[$3$\,m];
+	\ddimensioning{yx}{e}{j}{13}[$3$\,m];
 
-	\dnotation{1}{f}{$q=10~kN/m$}[above left=3mm];
+	\dnotation{1}{f}{$q=10$\,kN/m}[above left=3mm];
 	\dnotation{1}{b}{$A$}[below left];
 	\dnotation{1}{h}{$C$}[right=2mm];
 	\dnotation{1}{d}{$B$}[below left];
@@ -5105,18 +5105,18 @@ Actually, the structural design is already finished and ready for use. However, 
 	\dlineload{5}{0}{h}{d}[.5][.5][.11];
 	\dlineload{5}{0}{d}{j}[.5][.5][.11];
 
-	\ddimensioning{xy}{f}{g}{4.5}[$3~m$];
-	\ddimensioning{xy}{g}{h}{4.5}[$3~m$];
-	\ddimensioning{xy}{h}{i}{4.5}[$3~m$];
-	\ddimensioning{xy}{i}{j}{4.5}[$3~m$];
-	\ddimensioning{yx}{e}{j}{13}[$3~m$];
+	\ddimensioning{xy}{f}{g}{4.5}[$3$\,m];
+	\ddimensioning{xy}{g}{h}{4.5}[$3$\,m];
+	\ddimensioning{xy}{h}{i}{4.5}[$3$\,m];
+	\ddimensioning{xy}{i}{j}{4.5}[$3$\,m];
+	\ddimensioning{yx}{e}{j}{13}[$3$\,m];
 \end{tikzpicture}
 
 \begin{lstlisting}
 % Dimensions
-	\ddimensioning{xy}{f}{g}{4.5}[$3~m$];				\ddimensioning{xy}{g}{h}{4.5}[$3~m$];
-	\ddimensioning{xy}{h}{i}{4.5}[$3~m$];				\ddimensioning{xy}{i}{j}{4.5}[$3~m$];
-	\ddimensioning{yx}{e}{j}{13}[$3~m$];
+	\ddimensioning{xy}{f}{g}{4.5}[$3$\,m];				\ddimensioning{xy}{g}{h}{4.5}[$3$\,m];
+	\ddimensioning{xy}{h}{i}{4.5}[$3$\,m];				\ddimensioning{xy}{i}{j}{4.5}[$3$\,m];
+	\ddimensioning{yx}{e}{j}{13}[$3$\,m];
 \end{lstlisting}\vspace*{-7mm}
 
 \vspace*{-5mm}
@@ -5168,13 +5168,13 @@ Now the only missing parts are the names of nodes and bars, then the constructio
 	\dlineload{5}{0}{h}{d}[.5][.5][.11];
 	\dlineload{5}{0}{d}{j}[.5][.5][.11];
 
-	\ddimensioning{xy}{f}{g}{4.5}[$3~m$];
-	\ddimensioning{xy}{g}{h}{4.5}[$3~m$];
-	\ddimensioning{xy}{h}{i}{4.5}[$3~m$];
-	\ddimensioning{xy}{i}{j}{4.5}[$3~m$];
-	\ddimensioning{yx}{e}{j}{13}[$3~m$];
+	\ddimensioning{xy}{f}{g}{4.5}[$3$\,m];
+	\ddimensioning{xy}{g}{h}{4.5}[$3$\,m];
+	\ddimensioning{xy}{h}{i}{4.5}[$3$\,m];
+	\ddimensioning{xy}{i}{j}{4.5}[$3$\,m];
+	\ddimensioning{yx}{e}{j}{13}[$3$\,m];
 
-	\dnotation{1}{f}{$q=10~kN/m$}[above left=3mm];
+	\dnotation{1}{f}{$q=10$\,kN/m}[above left=3mm];
 	\dnotation{1}{b}{$A$}[below left];
 	\dnotation{1}{h}{$C$}[right=2mm];
 	\dnotation{1}{d}{$B$}[below left];
@@ -5182,7 +5182,7 @@ Now the only missing parts are the names of nodes and bars, then the constructio
 
 \begin{lstlisting}
 % Labels
-	\dnotation{1}{f}{$q=10~kN/m$}[above left=3mm];			\dnotation{1}{b}{$A$}[below left];
+	\dnotation{1}{f}{$q=10$\,kN/m}[above left=3mm];			\dnotation{1}{b}{$A$}[below left];
 	\dnotation{1}{h}{$C$}[right=2mm];										\dnotation{1}{d}{$B$}[below left];
 \end{lstlisting}\vspace*{-7mm}
 
@@ -5233,13 +5233,13 @@ Now the point labeling can be switched off and the construction is finished.
 	\dlineload{5}{0}{h}{d}[.5][.5][.11];
 	\dlineload{5}{0}{d}{j}[.5][.5][.11];
 
-	\ddimensioning{xy}{f}{g}{4.5}[$3~m$];
-	\ddimensioning{xy}{g}{h}{4.5}[$3~m$];
-	\ddimensioning{xy}{h}{i}{4.5}[$3~m$];
-	\ddimensioning{xy}{i}{j}{4.5}[$3~m$];
-	\ddimensioning{yx}{e}{j}{13}[$3~m$];
+	\ddimensioning{xy}{f}{g}{4.5}[$3$\,m];
+	\ddimensioning{xy}{g}{h}{4.5}[$3$\,m];
+	\ddimensioning{xy}{h}{i}{4.5}[$3$\,m];
+	\ddimensioning{xy}{i}{j}{4.5}[$3$\,m];
+	\ddimensioning{yx}{e}{j}{13}[$3$\,m];
 
-	\dnotation{1}{f}{$q=10~kN/m$}[above left=3mm];
+	\dnotation{1}{f}{$q=10$\,kN/m}[above left=3mm];
 	\dnotation{1}{b}{$A$}[below left];
 	\dnotation{1}{h}{$C$}[right=2mm];
 	\dnotation{1}{d}{$B$}[below left];
@@ -5303,14 +5303,14 @@ Now the point labeling can be switched off and the construction is finished.
 	\dlineload{5}{0}{d}{j}[.5][.5][.11];
 
 % Dimensions
-	\ddimensioning{xy}{f}{g}{4.5}[$3~m$];
-	\ddimensioning{xy}{g}{h}{4.5}[$3~m$];
-	\ddimensioning{xy}{h}{i}{4.5}[$3~m$];
-	\ddimensioning{xy}{i}{j}{4.5}[$3~m$];
-	\ddimensioning{yx}{e}{j}{13}[$3~m$];
+	\ddimensioning{xy}{f}{g}{4.5}[$3$\,m];
+	\ddimensioning{xy}{g}{h}{4.5}[$3$\,m];
+	\ddimensioning{xy}{h}{i}{4.5}[$3$\,m];
+	\ddimensioning{xy}{i}{j}{4.5}[$3$\,m];
+	\ddimensioning{yx}{e}{j}{13}[$3$\,m];
 
 % Labels
-	\dnotation{1}{f}{$q=10~kN/m$}[above left=3mm];
+	\dnotation{1}{f}{$q=10$\,kN/m}[above left=3mm];
 	\dnotation{1}{b}{$A$}[below left];
 	\dnotation{1}{h}{$C$}[right=2mm];
 	\dnotation{1}{d}{$B$}[below left];
