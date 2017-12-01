@@ -293,27 +293,55 @@
 			\draw[hatching]($(#2)+1*(\supportHatchingLength/2,-\supportHatchingHeight-\supportGap)$) -- ++(-\supportHatchingLength,0);
 		\end{scope}
 	}{}
-
-       \ifthenelse{\equal{#1}{2oo}}{ % 2oo: Floating bearing with two rollers
+        
+        \ifthenelse{\equal{#1}{2oo}}{ % 2oo: Floating bearing with two rollers
           \begin{scope}[rotate around={#3:(#2)}]
-            \draw [normalLine] (#2) -- ++(\supportLength/2,-\supportHeight+\supportGap) -- ++(-\supportLength,0) -- cycle;
-            \draw[normalLine, fill=white] ($(#2)+(\supportBasicLength/5,-\supportHeight)$) circle (0.9*\supportGap);
-            \draw[normalLine, fill=white] ($(#2)+(-\supportBasicLength/5,-\supportHeight)$) circle (0.9*\supportGap);
-            \draw [normalLine] ($(#2)+1*(\supportBasicLength/2,-\supportHeight-\supportGap)$) -- ++(-\supportBasicLength,0);
-            \clip ($(#2)+1*(-\supportBasicLength/2,-\supportBasicHeight-\supportHeight-\supportGap)$) rectangle ($(#2)+1*(\supportBasicLength/2,-\supportHeight-\supportGap)$);
-            \draw[hatching]($(#2)+1*(\supportHatchingLength/2,-\supportHatchingHeight-\supportGap)$) -- ++(-\supportHatchingLength,0);
+            \draw [normalLine] (#2)
+              -- ++(\supportLength/2,-\supportHeight+\supportGap)
+              -- ++(-\supportLength,0)
+              -- cycle;
+            \draw[normalLine, fill=white]
+              ($(#2)+(\supportBasicLength/5,-\supportHeight)$)
+              circle (0.9*\supportGap);
+            \draw[normalLine, fill=white]
+              ($(#2)+(-\supportBasicLength/5,-\supportHeight)$)
+              circle (0.9*\supportGap);
+            \draw [normalLine]
+              ($(#2)+1*(\supportBasicLength/2,-\supportHeight-\supportGap)$)
+              -- ++(-\supportBasicLength,0);
+            \clip
+              ($(#2)+1*(-\supportBasicLength/2,-\supportBasicHeight-\supportHeight-\supportGap)$)
+              rectangle ($(#2)+1*(\supportBasicLength/2,-\supportHeight-\supportGap)$);
+            \draw[hatching]
+              ($(#2)+1*(\supportHatchingLength/2,-\supportHatchingHeight-\supportGap)$)
+              -- ++(-\supportHatchingLength,0);
           \end{scope}
         }{}
 
-       \ifthenelse{\equal{#1}{2ooo}}{ % 2ooo: Floating bearing with three rollers
+        \ifthenelse{\equal{#1}{2ooo}}{ % 2ooo: Floating bearing with three rollers
           \begin{scope}[rotate around={#3:(#2)}]
-            \draw [normalLine] (#2) -- ++(\supportLength/2,-\supportHeight+\supportGap) -- ++(-\supportLength,0) -- cycle;
-            \draw[normalLine, fill=white] ($(#2)+(\supportBasicLength/4,-\supportHeight)$) circle (0.9*\supportGap);
-            \draw[normalLine, fill=white] ($(#2)+(0.0,-\supportHeight)$) circle (0.9*\supportGap);
-            \draw[normalLine, fill=white] ($(#2)+(-\supportBasicLength/4,-\supportHeight)$) circle (0.9*\supportGap);
-            \draw [normalLine] ($(#2)+1*(\supportBasicLength/2,-\supportHeight-\supportGap)$) -- ++(-\supportBasicLength,0);
-            \clip ($(#2)+1*(-\supportBasicLength/2,-\supportBasicHeight-\supportHeight-\supportGap)$) rectangle ($(#2)+1*(\supportBasicLength/2,-\supportHeight-\supportGap)$);
-            \draw[hatching]($(#2)+1*(\supportHatchingLength/2,-\supportHatchingHeight-\supportGap)$) -- ++(-\supportHatchingLength,0);
+            \draw [normalLine] (#2)
+              -- ++(\supportLength/2,-\supportHeight+\supportGap)
+              -- ++(-\supportLength,0)
+              -- cycle;
+            \draw[normalLine, fill=white]
+              ($(#2)+(\supportBasicLength/4,-\supportHeight)$)
+              circle (0.9*\supportGap);
+            \draw[normalLine, fill=white]
+              ($(#2)+(0.0,-\supportHeight)$)
+              circle (0.9*\supportGap);
+            \draw[normalLine, fill=white]
+              ($(#2)+(-\supportBasicLength/4,-\supportHeight)$)
+              circle (0.9*\supportGap);
+            \draw [normalLine]
+              ($(#2)+1*(\supportBasicLength/2,-\supportHeight-\supportGap)$)
+              -- ++(-\supportBasicLength,0);
+            \clip
+              ($(#2)+1*(-\supportBasicLength/2,-\supportBasicHeight-\supportHeight-\supportGap)$)
+              rectangle ($(#2)+1*(\supportBasicLength/2,-\supportHeight-\supportGap)$);
+            \draw[hatching]
+              ($(#2)+1*(\supportHatchingLength/2,-\supportHatchingHeight-\supportGap)$)
+              -- ++(-\supportHatchingLength,0);
           \end{scope}
         }{}
 
