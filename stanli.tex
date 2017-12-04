@@ -1083,24 +1083,39 @@ Another important note is, that every \tikzsym command has to be completed with 
 \endgroup
 
 \begingroup
-\hspace{7mm}\lstinline[emph={support}]|\support{2}{insertion point}[rotation];|
-
-\leftskip=14mm Type $2$ is a floating bearing, which can absorb forces only in one direction and no moments.
+\hspace{7mm}\begin{lstlisting}[emph={support},backgroundcolor=\color{white},xleftmargin=7mm,belowskip=-0.5cm]
+\support{2}{insertion point}[rotation];
+\support{2oo}{insertion point}[rotation];
+\support{2ooo}{insertion point}[rotation];
+\end{lstlisting}
+\leftskip=14mm Type $2$ is a floating bearing, which can absorb forces
+only in one direction and no moments.
+It has three alternative representations, (\texttt{2}) will use a
+slider, (\texttt{2oo}) two rollers and (\texttt{2ooo}) three rollers. 
 
 \leftskip=14mm\begin{minipage}[c]{0.3\linewidth}
-	\begin{tikzpicture}[framed]
-			\point{a}{0}{0};
-			\support{2}{a};
-	\end{tikzpicture}
+  \begin{tikzpicture}[framed]
+    \point{a}{0}{0};
+    \point{b}{1.5}{0};
+    \point{c}{3.0}{0};
+    \support{2}{a};
+    \support{2oo}{b};
+    \support{2ooo}{c};
+  \end{tikzpicture}
 \end{minipage}
 \begin{minipage}{0.61\linewidth}\begin{lstlisting}
 	\begin{tikzpicture}
-		\point{a}{0}{0};
-		\support{2}{a};
+    \point{a}{0}{0};
+    \point{b}{1.5}{0};
+    \point{c}{3.0}{0};
+    \support{2}{a};
+    \support{2oo}{b};
+    \support{2ooo}{c};
 	\end{tikzpicture}\end{lstlisting}\vspace{-7mm}
-\end{minipage}
-
+    \end{minipage}
+    
 \endgroup
+\newpage % May minipages for each block be better?
 
 \begingroup
 \hspace{7mm}\lstinline[emph={support}]|\support{3}{insertion point}[rotation];|
@@ -1124,20 +1139,27 @@ Another important note is, that every \tikzsym command has to be completed with 
 \endgroup
 
 \begingroup
-\hspace{7mm}\lstinline[emph={support}]|\support{4}{insertion point}[rotation];|
-
+\begin{lstlisting}[emph={support},backgroundcolor=\color{white},xleftmargin=7mm,belowskip=-0.5cm]
+\support{4}{insertion point}[rotation];
+\support{4ooo}{insertion point}[rotation];
+\end{lstlisting}
 \leftskip=14mm Type $4$ is also a fixed support. However, these can only absorb forces in one direction and moments.
+Two variants are available, (\texttt{4}) with a slider and (\texttt{4ooo}) with three rollers.
 
 \leftskip=14mm\begin{minipage}[c]{0.3\linewidth}
 	\begin{tikzpicture}[framed]
 			\point{a}{0}{0};
+			\point{b}{2}{0};
 			\support{4}{a}[90];
+			\support{4ooo}{b}[90];
 	\end{tikzpicture}
 \end{minipage}
 \begin{minipage}{0.61\linewidth}\begin{lstlisting}
 	\begin{tikzpicture}
 		\point{a}{0}{0};
+		\point{b}{2}{0};
 		\support{4}{a}[90];
+		\support{4ooo}{b}[90];
 	\end{tikzpicture}\end{lstlisting}\vspace{-7mm}
 \end{minipage}
 
@@ -1179,49 +1201,6 @@ Another important note is, that every \tikzsym command has to be completed with 
 	\begin{tikzpicture}
 		\point{a}{0}{0};
 		\support{6}{a}[-45];
-	\end{tikzpicture}\end{lstlisting}\vspace{-7mm}
-\end{minipage}
-
-\endgroup
-
-\begingroup
-\hspace{7mm}\lstinline[emph={support}]|\support{7}{insertion point}[rotation];|
-
-\leftskip=14mm Type $7$ is a floating bearing, identical to type $2$ but drawn with "rollers".
-
-\leftskip=14mm\begin{minipage}[c]{0.3\linewidth}
-	\begin{tikzpicture}[framed]
-	\draw[orange,dashed](0,0) -- (7mm,0mm)(0,0)--(30:	7mm);
-	\draw[orange,->] (.7,0) arc (0:30:7mm);
-	\node[orange] (x) at (1.1,.2) {$30^\circ$};
-	\point{a}{0}{0};
-	\support{7}{a}[30];
-	\end{tikzpicture}
-\end{minipage}
-\begin{minipage}{0.61\linewidth}\begin{lstlisting}
-	\begin{tikzpicture}
-	\point{a}{0}{0};
-	\support{7}{a}[30];
-	\end{tikzpicture}\end{lstlisting}\vspace{-7mm}
-\end{minipage}
-
-\endgroup
-
-\begingroup
-\hspace{7mm}\lstinline[emph={support}]|\support{8}{insertion point}[rotation];|
-
-\leftskip=14mm Type $8$ is identical to type $4$ but drawn with "rollers".
-
-\leftskip=14mm\begin{minipage}[c]{0.3\linewidth}
-	\begin{tikzpicture}[framed]
-	\point{a}{0}{0};
-	\support{8}{a}[90];
-	\end{tikzpicture}
-\end{minipage}
-\begin{minipage}{0.61\linewidth}\begin{lstlisting}
-	\begin{tikzpicture}
-	\point{a}{0}{0};
-	\support{8}{a}[90];
 	\end{tikzpicture}\end{lstlisting}\vspace{-7mm}
 \end{minipage}
 
@@ -1294,9 +1273,13 @@ Another important note is, that every \tikzsym command has to be completed with 
 \endgroup
 
 \begingroup
-\hspace{7mm}\lstinline[emph={hinge}]|\hinge{3}{insertion point}[rotation];|
 
+\begin{lstlisting}[emph={hinge},backgroundcolor=\color{white},xleftmargin=7mm,belowskip=-0.5cm]
+\hinge{3}{insertion point}[rotation];
+\hinge{3ooo}{insertion point}[rotation];
+\end{lstlisting}
 \leftskip=14mm Type $3$ describes a shear hinge. There is an additional option for rotating the hinge. The rotation works similar to the rotation of the supports.
+Type \texttt{3ooo} is an alternative representation for type $3$.
 
 \leftskip=14mm\begin{minipage}[c]{0.3\linewidth}
 	\begin{tikzpicture}[framed]
@@ -1313,6 +1296,24 @@ Another important note is, that every \tikzsym command has to be completed with 
 		\point{a}{0}{0};	\point{b}{2}{0};	\point{c}{4}{0};
 		\beam{1}{a}{b};	\beam{1}{b}{c};
 		\hinge{3}{b};
+	\end{tikzpicture}\end{lstlisting}\vspace{-7mm}
+\end{minipage}
+    
+\leftskip=14mm\begin{minipage}[c]{0.3\linewidth}
+	\begin{tikzpicture}[framed]
+	\point{a}{0}{0};
+	\point{b}{2}{0};
+	\point{c}{4}{0};
+	\beam{1}{a}{b};
+	\beam{1}{b}{c};
+	\hinge{3ooo}{b};
+	\end{tikzpicture}
+\end{minipage}
+\begin{minipage}{0.61\linewidth}\begin{lstlisting}
+	\begin{tikzpicture}
+	\point{a}{0}{0};	\point{b}{2}{0};	\point{c}{4}{0};
+	\beam{1}{a}{b};	\beam{1}{b}{c};
+	\hinge{3ooo}{b};
 	\end{tikzpicture}\end{lstlisting}\vspace{-7mm}
 \end{minipage}
 
@@ -1364,31 +1365,6 @@ Another important note is, that every \tikzsym command has to be completed with 
 		\point{a}{0}{0};	\point{b}{2}{1};	\point{c}{4}{.5};
 		\beam{1}{a}{b}[0][1];	\beam{1}{b}{c}[1];
 		\hinge{5}{b}[a][c];
-	\end{tikzpicture}\end{lstlisting}\vspace{-7mm}
-\end{minipage}
-
-\endgroup
-
-\begingroup
-\hspace{7mm}\lstinline[emph={hinge}]|\hinge{6}{insertion point}[rotation];|
-
-\leftskip=14mm Type $6$ is an alternative representation of type $3$.
-
-\leftskip=14mm\begin{minipage}[c]{0.3\linewidth}
-	\begin{tikzpicture}[framed]
-	\point{a}{0}{0};
-	\point{b}{2}{0};
-	\point{c}{4}{0};
-	\beam{1}{a}{b};
-	\beam{1}{b}{c};
-	\hinge{6}{b};
-	\end{tikzpicture}
-\end{minipage}
-\begin{minipage}{0.61\linewidth}\begin{lstlisting}
-	\begin{tikzpicture}
-	\point{a}{0}{0};	\point{b}{2}{0};	\point{c}{4}{0};
-	\beam{1}{a}{b};	\beam{1}{b}{c};
-	\hinge{6}{b};
 	\end{tikzpicture}\end{lstlisting}\vspace{-7mm}
 \end{minipage}
 
