@@ -26,10 +26,10 @@ for teaching. For this reason I developed, in cooperation with the
 
 
 There are two different types of libraries available: one for 2D structures
-(``stanli.sty``) and one for 3D structures
-(``stanli3d.sty``). In the following article only the 2D library
+and one for 3D structures, both provided by the ``stanli.sty`` package.
+In the following article only the 2D library
 will be discussed, but the principles and methods are the same for 3D
-structures.
+structures, as shown in the example at the end of this document.
 
 
 
@@ -126,7 +126,7 @@ generated. In the manual both examples are explained in detail.
 2D Simplified Roof
 ------------------
 
-By using the library ``stanli``, the following graph can be created
+By using the 2D library, the following graph can be created
 in a very short time: ::
 
    \begin{tikzpicture}
@@ -191,7 +191,7 @@ in a very short time: ::
 3D Support Construction
 -----------------------
 
-By using the library ``stanli3d``, the following graph can be created
+By using the 3D library, the following graph can be created
 in a very short time: ::
 
   \setcoords{-25}{10}[1][1.2]
