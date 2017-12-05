@@ -1166,21 +1166,28 @@ Two variants are available, (\texttt{4}) with a slider and (\texttt{4ooo}) with 
 \endgroup
 
 \begingroup
-\hspace{7mm}\lstinline[emph={support}]|\support{5}{insertion point}[rotation];|
-
-
+\begin{lstlisting}[emph={support},backgroundcolor=\color{white},xleftmargin=7mm,belowskip=-0.5cm]
+\support{5}{insertion point}[rotation];
+\support{5c}{insertion point}[rotation];
+\end{lstlisting}
 \leftskip=14mm Type $5$ describes a spring.
+Two alternative representations are available, (\texttt{5}) will use a
+zig-zag line and (\texttt{5c}) a coil.
 
 \leftskip=14mm\begin{minipage}[c]{0.3\linewidth}
 	\begin{tikzpicture}[framed]
 			\point{a}{0}{0};
+			\point{b}{2}{0};
 			\support{5}{a};
+			\support{5c}{b};
 	\end{tikzpicture}
 \end{minipage}
 \begin{minipage}{0.61\linewidth}\begin{lstlisting}
 	\begin{tikzpicture}
 		\point{a}{0}{0};
+		\point{b}{2}{0};
 		\support{5}{a};
+		\support{5c}{b};
 	\end{tikzpicture}\end{lstlisting}\vspace{-7mm}
 \end{minipage}
 

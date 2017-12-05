@@ -85,6 +85,11 @@
 \newcommand{\springPostLength}{3pt}			%
 \newcommand{\springAmplitude}{2.5mm}		%
 \newcommand{\springSegmentLength}{5pt}	%
+\newcommand{\springCoilLength}{10mm}      	%
+\newcommand{\springCoilPreLength}{3pt}      %
+\newcommand{\springCoilPostLength}{1pt}			%
+\newcommand{\springCoilAmplitude}{2.5mm}		%
+\newcommand{\springCoilSegmentLength}{3pt}	%
 
 \newcommand{\supportGap}{1mm}						%
 \newcommand{\supportBasicLength}{12mm}	%
@@ -146,7 +151,7 @@
 \tikzstyle{tinyLine}=[line width=\tinyLineWidth,]
 
 %------------------------------------------------
-%		spring style
+%		spring styles
 %------------------------------------------------
 
 \tikzstyle{spring} =	[
@@ -158,6 +163,19 @@
 			post length=\springPostLength,
 			segment length=\springSegmentLength,
 			amplitude=\springAmplitude
+		},
+		decorate,
+]
+                
+\tikzstyle{coilspring} =	[
+	normalLine,
+	decoration=
+		{
+			coil,
+			pre length=\springCoilPreLength,
+			post length=\springCoilPostLength,
+			segment length=\springCoilSegmentLength,
+			amplitude=\springCoilAmplitude
 		},
 		decorate,
 ]
@@ -382,13 +400,29 @@
 		\end{scope}
 	}{}
 	
-	\ifthenelse{\equal{#1}{5}}{		%
+	\ifthenelse{\equal{#1}{5}}{ % Linear spring with zig-zag
 		\begin{scope}[rotate around={#3:(#2)}]
 			\draw [spring] (#2) -- ++(0,-\springLength);
 			\draw [normalLine] ($(#2)+1*(\supportBasicLength/2,-\springLength)$) -- ++(-\supportBasicLength,0);
 			\clip ($(#2)+1*(-\supportBasicLength/2,-\supportBasicHeight-\springLength)$) rectangle ($(#2)+1*(\supportBasicLength/2,-\springLength)$);
 			\draw[hatching]($(#2)+1*(\supportHatchingLength/2,-\springLength)$) -- ++(-\supportHatchingLength,0);
 		\end{scope}
+	}{}
+	
+	\ifthenelse{\equal{#1}{5c}}{ % Linear spring with coil
+          \begin{scope}[rotate around={#3:(#2)}]
+            \draw [coilspring]
+              (#2) -- ++(0,-\springCoilLength);
+            \draw [normalLine]
+              ($(#2)+1*(\supportBasicLength/2,-\springLength)$)
+              -- ++(-\supportBasicLength,0);
+            \clip
+              ($(#2)+1*(-\supportBasicLength/2,-\supportBasicHeight-\springLength)$)
+              rectangle ($(#2)+1*(\supportBasicLength/2,-\springLength)$);
+            \draw[hatching]
+              ($(#2)+1*(\supportHatchingLength/2,-\springLength)$)
+              -- ++(-\supportHatchingLength,0);
+          \end{scope}
 	}{}
 
 	\ifthenelse{\equal{#1}{6}}{		%
