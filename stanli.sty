@@ -448,11 +448,11 @@
                 arc [start angle=0,end angle=180,radius=5.6mm];
             \end{scope}
             \draw [normalLine]
-              ($(#2)+1*(-\springTorsionRadius -\supportBasicLength/6, 0)$)
-              -- ++(\supportBasicLength/3, 0);
+              ($(#2)+1*(-\springTorsionRadius -\supportBasicLength/7, 0)$)
+              -- ++(\supportBasicLength/3.5, 0);
             \clip
-              ($(#2)+1*(-\springTorsionRadius-\supportBasicLength/6,0)$)
-              rectangle ++(\supportBasicLength/3,-\supportBasicHeight/2);
+              ($(#2)+1*(-\springTorsionRadius-\supportBasicLength/7,0)$)
+              rectangle ++(\supportBasicLength/3.5,-\supportBasicHeight/2);
             \draw[hatchingspring]
               ($(#2)+1*(0,0)$)
               -- ++(-\supportHatchingLength/2,0);
@@ -474,13 +474,13 @@
                 arc [start angle=180,end angle=0,radius=5.6mm];
             \end{scope}
             \draw [normalLine]
-              ($(#2)+1*(\springTorsionRadius -\supportBasicLength/6, 0)$)
-              -- ++(\supportBasicLength/3, 0);
+              ($(#2)+1*(\springTorsionRadius -\supportBasicLength/7, 0)$)
+              -- ++(\supportBasicLength/3.5, 0);
             \clip
-              ($(#2)+1*(\springTorsionRadius-\supportBasicLength/6,0)$)
-              rectangle ++(\supportBasicLength/3,-\supportBasicHeight/2);
+              ($(#2)+1*(\springTorsionRadius-\supportBasicLength/7,0)$)
+              rectangle ++(\supportBasicLength/3.5,-\supportBasicHeight/2);
             \draw[hatchingspring]
-              ($(#2)+1*(\springTorsionRadius + \supportHatchingLength/2 -\supportBasicLength/3 ,0)$)
+              ($(#2)+1*(2*\springTorsionRadius ,0)$)
               -- ++(-\supportHatchingLength/2,0);
           \end{scope}
 	}{}
