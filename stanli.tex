@@ -880,7 +880,7 @@ For illustration a small example of a single force
 \end{lstlisting} 
 
 
-When entering size values the base unit is always predefined in $[cm]$.  Percentage values $\%$ are always specified as decimal values; for example, $100\% = 1.0 $ and $ 10 \% $ corresponds to $ 0.1 $.
+When entering size values the base unit is always predefined in $[\mathrm{cm}]$.  Percentage values $\%$ are always specified as decimal values; for example, $100\% = 1.0 $ and $ 10 \% $ corresponds to $ 0.1 $.
 
 Another important note is, that every \tikzsym command has to be completed with an semicolon ``;''. If this semicolon is not set, the command can not be performed, this leads finally to an error message by the compilation.
 
@@ -2407,7 +2407,7 @@ In order to create the desired roof structure, a file has to be created first. I
 \subsection{First steps}
 \label{sec:ErsteSchritte}
 
-First, we have to specify corresponding points with the command \lstinline|\point|. On this basis, the remaining library elements are placed. Since the points are not shown in the graph, it is recommended to create a helping grid, to predict the distances and sizes. The basic size of a grid element is $1~cm $ by $1 ~cm $.
+First, we have to specify corresponding points with the command \lstinline|\point|. On this basis, the remaining library elements are placed. Since the points are not shown in the graph, it is recommended to create a helping grid, to predict the distances and sizes. The basic size of a grid element is $1\,\mathrm{cm}$ by $1\,\mathrm{cm}$.
 
 \begin{minipage}[c]{0.65\linewidth}
 	\begin{tikzpicture}[framed]
@@ -2421,7 +2421,7 @@ First, we have to specify corresponding points with the command \lstinline|\poin
 \end{tikzpicture}\end{lstlisting}\vspace{-7mm}
 \end{minipage}
 
-Here, it is obvious that the roof structure with a width of $ 22 ~cm $ does not fit on this page. In order not to change all the dimensions recalculating all distances, the command \lstinline|scaling| can be used. Hereby, the distances are scaled depending on the desired scaling factor. However, the symbols and the entries remain unchanged. 
+Here, it is obvious that the roof structure with a width of $22\,\mathrm{cm}$ does not fit on this page. In order not to change all the dimensions recalculating all distances, the command \lstinline|scaling| can be used. Hereby, the distances are scaled depending on the desired scaling factor. However, the symbols and the entries remain unchanged. 
 
 Note, since the help grid is a function of \tikzsym, the scaling command can not be used for the guides. If we recalculate the size of the grid we get following situation:
 
@@ -2978,7 +2978,7 @@ For illustration a small example of a single force
 	\dload{type}{insertion point}[rotation A][rotation B][load length][load distance];
 \end{lstlisting} 
 
-When entering size values the base unit is always predefined in $[cm]$.  Percentage values $\%$ are always specified as decimal values; for example, $100\% = 1.0 $ and $ 10 \% $ corresponds to $ 0.1 $.
+When entering size values the base unit is always predefined in $[\mathrm{cm}]$.  Percentage values $\%$ are always specified as decimal values; for example, $100\% = 1.0 $ and $ 10 \% $ corresponds to $ 0.1 $.
 
 Another important note is, that every \tikzsym command has to be completed with an semicolon ``;''. If this semicolon is not set, the command can not be performed, this leads finally to an error message by the compilation.
 
