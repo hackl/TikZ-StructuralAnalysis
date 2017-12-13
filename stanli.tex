@@ -317,7 +317,7 @@ Beams and bars (see \ref{sec:BalkenUndStabe})
 						\beam{4}{initial point}{end point}[rounded initial point][rounded end point];										
 \end{lstlisting}\vspace{-10mm}
 
-Supports and Bearings(see \ref{sec:Lager})
+Supports and Bearings (see \ref{sec:Lager})
 
 \begin{lstlisting}[emph={support},backgroundcolor=\color{white}]
 		\support{type}{insertion point}[rotation];
@@ -795,7 +795,7 @@ Special additions which are needed for a better understanding are shown in orang
 
 \subsection{Additional help}
 
-Is the manual not enough, occur some ambiguities or some \tikzsym commands are unclear, please have a look in the ``\tikzsym and PGF Manual'' von Till Tantau.
+Is the manual not enough, occur some ambiguities or some \tikzsym commands are unclear, please have a look in the ``\tikzsym and PGF Manual'' by Till Tantau.
 
 Should you have any further questions, please do not hesitate to contact me. 
 
@@ -804,7 +804,7 @@ Should you have any further questions, please do not hesitate to contact me.
 
 Actually, we can hardly speak of an installation since only the necessary package \lstinline|\usepackage{stanli}| must be installed.
 
-Is the package installed or the style file i stored in the main file folder, so the library can be imported by \lstinline|\usepackage{stanli}|, as a following example shows:
+Is the package installed or the style file is stored in the main file folder, so the library can be imported by \lstinline|\usepackage{stanli}|, as a following example shows:
 
 \begin{lstlisting}
 %------------
@@ -851,7 +851,7 @@ To use all commands and options of \tikzsym, possibly some packages need to be r
 \subsection{Order}
 \label{sec:Reihenfolge}
 
-The library provides a number of standard elements available to the user. For example, bearings, joints, forces, etc. Since \tikzsym displayes those elements at the bottom which are entered first, it must be ensured that the element insert in the correct order. The following order is recommended:
+The library provides a number of standard elements available to the user. For example, bearings, joints, forces, etc. Since \tikzsym displays those elements at the bottom which are entered first, it must be ensured that the element is inserted in the correct order. The following order is recommended:
 
 \begin{enumerate}
 	\item Points \lstinline|\point|
@@ -933,7 +933,7 @@ Another important note is, that every \tikzsym command has to be completed with 
 \lstinline[emph={beam}]|\beam{type}{initial point}{end point}[rounded initial point][rounded end point];|
 
 
-\leftskip=7mm The library includes several types of beams and bars. These are determined by the type. To construct such a beam or bar, two points must first be defined, the starting point and the end point. Furthermore, is an optional available to round the ends of the bars. $[0]$ or no entry means the corresponding end of the beam is not rounded, $[1]$ the end is rounded. This option is especially needed when multiple bars meet with different angles.
+\leftskip=7mm The library includes several types of beams and bars. These are determined by the type. To construct such a beam or bar, two points must first be defined, the starting point and the end point. Furthermore, there is an option available to round the ends of the bars. $[0]$ or no entry means the corresponding end of the beam is not rounded, $[1]$ the end is rounded. This option is especially needed when multiple bars meet with different angles.
 
 \endgroup
 
@@ -1230,7 +1230,7 @@ Type \texttt{6cw} provides a clockwise variant.
 \lstinline[emph={hinge}]|\hinge{type}{insertion point}[optional][optional][optional];|
 
 
-\leftskip=7mm The above described bearings might be combined with the following joints. The library contains different types of joints. Beside the insertion point, several other parameters are available. However, the optional parameter are mainly dependent on the type of joint.
+\leftskip=7mm The above described bearings might be combined with the following joints. The library contains different types of joints. Besides the insertion point, several other parameters are available. However, the optional parameter are mainly dependent on the type of joint.
 
 \endgroup
 
@@ -1263,7 +1263,7 @@ Type \texttt{6cw} provides a clockwise variant.
 \hspace{7mm}\lstinline[emph={hinge}]|\hinge{2}{insertion point}[initial point][end point][orientation];|
 
 
-\leftskip=14mm In addition to the insertion point, for type $2$ - the half-hinge - the start and end point have to be specify, for the purpose of orientation. This information is marked as optional by $[~]$, but must be completed in order to generate such a half-hinge. The joint is inserted at the insertion point and stretches between the start and the end point. The input $[0]$ or no input in the orientation means that the half-hinge on the lower side, ie on the side of the characteristic fiber. A $[1]$ in contrast means the exact opposite.
+\leftskip=14mm In addition to the insertion point, for type $2$ - the half-hinge - the start and end point have to be specified, for the purpose of orientation. This information is marked as optional by $[~]$, but must be completed in order to generate such a half-hinge. The joint is inserted at the insertion point and stretches between the start and the end point. The input $[0]$ or no input in the orientation means that the half-hinge on the lower side, ie on the side of the characteristic fiber. A $[1]$ in contrast means the exact opposite.
 
 \leftskip=14mm\begin{minipage}[c]{0.3\linewidth}
 	\begin{tikzpicture}[framed]
@@ -1835,7 +1835,7 @@ Here the angle is counted from the x-axis.
 \lstinline[emph={notation}]|\notation{type}{insertion point}{}[][][];|
 
 
-\leftskip=7mm With the element \lstinline|\notation| various kinds of labels can be insert. Because different input parameters are require, these are explained in detail for the individual types. Furthermore, in all types the optional parameters \lstinline|orientation| is used. Here, the \tikzsym commands must be used, these are described in Section \ref{sec:OrientierungVonTextelementen}.
+\leftskip=7mm With the element \lstinline|\notation| various kinds of labels can be inserted. Because different input parameters are required, these are explained in detail for the individual types. Furthermore, in all types the optional parameters \lstinline|orientation| is used. Here, the \tikzsym commands must be used, these are described in Section \ref{sec:OrientierungVonTextelementen}.
 \endgroup
 
 \begingroup
@@ -2494,7 +2494,7 @@ Now the points of the structure can be easily entered. Since the points, as ment
 \subsection{Roof structure}
 \label{sec:Dachdecken}
 
-After the foundation stone was laid by the points, we can start to connect the points with  beams and bars. In the library bars are with or without characteristics fiber available. With the command \lstinline|\beam| they can be brought to `` paper''.
+After the foundation stone was laid by the points, we can start to connect the points with  beams and bars. In the library bars are with or without characteristic fiber available. With the command \lstinline|\beam| they can be brought to `` paper''.
 
 \begin{minipage}[c]{0.65\linewidth}
 \begin{tikzpicture}[framed]
@@ -2963,7 +2963,7 @@ Now the guides can be deleted and the scaling factor can be chosen so that the e
 \subsection{Order}
 \label{sec:3dReihenfolge}
 
-The library provides a number of standard elements available to the user. For example, bearings, joints, forces, etc. Since \tikzsym displayes those elements at the bottom which are entered first, it must be ensured that the element insert in the correct order. The following order is recommended:
+The library provides a number of standard elements available to the user. For example, bearings, joints, forces, etc. Since \tikzsym displayes those elements at the bottom which are entered first, it must be ensured that the element is inserted in the correct order. The following order is recommended:
 
 \begin{enumerate}
 	\item Points \lstinline|\dpoint|
@@ -2971,7 +2971,7 @@ The library provides a number of standard elements available to the user. For ex
 	\item Axis \lstinline|\daxis|
 	\item Supports and bearings \lstinline|\dsupport|
 	\item Joints \lstinline|\dhinge|
-	\item Force and moments \lstinline|\dload| respectively \lstinline|\dlineload|
+	\item Forces and moments \lstinline|\dload| respectively \lstinline|\dlineload|
 	\item Internal forces \lstinline|\dinternalforces|
 	\item Dimensioning \lstinline|\ddimensioning|
 	\item Labeling \lstinline|\dnotation|
@@ -3032,7 +3032,7 @@ With the command \lstinline|\setcoords| (see \ref{sec:3dsetcoords}), the orienta
 \begingroup
 \lstinline[emph={dpoint}]|\dpoint{name}{x-coordiante}{y-coordiante}{z-coordinate};| 
 
-\leftskip=7mm In order to be able, to place elements, points must be defined previously. For the labeling a short and precise name should be chosen. Because other elements will reference back to these points, in the later stages of the construction. Since \tikzsym uses Cartesian coordinates, this must be entered in accordance with the coordinate system. This means that is first entry corresponds to the x-coordinate and the second to the y-coordinate and the third to the z-coordinate. Because, the points are not shown in the drawing, with the command \lstinline|\showpoint| (see \ref{sec:3dshowpoint}) there is the possibility to show the labels of the points.
+\leftskip=7mm In order to be able, to place elements, points must be defined previously. For the labeling a short and precise name should be chosen. Because other elements will reference back to these points, in the later stages of the construction. Since \tikzsym uses Cartesian coordinates, this must be entered in accordance with the coordinate system. This means that its first entry corresponds to the x-coordinate and the second to the y-coordinate and the third to the z-coordinate. Because, the points are not shown in the drawing, with the command \lstinline|\showpoint| (see \ref{sec:3dshowpoint}) there is the possibility to show the labels of the points.
 
 \leftskip=7mm\begin{minipage}[c]{0.3\linewidth}
 	\begin{tikzpicture}[framed,coords]
@@ -3070,7 +3070,7 @@ With the command \lstinline|\setcoords| (see \ref{sec:3dsetcoords}), the orienta
 \begingroup
 \lstinline[emph={dbeam}]|\dbeam{type}{initial point}{end point}[rounded initial point][rounded end point];|
 
-\leftskip=7mm The library includes several types of beams and bars. These are determined by the type. To construct such a beam or bar, two points must first be defined, the starting point and the end point. Furthermore, is an optional available to round the ends of the bars. $[0]$ or no entry means the corresponding end of the beam is not rounded, $[1]$ the end is rounded. This option is especially needed when multiple bars meet with different angles.
+\leftskip=7mm The library includes several types of beams and bars. These are determined by the type. To construct such a beam or bar, two points must first be defined, the starting point and the end point. Furthermore, there is an option available to round the ends of the bars. $[0]$ or no entry means the corresponding end of the beam is not rounded, $[1]$ the end is rounded. This option is especially needed when multiple bars meet with different angles.
 
 \endgroup
 
@@ -3320,7 +3320,7 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 \begingroup
 \hspace{7mm}\lstinline[emph={dsupport}]|\dsupport{2}{insertion point}[plane];|
 
-\leftskip=14mm Type $2$ is a fixed support which can absorb all forces and moments. This support has to be placed parallel to an coordinate plane.
+\leftskip=14mm Type $2$ is a fixed support which can absorb all forces and moments. This support has to be placed parallel to a coordinate plane.
 
 \leftskip=14mm\begin{minipage}[c]{0.3\linewidth}
 	\begin{tikzpicture}[framed,coords]
@@ -3460,7 +3460,7 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 \begingroup
 \hspace{7mm}\lstinline[emph={dhinge}]|\dhinge{2}{insertion point}[initial point][end point][orientation];|
 
-\leftskip=14mm In addition to the insertion point, for type $2$ - the half-hinge - the start and end point have to be specify, for the purpose of orientation. This information is marked as optional by $[~]$, but must be completed in order to generate such a half-hinge. The joint is inserted at the insertion point and stretches between the start and the end point. The input $[0]$ or no input in the orientation means that the half-hinge is placed inside. A $[1]$ in contrast means the exact opposite.
+\leftskip=14mm In addition to the insertion point, for type $2$ - the half-hinge - the start and end point have to be specified, for the purpose of orientation. This information is marked as optional by $[~]$, but must be completed in order to generate such a half-hinge. The joint is inserted at the insertion point and stretches between the start and the end point. The input $[0]$ or no input in the orientation means that the half-hinge is placed inside. A $[1]$ in contrast means the exact opposite.
 
 \leftskip=14mm\begin{minipage}[c]{0.3\linewidth}
 	\begin{tikzpicture}[framed,coords]
@@ -3553,14 +3553,14 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 \begingroup
 \lstinline[emph={dload}]|\dload{type}{insertion point}[rotation A][rotation B][load length][load distance];|
 
-\leftskip=7mm The single load command includes both individual forces and moments. To place such an element it is necessary to define an insertion point. The orientation of the singe loads and the moments are defined by spherical coordinates. As an optional parameter the length of the vector and the distance to the insertion point can be changed. Per default the distance to the beam axis is the radius of a joint.
+\leftskip=7mm The single load command includes both individual forces and moments. To place such an element it is necessary to define an insertion point. The orientation of the single loads and the moments are defined by spherical coordinates. As an optional parameter the length of the vector and the distance to the insertion point can be changed. Per default the distance to the beam axis is the radius of a joint.
 
 \endgroup
 
 \begingroup
 \hspace{7mm}\lstinline[emph={dload}]|\dload{1}{insertion point}[rotation A][rotation B][load length][load distance];|
 
-\leftskip=14mm The first type describes a single force. With the optional parameters the orientation can be changed. Rotation $A$ describes the angle form the zenith to the equator, and rotation $B$ the angle around the equator.
+\leftskip=14mm The first type describes a single force. With the optional parameters the orientation can be changed. Rotation $A$ describes the angle from the zenith to the equator, and rotation $B$ the angle around the equator.
 
 \leftskip=14mm\begin{minipage}[c]{0.3\linewidth}
 	\begin{tikzpicture}[framed,coords]
@@ -3825,7 +3825,7 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 									[end force value][force interval];
 \end{lstlisting}\vspace{-10mm}
 
-\leftskip=14mm Type $5$ is contrary to the line loads mentioned above, a spatial load and thus independent of the different coordinate planes. Type $5$ is similar to $1$ and $2$ a force, which is directed to the beam axis. The optional specification of the rotation angle allow to changed the alignment of the line load, similar to the single load. Otherwise, the same parameters as above apply.
+\leftskip=14mm Type $5$ is contrary to the line loads mentioned above, a spatial load and thus independent of the different coordinate planes. Type $5$ is similar to $1$ and $2$ a force, which is directed to the beam axis. The optional specification of the rotation angle allows to change the alignment of the line load, similar to the single load. Otherwise, the same parameters as above apply.
 
 \leftskip=14mm\begin{minipage}[c]{0.3\linewidth}
 	\begin{tikzpicture}[framed,coords]
@@ -3946,7 +3946,7 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 							[measure][help line length];
 \end{lstlisting}\vspace{-7mm}
 
-\leftskip=7mm Basically, due to the right choice of the coordinate plane, all dimensions can be distinguished in the program. As with the line loads, also here the the start and end point is required. However, the distance between the the dimension line and the the corresponding points is not entered directly, but the dimension line refers to the coordinate origin. Therefore, it is necessary to specify the coordinate plane. Optional a label can be inserted at any dimension line. Also some help lines for the dimension can be plotted.
+\leftskip=7mm Basically, due to the right choice of the coordinate plane, all dimensions can be distinguished in the program. As with the line loads, also here the the start and end point is required. However, the distance between the the dimension line and the the corresponding points is not entered directly, but the dimension line refers to the coordinate origin. Therefore, it is necessary to specify the coordinate plane. Optionally a label can be inserted at any dimension line. Also some help lines for the dimension can be plotted.
 
 \leftskip=14mm\begin{minipage}[c]{0.3\linewidth}
 	\begin{tikzpicture}[framed,coords]
@@ -3993,7 +3993,7 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 \begingroup
 \lstinline[emph={dnotation}]|\dnotation{type}{insertion point}{obligatory}[optional][optional][optional][optional];|
 
-\leftskip=7mm With the element \lstinline|\dnotation| various kinds of labels can be insert. Because different input parameters are require, these are explained in detail for the individual types. Furthermore, in all types the optional parameters \lstinline|orientation| is used. Here, the \tikzsym commands must be used, these are described in Section \ref{sec:OrientierungVonTextelementen}.
+\leftskip=7mm With the element \lstinline|\dnotation| various kinds of labels can be inserted. Because different input parameters are required, these are explained in detail for the individual types. Furthermore, in all types the optional parameter \lstinline|orientation| is used. Here, the \tikzsym commands must be used, these are described in Section \ref{sec:OrientierungVonTextelementen}.
 
 \endgroup
 
@@ -4006,13 +4006,13 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 	\begin{tikzpicture}[framed,coords]
 		\filldraw [orange] (0,0,0) circle (2pt);
 		\dpoint{a}{0}{0}{0};
-		\dnotation{1}{a}{Typ 1};
+		\dnotation{1}{a}{Type 1};
 	\end{tikzpicture}
 \end{minipage}
 \begin{minipage}{0.61\linewidth}\begin{lstlisting}
 	\begin{tikzpicture}[coords]
 		\dpoint{a}{0}{0}{0};
-		\dnotation{1}{a}{Typ 1};
+		\dnotation{1}{a}{Type 1};
 	\end{tikzpicture}\end{lstlisting}\vspace{-7mm}
 \end{minipage}
 
@@ -4027,13 +4027,13 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 	\begin{tikzpicture}[framed]
 		\filldraw [orange] (0,0,0) circle (2pt);
 		\dpoint{a}{0}{0}{0};
-		\dnotation{2}{a}{Typ 2}[below right];
+		\dnotation{2}{a}{Type 2}[below right];
 	\end{tikzpicture}
 \end{minipage}
 \begin{minipage}{0.61\linewidth}\begin{lstlisting}
 	\begin{tikzpicture}[coords]
 		\dpoint{a}{0}{0}{0};
-		\dnotation{2}{a}{Typ 2}[below right];
+		\dnotation{2}{a}{Type 2}[below right];
 	\end{tikzpicture}\end{lstlisting}\vspace{-7mm}
 \end{minipage}
 
@@ -4056,7 +4056,7 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 		\dbeam{1}{a}{b}[0][1];
 		\dbeam{1}{b}{c};
 		\dnotation{3}{a}{b}[$i$][.5][above right];
-		\dnotation{3}{b}{c}[Typ 3][.3][above right];
+		\dnotation{3}{b}{c}[Type 3][.3][above right];
 	\end{tikzpicture}
 \end{minipage}
 \begin{minipage}{0.61\linewidth}\begin{lstlisting}
@@ -4065,7 +4065,7 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 		\dpoint{c}{1.5}{3}{-1};
 		\dbeam{1}{a}{b}[0][1];			\dbeam{1}{b}{c};
 		\dnotation{3}{a}{b}[$i$][.5][above right];
-		\dnotation{3}{b}{c}[Typ 3][.3][above right];
+		\dnotation{3}{b}{c}[Type 3][.3][above right];
 	\end{tikzpicture}\end{lstlisting}\vspace{-7mm}
 \end{minipage}
 
@@ -4167,7 +4167,7 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 \begingroup
 \lstinline[emph={daddon}]|\daddon{type}{plane}[plane distance]{obligatory}{obligatory}{obligatory}[optional];|
 
-\leftskip=7mm Among these elements fall all symbols that you can not assign to the above introduced elements. Since these types of items require different input parameters, these are explained in detail for each individual types. However, all elements have in common that the corresponding coordination plane must be specified (see \ref{sec:3dEbenenUndRaumlicheElemente}).
+\leftskip=7mm Among these elements fall all symbols that you can not assign to the above introduced elements. Since these types of items require different input parameters, these are explained in detail for each individual types. However, all elements have in common that the corresponding coordinate plane must be specified (see \ref{sec:3dEbenenUndRaumlicheElemente}).
 
 \endgroup
 
@@ -4831,7 +4831,7 @@ In order to create the desired structural design, a file has to be created first
 \subsection{Preparation}
 \label{sec:3dVorbereitung}
 
-Before starting the construction, relevant settings has to be made in advance. Among others, a new coordinate system with \lstinline|\setcoords| will be introduced. Likewise, the labeling of the global and local axes can be changed.
+Before starting the construction, relevant settings have to be made in advance. Among others, a new coordinate system with \lstinline|\setcoords| will be introduced. Likewise, the labeling of the global and local axes can be changed.
 
 \begin{lstlisting}
 \setcoords{-25}{10}[1][1.2]
@@ -4961,7 +4961,7 @@ In order not to lose the overview, it is advisable to display a global axis syst
 \subsection{Supports and joints}
 \label{sec:3dLagerUndGelenke}
 \vspace*{-5mm}
-In order to provide more flexibility, and to keep the number of macros as low as possible, their are own commands available for the supports and the joints. Supports are built with the command \lstinline|\dsupport|. However, the corresponding joint must independently created with the command \lstinline|\dhinge|. This allows to combine different bearings with different joints. The important thing is always that the bearing has to be created first and only then the joints should be implemented. This is necessary, because \tikzsym puts the recently drawn figures on the top.
+In order to provide more flexibility, and to keep the number of macros as low as possible, there are own commands available for the supports and the joints. Supports are built with the command \lstinline|\dsupport|. However, the corresponding joint must be independently created with the command \lstinline|\dhinge|. This allows to combine different bearings with different joints. The important thing is always that the bearing has to be created first and only then the joints should be implemented. This is necessary, because \tikzsym puts the recently drawn figures on the top.
 
 \setcoords{-25}{10}[1][1.2]
 \setaxis{2}
@@ -5015,7 +5015,7 @@ In order to provide more flexibility, and to keep the number of macros as low as
 \label{sec:3dSchneeAmDach}
 \vspace*{-5mm}
 
-With the insertion of the joints, the construction is completed and can now be loaded. Besides single loads \lstinline|\dload| are line loads \lstinline|\dlineload| available. Because the loads are not parallel to one of the main coordinate plains, a line load in space (type $5$) has to be used.
+With the insertion of the joints, the construction is completed and can now be loaded. Besides single loads \lstinline|\dload| are line loads \lstinline|\dlineload| available. Because the loads are not parallel to one of the main coordinate planes, a line load in space (type $5$) has to be used.
 
 \setcoords{-25}{10}[1][1.2]
 \setaxis{2}
