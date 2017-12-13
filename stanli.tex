@@ -327,18 +327,23 @@ Supports and Bearings(see \ref{sec:Lager})
 						
 				+*\textbf{\{2\} floating bearing}*+
 						\support{2}{insertion point}[rotation];
+						\support{2oo}{insertion point}[rotation];
+						\support{2ooo}{insertion point}[rotation];
 						
 				+*\textbf{\{3\} fixed support}*+
 						\support{3}{insertion point}[rotation];
 						
 				+*\textbf{\{4\} support}*+
-						\support{4}{insertion point}[rotation];		
+						\support{4}{insertion point}[rotation];	
+						\support{4ooo}{insertion point}[rotation];
 
 				+*\textbf{\{5\} spring}*+
 						\support{5}{insertion point}[rotation];	
+						\support{5c}{insertion point}[rotation];
 
 				+*\textbf{\{6\} torsion spring}*+
-						\support{6}{insertion point}[rotation];										
+						\support{6}{insertion point}[rotation];	
+						\support{6cw}{insertion point}[rotation];
 \end{lstlisting}\vspace{-10mm}
 
 Joints and Hinges (see \ref{sec:Gelenke})
@@ -354,6 +359,7 @@ Joints and Hinges (see \ref{sec:Gelenke})
 						
 				+*\textbf{\{3\} shear joint}*+
 						\hinge{3}{insertion point}[rotation];
+						\hinge{3ooo}{insertion point}[rotation];
 						
 				+*\textbf{\{4\} normal force joint}*+
 						\hinge{4}{insertion point}[rotation];		
