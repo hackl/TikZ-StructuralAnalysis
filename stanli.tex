@@ -858,7 +858,7 @@ To use all commands and options of \tikzsym, possibly some packages need to be r
 \section{General information about the elements}
 \label{sec:AllgemeinesZuDenElementen}
 
-\subsection{Order}
+\subsection{Order}\index{ordering of the elements}
 \label{sec:Reihenfolge}
 
 The library provides a number of standard elements available to the user. For example, bearings, joints, forces, etc. Since \tikzsym displays those elements at the bottom which are entered first, it must be ensured that the element is inserted in the correct order. The following order is recommended:
@@ -907,7 +907,7 @@ Another important note is, that every \tikzsym command has to be completed with 
 %------------------------------------------------
 
 \subsection{Points}
-\label{sec:Punkte}
+\label{sec:Punkte}\STNLindexcommand{point}
 \begingroup
 \lstinline[emph={point}]|\point{name}{x-coordiante}{y-coordiante};| 
 
@@ -936,12 +936,12 @@ Another important note is, that every \tikzsym command has to be completed with 
 %		beam
 %------------------------------------------------
 
-\subsection{Beams and bars}
+\subsection{Beams and bars}\index{beam}\index{bar}
 \label{sec:BalkenUndStabe}
 
 \begingroup
 \lstinline[emph={beam}]|\beam{type}{initial point}{end point}[rounded initial point][rounded end point];|
-
+\STNLindexcommand{beam}
 
 \leftskip=7mm The library includes several types of beams and bars. These are determined by the type. To construct such a beam or bar, two points must first be defined, the starting point and the end point. Furthermore, there is an option available to round the ends of the bars. $[0]$ or no entry means the corresponding end of the beam is not rounded, $[1]$ the end is rounded. This option is especially needed when multiple bars meet with different angles.
 
@@ -949,7 +949,7 @@ Another important note is, that every \tikzsym command has to be completed with 
 
 \begingroup
 \hspace{7mm}\lstinline[emph={beam}]|\beam{1}{initial point}{end point}[rounded initial point][rounded end point];|
-
+\STNLindexcommand{beam}\index{bending beam}\index{beam!bending}
 
 \leftskip=14mm Type $1$ is a bending beam with characteristic fiber\footnote{The characteristic fiber acts as a local coordinate system of the beam.}. Thereby, the characteristic fiber is always below the bar, when you follow the input convention mentioned above (start point - end point).
 
@@ -976,6 +976,7 @@ Another important note is, that every \tikzsym command has to be completed with 
 
 \begingroup
 \hspace{7mm}\lstinline[emph={beam}]|\beam{2}{initial point}{end point}[rounded initial point][rounded end point];|
+\STNLindexcommand{beam}\index{truss rod}
 
 \leftskip=14mm Type $2$ describes a truss rod. Accordingly there is no characteristic fiber. This means, that order of the input points (starting point - end point) does not matter.
 
@@ -1002,6 +1003,7 @@ Another important note is, that every \tikzsym command has to be completed with 
 
 \begingroup
 \hspace{7mm}\lstinline[emph={beam}]|\beam{3}{initial point}{end point};|
+\STNLindexcommand{beam}\index{beam!invisible}\index{invisible!bar}\index{invisible!beam}
 
 \leftskip=14mm Here (type $3$) is an invisible bar or beam. Since this is plotted as a dashed lines, there is no option to round the ends.
 
@@ -1028,6 +1030,7 @@ Another important note is, that every \tikzsym command has to be completed with 
 
 \begingroup
 \hspace{7mm}\lstinline[emph={beam}]|\beam{4}{initial point}{end point}[rounded initial point][rounded end point];|
+\STNLindexcommand{beam}\index{bending beam}\index{beam!bending}
 
 
 \leftskip=14mm Type $4$ has the same look and the same properties as type $1$, but no characteristic fiber. This corresponds to a bending beam without characteristics fiber.
@@ -1059,11 +1062,12 @@ Another important note is, that every \tikzsym command has to be completed with 
 %		support
 %------------------------------------------------
 
-\subsection{Supports and Bearings}
+\subsection{Supports and Bearings}\index{support}\index{bearing}
 \label{sec:Lager}
 
 \begingroup
 \lstinline[emph={support}]|\support{type}{insertion point}[rotation];|
+\STNLindexcommand{support}
 
 \leftskip=7mm In the library the most common types of bearings and springs are available. Similar to all remaining elements the type can be changed by the type variable. Similarly, an insertion point is required to initialize a bearing or a spring. As an optional parameter the rotation is available. Here the angle is counted from the x-axis.
 
@@ -1071,6 +1075,7 @@ Another important note is, that every \tikzsym command has to be completed with 
 
 \begingroup
 \hspace{7mm}\lstinline[emph={support}]|\support{1}{insertion point}[rotation];|
+\STNLindexcommand{support}\index{fixed!bearing}\index{bearing!fixed}
 
 \leftskip=14mm Type $1$ is a fixed bearing, which can absorb both horizontal and vertical forces, but no moments.
 
@@ -1098,6 +1103,7 @@ Another important note is, that every \tikzsym command has to be completed with 
 \support{2oo}{insertion point}[rotation];
 \support{2ooo}{insertion point}[rotation];
 \end{lstlisting}
+\STNLindexcommand{support}\index{floating bearing}\index{bearing!floating}
 \leftskip=14mm Type $2$ is a floating bearing, which can absorb forces
 only in one direction and no moments.
 It has three alternative representations, (\texttt{2}) will use a
@@ -1129,6 +1135,7 @@ slider, (\texttt{2oo}) two rollers and (\texttt{2ooo}) three rollers.
 
 \begingroup
 \hspace{7mm}\lstinline[emph={support}]|\support{3}{insertion point}[rotation];|
+\STNLindexcommand{support}\index{fixed!support}
 
 
 \leftskip=14mm Type $3$ is a fixed support which can absorb all forces and moments.
@@ -1153,6 +1160,7 @@ slider, (\texttt{2oo}) two rollers and (\texttt{2ooo}) three rollers.
 \support{4}{insertion point}[rotation];
 \support{4ooo}{insertion point}[rotation];
 \end{lstlisting}
+\STNLindexcommand{support}\index{fixed!support}
 \leftskip=14mm Type $4$ is also a fixed support. However, these can only absorb forces in one direction and moments.
 Two variants are available, (\texttt{4}) with a slider and (\texttt{4ooo}) with three rollers.
 
@@ -1179,6 +1187,7 @@ Two variants are available, (\texttt{4}) with a slider and (\texttt{4ooo}) with 
 \begin{lstlisting}[emph={support},backgroundcolor=\color{white},xleftmargin=7mm,belowskip=-0.5cm]
 \support{5}{insertion point}[rotation];
 \support{5c}{insertion point}[rotation];
+\STNLindexcommand{support}\index{linear spring support}
 \end{lstlisting}
 \leftskip=14mm Type $5$ describes a spring (zig-zag variant).
 Type \texttt{5c} provides a coil variant.
@@ -1207,6 +1216,7 @@ Type \texttt{5c} provides a coil variant.
 \support{6}{insertion point}[rotation];
 \support{6cw}{insertion point}[rotation];
 \end{lstlisting}
+\STNLindexcommand{support}\index{torsion spring support}
 \leftskip=14mm Type $6$ describes a torsion spring.
 Type \texttt{6cw} provides a clockwise variant.
 
@@ -1233,11 +1243,12 @@ Type \texttt{6cw} provides a clockwise variant.
 %		hinge
 %------------------------------------------------
 
-\subsection{Joints and Hinges}
+\subsection{Joints and Hinges}\index{joint}\index{hinge}
 \label{sec:Gelenke}
 
 \begingroup
 \lstinline[emph={hinge}]|\hinge{type}{insertion point}[optional][optional][optional];|
+\STNLindexcommand{hinge}
 
 
 \leftskip=7mm The above described bearings might be combined with the following joints. The library contains different types of joints. Besides the insertion point, several other parameters are available. However, the optional parameter are mainly dependent on the type of joint.
@@ -1246,6 +1257,7 @@ Type \texttt{6cw} provides a clockwise variant.
 
 \begingroup
 \hspace{7mm}\lstinline[emph={hinge}]|\hinge{1}{insertion point};|
+\STNLindexcommand{hinge}\index{full joint}\index{joint!full}
 
 \leftskip=14mm The basic version of a joint is the type $1$. This is a full joint, which requires only an insertion point.
 
@@ -1271,6 +1283,7 @@ Type \texttt{6cw} provides a clockwise variant.
 
 \begingroup
 \hspace{7mm}\lstinline[emph={hinge}]|\hinge{2}{insertion point}[initial point][end point][orientation];|
+\STNLindexcommand{hinge}\index{hinge!half}\index{half hinge}
 
 
 \leftskip=14mm In addition to the insertion point, for type $2$ - the half-hinge - the start and end point have to be specified, for the purpose of orientation. This information is marked as optional by $[~]$, but must be completed in order to generate such a half-hinge. The joint is inserted at the insertion point and stretches between the start and the end point. The input $[0]$ or no input in the orientation means that the half-hinge on the lower side, ie on the side of the characteristic fiber. A $[1]$ in contrast means the exact opposite.
@@ -1301,6 +1314,7 @@ Type \texttt{6cw} provides a clockwise variant.
 \hinge{3}{insertion point}[rotation];
 \hinge{3ooo}{insertion point}[rotation];
 \end{lstlisting}
+\STNLindexcommand{hinge}\index{hinge!shear}\index{shear hinge}
 \leftskip=14mm Type $3$ describes a shear hinge. There is an additional option for rotating the hinge. The rotation works similar to the rotation of the supports.
 Type \texttt{3ooo} is an alternative representation for type $3$.
 
@@ -1344,6 +1358,7 @@ Type \texttt{3ooo} is an alternative representation for type $3$.
 
 \begingroup
 \hspace{7mm}\lstinline[emph={hinge}]|\hinge{4}{insertion point}[rotation];|
+\STNLindexcommand{hinge}\index{normal force hinge}\index{hinge!normal force}
 
 \leftskip=14mm For Type $4$, the normal force hinge, applies the same as for the shear hinge.
 
@@ -1369,6 +1384,7 @@ Type \texttt{3ooo} is an alternative representation for type $3$.
 
 \begingroup
 \hspace{7mm}\lstinline[emph={hinge}]|\hinge{5}{insertion point}[initial point][end point];|
+\STNLindexcommand{hinge}
 
 
 \leftskip=14mm To achieve a stiffening of a corner, the Type $5$ is applied. In addition to the insertion point, type $5$ requires the input of the start and the end point, similar to the half hinge. This information is marked as optional, by $[~]$, but must be completed in order to generate such a stiff corner.
@@ -1398,11 +1414,12 @@ Type \texttt{3ooo} is an alternative representation for type $3$.
 %		load
 %------------------------------------------------
 
-\subsection{Single load}
+\subsection{Single load}\index{load!single}\index{single!load}
 \label{sec:Einzellast}
 
 \begingroup
 \lstinline[emph={load}]|\load{type}{insertion point}[rotation][length or included angle][loaddistance];|
+\STNLindexcommand{load}
 
 \leftskip=7mm The single load command includes both individual forces and moments. To place such an element it is necessary to define an insertion point. The moments can be plotted in a clockwise or counter clockwise directional. As an optional parameter the rotation is available.
 Here the angle is counted from the x-axis.
@@ -1411,6 +1428,7 @@ Here the angle is counted from the x-axis.
 
 \begingroup
 \hspace{7mm}\lstinline[emph={load}]|\load{1}{insertion point}[rotation][length][loaddistance];|
+\STNLindexcommand{load}\index{single!force}\index{force!single}
 
 \leftskip=14mm The first type describes a single force. In addition to the optional parameter of rotation, there is a parameter to change the length of the force, as well as an optional parameter which regulates the distance to the beam axis. Per default the distance to the beam axis is the radius of a joint.
 
@@ -1440,6 +1458,7 @@ Here the angle is counted from the x-axis.
 
 \begingroup
 \hspace{7mm}\lstinline[emph={load}]|\load{2}{insertion point}[rotation][included angle][loaddistance];|
+\STNLindexcommand{load}\index{load!moment!clockwise}\index{moment!clockwise}
 
 \leftskip=14mm Type $2$, describes a moment that is oriented clockwise. In addition to the optional parameter rotation there is further parameter to specify the included angle and the radius of the moment.
 
@@ -1468,7 +1487,7 @@ Here the angle is counted from the x-axis.
 \begingroup
 
 \hspace{7mm}\lstinline[emph={load}]|\load{3}{insertion point}[rotation][included angle][loaddistance];|
-
+\STNLindexcommand{load}\index{load!moment!counterclockwise}\index{moment!counterclockwise}
 
 \leftskip=14mm Type $3$ describes a moment that is oriented counterclockwise. Otherwise, the same conditions apply as for type $2$.
 
@@ -1498,11 +1517,12 @@ Here the angle is counted from the x-axis.
 %		lineload
 %------------------------------------------------
 
-\subsection{Line loads}
+\subsection{Line loads}\index{load!line}
 \label{sec:Linienlast}
 
 \begingroup
 \lstinline[emph={lineload}]|\lineload{type}{initial point}{end point}[optional][optional][optional][optional];|
+\STNLindexcommand{lineload}
 
 \leftskip=7mm In the library four types of line loads are available. These are determined by their type. Two points (start and end point) must be defined in advance, similar as with the beam and bar elements. The optional properties are mainly dependent on the type of the line load.
 
@@ -1510,6 +1530,7 @@ Here the angle is counted from the x-axis.
 
 \begingroup
 \hspace{7mm}\lstinline[emph={lineload}]|\lineload{1}{initial point}{end point}[initial force value][end force value][force interval];|
+\STNLindexcommand{lineload}\index{linear load!perpendicular}\index{load!linear!perpendicular}\index{force!linear!perpendicular}
 
 \leftskip=14mm Type $1$ is a linear load that is normal to the beam axis. Optionally, the sizes of the initial force and the final force can be adjusted. Is one of the parameters set to $[0]$, the result is a triangular load. The last parameter controls the distance between the individual forces.
 
@@ -1540,6 +1561,7 @@ Here the angle is counted from the x-axis.
 
 \begingroup
 \hspace{7mm}\lstinline[emph={lineload}]|\lineload{2}{initial point}{end point}[initial force value][end force value][force interval];|
+\STNLindexcommand{lineload}\index{linear load!parallel}\index{load!linear!parallel}\index{force!linear!parallel}
 
 \leftskip=14mm For type $2$, the forces are parallel to the y-axis. The optional parameters are the same as for type $1$.
 
@@ -1570,6 +1592,7 @@ Here the angle is counted from the x-axis.
 
 \begingroup
 \hspace{7mm}\lstinline[emph={lineload}]|\lineload{3}{initial point}{end point}[initial force value][end force value][force interval];|
+\STNLindexcommand{lineload}\index{linear load!projection of the forces}\index{force!projection}
 
 \leftskip=14mm Type $3$ is a projection of the forces on the beam. In addition to the start and end force size, the vertical distance to the starting point can also be specified optionally.
 
@@ -1600,6 +1623,7 @@ Here the angle is counted from the x-axis.
 
 \begingroup
 \hspace{7mm}\lstinline[emph={lineload}]|\lineload{4}{initial point}{end point}[force interval][force length];|
+\STNLindexcommand{lineload}
 
 \leftskip=14mm A line load along the bar axis is described by type $4$. In addition to the start and end points, the number of forces and its length can be changed optionally. This line load is always located above the bar. To change the direction, start and end points must be exchanged.
 
@@ -1630,7 +1654,7 @@ Here the angle is counted from the x-axis.
 %		temperature
 %------------------------------------------------
 
-\subsection{Temperature}
+\subsection{Temperature}\index{temperature}
 \label{sec:Temperatur}
 
 \begingroup
@@ -1639,6 +1663,7 @@ Here the angle is counted from the x-axis.
 								[temperature_position][temperature_value_below][temperature_value_above]
 								[text_orientation_below][text_orientation_above];
 \end{lstlisting}
+\STNLindexcommand{temperature}\index{load!temperature}
 \vspace{-5mm}
 \leftskip=7mm The load temperature is described in its own command, because several optional settings can be made (see above). Same as with the line loads, the starting point and the end point of the bar has to be entered, where the temperature load act on. This is followed by the obligatory declaration of the temperature input variables, starting with the temperature at the bottom side of the bar. Optionally, the position of the temperature can be changed. By default, the temperature will be positioned at the center of the beam. Furthermore, there is also the possibility of labeling the temperature. The entries of the text are equal to a \LaTeX input. As a further optional input, the alignment of the text can be modified. Here, \tikzsym commands must be used, these are in section \ref{sec:OrientierungVonTextelementen} described.
 
@@ -1667,11 +1692,12 @@ Here the angle is counted from the x-axis.
 %		internalforces
 %------------------------------------------------
 
-\subsection{Internal forces}
+\subsection{Internal forces}\index{internal forces}
 \label{sec:Schnittkraftverlauf}
 
 \begingroup
 \lstinline[emph={internalforces}]|\internalforces{initial point}{end point}{initial value}{end value}[parabola height][color][bend position];|
+\STNLindexcommand{internalforces}\index{internal forces}\index{force!internal}
 
 
 \leftskip=7mm Same as with the temperature, there are no different types of internal forces. With this function, linear and quadratic curves internal forces can be displayed. The entries are made as repeatedly shown above. First, the start and end points must be determined. Thereafter, the start and end values must be entered. Optional the parabola down can be enter. If there is no entry or the entry is equal to $[0]$, than it is a linear function. Also optionally, the color can be determined. Here the most common colors are available and addressed with the color name. The last optional parameter is used to edit the parabola down and if necessary to adapt the plot to another function.
@@ -1705,11 +1731,12 @@ Here the angle is counted from the x-axis.
 %		dimensioning
 %------------------------------------------------
 
-\subsection{Dimensioning}
+\subsection{Dimensioning}\index{dimensioning}
 \label{sec:Abmessungen}
 
 \begingroup
 \lstinline[emph={dimensioning}]|\dimensioning{type}{initial point}{end point}{distance from point of origin}[measure];|
+\STNLindexcommand{dimensioning}
 
 \leftskip=7mm Basically, three kinds of dimensions can be distinguished in the program, the horizontal and vertical dimension and a dimension of a shift. As with the line loads, also here the the start and end point is required. However, the distance between the the dimension line and the the corresponding points is not entered directly, but the dimension line refers to the coordinate origin. Optional a label can be inserted at any dimension line.
 
@@ -1717,6 +1744,7 @@ Here the angle is counted from the x-axis.
 
 \begingroup
 \hspace{7mm}\lstinline[emph={dimensioning}]|\dimensioning{1}{initial point}{end point}{distance from point of origin}[measure];|
+\STNLindexcommand{dimensioning}\index{dimensioning!horizontal}
 
 \leftskip=14mm The first type describes the horizontal dimension.
 
@@ -1744,6 +1772,7 @@ Here the angle is counted from the x-axis.
 
 \begingroup
 \hspace{7mm}\lstinline[emph={dimensioning}]|\dimensioning{2}{initial point}{end point}{distance from point of origin}[measure];|
+\STNLindexcommand{dimensioning}\index{dimensioning!vertical}
 
 \leftskip=14mm Type $2$ describe the vertical dimension.
 
@@ -1768,6 +1797,7 @@ Here the angle is counted from the x-axis.
 
 \begingroup
 \hspace{7mm}\lstinline[emph={dimensioning}]|\dimensioning{3}{initial point}{end point}{distance from inital point}[measure];|
+\STNLindexcommand{dimensioning}
 
 
 \leftskip=14mm With type $3$, a shift is marked. Unlike type $1$ and $2$ the distance is not determined from the origin, but from the initial point.
@@ -1803,11 +1833,13 @@ Here the angle is counted from the x-axis.
 %		influenceline
 %------------------------------------------------
 
-\subsection{Range of the influence line}
+\subsection{Range of the influence line}%
+\index{influence line, range}\index{range of the influence line}
 \label{sec:BereichDerEinflusslinie}
 
 \begingroup
 \lstinline[emph={influenceline}]|\influenceline{initial point}{end point}{distance from initial point}[arrow position];|
+\STNLindexcommand{influenceline}
 
 \leftskip=7mm A special case of dimension is the range of the influence line. In addition to the start or end point of the vertical distance from the starting point must be specified. Optionally the position of the arrow symbol can be moved.
 
@@ -1843,6 +1875,7 @@ Here the angle is counted from the x-axis.
 
 \begingroup
 \lstinline[emph={notation}]|\notation{type}{insertion point}{}[][][];|
+\STNLindexcommand{notation}\index{labeling}\index{notation}
 
 
 \leftskip=7mm With the element \lstinline|\notation| various kinds of labels can be inserted. Because different input parameters are required, these are explained in detail for the individual types. Furthermore, in all types the optional parameters \lstinline|orientation| is used. Here, the \tikzsym commands must be used, these are described in Section \ref{sec:OrientierungVonTextelementen}.
@@ -1850,6 +1883,7 @@ Here the angle is counted from the x-axis.
 
 \begingroup
 \hspace{7mm}\lstinline[emph={notation}]|\notation{1}{insertion point}{labelling}[orientation];|
+\STNLindexcommand{notation}
 
 \leftskip=14mm Type $1$ is a normal labeling. Only the insertion point and the corresponding text must be specified. The optional parameter orientation can be changed. The default setting is \lstinline|above right|, which means top right.
 
@@ -1871,6 +1905,7 @@ Here the angle is counted from the x-axis.
 
 \begingroup
 \hspace{7mm}\lstinline[emph={notation}]|\notation{2}{insertion point}{labelling}[orientation];|
+\STNLindexcommand{notation}
 
 \leftskip=14mm Type $2$ has besides the label additional a line to mark the appropriate place. This line is always parallel to the y-axis.
 
@@ -1892,6 +1927,7 @@ Here the angle is counted from the x-axis.
 
 \begingroup
 \hspace{7mm}\lstinline[emph={notation}]|\notation{3}{initial point}{end point}[labelling][position][orientation];|
+\STNLindexcommand{notation}
 
 
 \leftskip=14mm Type $3$ is an extension of type $2$. As with the other line elements the start point and end point must be specified. The mark is located in the middle of the two points. An optional parameter is the position of the mark which can be changed.
@@ -1921,6 +1957,7 @@ Here the angle is counted from the x-axis.
 
 \begingroup
 \hspace{7mm}\lstinline[emph={notation}]|\notation{4}{initial point}{end point}[labelling][position][orientation][text orientation];|
+\STNLindexcommand{notation}
 
 \leftskip=14mm Type $4$ is placed on a line, like type $3$. Instead of a mark, the text is enclosed in a square. The other parameters are the same as in type $3$. In addition, with the last parameter, the text alignment can be changed. Is the parameter equal to  $[1]$, the text is placed parallel to the x-axis.
 
@@ -1949,6 +1986,7 @@ Here the angle is counted from the x-axis.
 
 \begingroup
 \hspace{7mm}\lstinline[emph={notation}]|\notation{5}{initial point}{end point}[labelling][position][orientation][text orientation];|
+\STNLindexcommand{notation}
 
 \leftskip=14mm Type $5$ corresponds to the types $3$ and $4$, but here only the text is displayed and no additional symbols. Thus, the same requirements as in the previous type can be applied.
 
@@ -1977,6 +2015,7 @@ Here the angle is counted from the x-axis.
 
 \begingroup
 \hspace{7mm}\lstinline[emph={notation}]|\notation{6}{insertion point}{labelling};|
+\STNLindexcommand{notation}
 
 \leftskip=14mm The last type $6$, is similar to the type $1$. Only in this case, the text is framed by a circle. Furthermore, no orientation of the text can be made.
 
@@ -1999,11 +2038,12 @@ Here the angle is counted from the x-axis.
 %		addon
 %------------------------------------------------
 
-\subsection{Additional symbols}
+\subsection{Additional symbols}\index{addons!2D}
 \label{sec:ZusatzlicheSymbole}
 
 \begingroup
 \lstinline[emph={addon}]|\addon{type}{insertion point}{}{}[];|
+\STNLindexcommand{addon}
 
 
 \leftskip=7mm Among these elements fall all symbols that you can not assign to the above introduced elements. Since these types of items require different input parameters, these are explained in detail for each individual types.
@@ -2012,6 +2052,7 @@ Here the angle is counted from the x-axis.
 
 \begingroup
 \hspace{7mm}\lstinline[emph={addon}]|\addon{1}{insertion point}{end point}{position};|
+\STNLindexcommand{addon}\index{bar!parallel}
 
 \leftskip=14mm Type $1$ is a symbol for parallel bars. First the start and end points of the bar must be specified and then the positioning of the symbol must be set.
 
@@ -2041,6 +2082,7 @@ Here the angle is counted from the x-axis.
 
 \begingroup
 \hspace{7mm}\lstinline[emph={addon}]|\addon{2}{insertion point}{initial point}{end point}[orientation];|
+\STNLindexcommand{addon}
 
 \leftskip=14mm Type $2$ represents the symbol of two originally bars. Here, also the insertion point must be specified in addition to the start and end points. The orientation of the symbol can be changed, by setting an optional parameter to $[-1]$
 
@@ -2069,6 +2111,7 @@ Here the angle is counted from the x-axis.
 
 \begingroup
 \hspace{7mm}\lstinline[emph={addon}]|\addon{3}{insertion point}{initial point}{end point}[orientation];|
+\STNLindexcommand{addon}\index{angle}
 
 \leftskip=14mm Type $3$ is the symbol for an arbitrary angle. The same approaches as for Type $2$ can be applied. With the optional parameter it can be distinguished between an acute angle or an obtuse angle. Depending on the case the parameter has to chanced to $[-1]$.
 
@@ -2225,7 +2268,7 @@ To group objects and assign features, there is the environment \lstinline|scope|
 \begin{scope}[<options>]
 	<enviroment contents>
 \end{scope}
-\end{lstlisting}
+\end{lstlisting}\index{scope environment@\texttt{scope} environment}
 \vspace{-7mm}
 \begingroup
 \leftskip=7mm All \lstinline|<options>| are locally limited to those elements that are within the scope.
@@ -2262,12 +2305,13 @@ To group objects and assign features, there is the environment \lstinline|scope|
 %------------------------------------------------
 
 \subsection{Scaling}
-\label{sec:scaling}
+\label{sec:scaling}\index{scaling}
 
 This command is not provided in the \tikzsym package, but it was written for the library to accordingly scale the lengths.
 
 \begingroup
 \lstinline[emph={tikz,structuralanalysis,scaling}]|/tikz/structuralanalysis/scaling{scalingParameter};|
+\STNLindexcommand{scaling}\index{scaling!lenghts}
 
 \leftskip=7mm This command only scales the length of the system, i.e. scaling the distances between individual points. This enables the user to create larger system, but still be printable on paper without reducing to symbols size.
 
@@ -2314,7 +2358,7 @@ This command is not provided in the \tikzsym package, but it was written for the
 %------------------------------------------------
 
 \subsection{Guides}
-\label{sec:Hilfslinien}
+\label{sec:Hilfslinien}\index{guides}\index{grid@\texttt{grid}}
 
 \begingroup
 \lstinline[emph={help, lines}]|\draw[help lines,<options>] (<coordinates>) grid (<coordinates>);|
@@ -2344,7 +2388,7 @@ This command is not provided in the \tikzsym package, but it was written for the
 % Tutorial                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{Tutorial}
+\chapter{Tutorial}\index{tutorial!2D}
 \label{sec:Tutorial}
 
 In the following tutorial, the program code is only shown for the currently treated aspects, because of the limited space. However, at the end the full code is provided.
@@ -2971,7 +3015,7 @@ Now the guides can be deleted and the scaling factor can be chosen so that the e
 \section{General information about the elements}
 \label{sec:3dAllgemeinesZuDenElementen}
 \subsection{Order}
-\label{sec:3dReihenfolge}
+\label{sec:3dReihenfolge}\index{ordering of the elements}
 
 The library provides a number of standard elements available to the user. For example, bearings, joints, forces, etc. Since \tikzsym displayes those elements at the bottom which are entered first, it must be ensured that the element is inserted in the correct order. The following order is recommended:
 
@@ -3041,6 +3085,7 @@ With the command \lstinline|\setcoords| (see \ref{sec:3dsetcoords}), the orienta
 \label{sec:3dPunkte}
 \begingroup
 \lstinline[emph={dpoint}]|\dpoint{name}{x-coordiante}{y-coordiante}{z-coordinate};| 
+\STNLindexcommand{dpoint}
 
 \leftskip=7mm In order to be able, to place elements, points must be defined previously. For the labeling a short and precise name should be chosen. Because other elements will reference back to these points, in the later stages of the construction. Since \tikzsym uses Cartesian coordinates, this must be entered in accordance with the coordinate system. This means that its first entry corresponds to the x-coordinate and the second to the y-coordinate and the third to the z-coordinate. Because, the points are not shown in the drawing, with the command \lstinline|\showpoint| (see \ref{sec:3dshowpoint}) there is the possibility to show the labels of the points.
 
@@ -3079,6 +3124,7 @@ With the command \lstinline|\setcoords| (see \ref{sec:3dsetcoords}), the orienta
 
 \begingroup
 \lstinline[emph={dbeam}]|\dbeam{type}{initial point}{end point}[rounded initial point][rounded end point];|
+\STNLindexcommand{dbeam}
 
 \leftskip=7mm The library includes several types of beams and bars. These are determined by the type. To construct such a beam or bar, two points must first be defined, the starting point and the end point. Furthermore, there is an option available to round the ends of the bars. $[0]$ or no entry means the corresponding end of the beam is not rounded, $[1]$ the end is rounded. This option is especially needed when multiple bars meet with different angles.
 
@@ -3086,6 +3132,7 @@ With the command \lstinline|\setcoords| (see \ref{sec:3dsetcoords}), the orienta
 
 \begingroup
 \hspace{7mm}\lstinline[emph={dbeam}]|\dbeam{1}{initial point}{end point}[rounded initial point][rounded end point];|
+\STNLindexcommand{dbeam}\index{bending beam}\index{beam!bending}
 
 \leftskip=14mm Type $1$ is a bending beam. In the 3-dimensional space the characteristic fiber\footnote{The characteristic fiber acts as a local coordinate system of the beam.} is renounced.
 
@@ -3118,6 +3165,7 @@ With the command \lstinline|\setcoords| (see \ref{sec:3dsetcoords}), the orienta
 
 \begingroup
 \hspace{7mm}\lstinline[emph={dbeam}]|\dbeam{2}{initial point}{end point}[rounded initial point][rounded end point];|
+\STNLindexcommand{dbeam}\index{truss rod}
 
 \leftskip=14mm Type $2$ describes a truss rod. Accordingly there is no characteristic fiber. This means, that order of the input points (starting point - end point) does not matter.
 
@@ -3148,6 +3196,7 @@ With the command \lstinline|\setcoords| (see \ref{sec:3dsetcoords}), the orienta
 
 \begingroup
 \hspace{7mm}\lstinline[emph={dbeam}]|\dbeam{3}{initial point}{end point};|
+\STNLindexcommand{dbeam}\index{invisible!bar}\index{invisible!beam}
 
 \leftskip=14mm Here (type $3$) is an invisible bar or beam. Since this is plotted as a dashed lines, there is no option to round the ends.
 
@@ -3190,6 +3239,7 @@ With the command \lstinline|\setcoords| (see \ref{sec:3dsetcoords}), the orienta
 \daxis{type}{obligatory}[optional][optional][optional][optional][optional]
 						[optional][optional];
 \end{lstlisting}\vspace{-10mm}
+\STNLindexcommand{daxis}
 
 \leftskip=7mm In principle, both global and local axes are available. In the case of local systems a distinction is made between axes in a plane and spatial axes. In both, the global as well as at the local axis systems, with optional parameters the positions and the labels of the axes can be changed. To change the axis names themselves, the command \lstinline|\setaxis| has to be used (see \ref{sec:3dsetaxis}). Using the command \lstinline|\dscaling{3}{scaling value}| it is possible to scale the axes (see \ref{sec:3dscaling}).
 
@@ -3197,6 +3247,7 @@ With the command \lstinline|\setcoords| (see \ref{sec:3dsetcoords}), the orienta
 
 \begingroup
 \hspace{7mm}\lstinline[emph={daxis}]|\daxis{1}{insertion point}[X-orientation][Y-orientation][Z-orientation];|
+\STNLindexcommand{daxis}\index{coordinate system!global}
 
 
 \leftskip=14mm Type $1$ is a global coordinate system. Where the insertion point indicates the origin of the system. With the optional parameters, the orientation of axes label can be changed.
@@ -3222,7 +3273,8 @@ With the command \lstinline|\setcoords| (see \ref{sec:3dsetcoords}), the orienta
 \begin{lstlisting}[emph={daxis},backgroundcolor=\color{white}]
 		\daxis{2}{plane}[insertion point][end point][position][x-orientation][y-orientation]
 							[z-orientation][change y with z];
-\end{lstlisting}\vspace{-10mm}
+\end{lstlisting}
+\STNLindexcommand{daxis}\index{coordinate system!local}\vspace{-10mm}
 
 \leftskip=14mm Type $2$ this is a local coordinate system of axes in a plane (see \ref{sec:3dEbenenUndRaumlicheElemente}). Contrary to the global axes, a start and end point must be selected. Furthermore, the position of the axis can be changed. Likewise, the orientation of the labeling is changeable. The last optional parameter is used to interchange the $y$ with the $z$ axis.
 
@@ -3258,7 +3310,8 @@ With the command \lstinline|\setcoords| (see \ref{sec:3dsetcoords}), the orienta
 \begin{lstlisting}[emph={daxis},backgroundcolor=\color{white}]
 		\daxis{3}{rotation A}[insertion point][end point][position][rotation 1][rotation 2]
 							[rotation 3][rotation B];
-\end{lstlisting}\vspace{-10mm}
+\end{lstlisting}
+\STNLindexcommand{daxis}\index{local axis}\vspace{-10mm}
 
 Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but but the rotations is specified. With rotation $A$ and $B$, the position of the local axis system is defined. Both angles describe the spherical coordinates originating the insert point. With the rotation angles $1$, $2$ and $3$ the local coordinate system is rotated. With angle $1$ the axis is rotated around the $z$-axis. With angle $2$ the rotation around the $y$-axis is defined. And with angle $3$ the rotation of the not yet turned $z$-axis is specified. Since the commands are limited to 9 variables, the position of the labels for the coordinate system must be changed with the command \lstinline|\setaxis{4}| (see \ref{sec:3dsetaxis}).
 
@@ -3298,6 +3351,7 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 
 \begingroup
 \lstinline[emph={dsupport}]|\dsupport{type}{insertion point}[optional][optional][optional][optional];|
+\STNLindexcommand{dsupport}
 
 \leftskip=7mm In the library the most common types of supports and springs are available. Similar to all remaining elements the type can be changed by the type variable. Similarly, an insertion point is required to initialize a bearing or a spring. As an optional parameter the orientation of the pendulum rod can be changed.
 
@@ -3305,6 +3359,7 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 
 \begingroup
 \hspace{7mm}\lstinline[emph={dsupport}]|\dsupport{1}{insertion point}[x-direction][y-direction][z-direction];|
+\STNLindexcommand{dsupport}\index{fixed!support}\index{support!fixed}
 
 \leftskip=14mm Type $1$ is a fixed support, which can absorb forces in all directions, but no moments. The pendulum rod can be switched off with the parameter $[0]$. Respectively, with a negative value $[-1]$ the direction can be chanced.
 
@@ -3329,6 +3384,7 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 
 \begingroup
 \hspace{7mm}\lstinline[emph={dsupport}]|\dsupport{2}{insertion point}[plane];|
+\STNLindexcommand{dsupport}\index{fixed!support}\index{support!fixed}
 
 \leftskip=14mm Type $2$ is a fixed support which can absorb all forces and moments. This support has to be placed parallel to a coordinate plane.
 
@@ -3357,6 +3413,7 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 
 \begingroup
 \hspace{7mm}\lstinline[emph={dsupport}]|\dsupport{3}{insertion point}[x-direction][y-direction][z-direction];|
+\STNLindexcommand{dsupport}
 
 \leftskip=14mm Type $3$ is similar to  type $1$. This fixed support is needed as a base for a forked support (see \ref{sec:3dGelenke}).
 
@@ -3377,6 +3434,7 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 
 \begingroup
 \hspace{7mm}\lstinline[emph={dsupport}]|\dsupport{4}{insertion point}[x-direction][y-direction][z-direction];|
+\STNLindexcommand{dsupport}
 
 \leftskip=14mm Type $4$ is similar to type $1$. Here, the pendulum rods are springs.
 
@@ -3403,6 +3461,7 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 
 \begingroup
 \hspace{7mm}\lstinline[emph={dsupport}]|\dsupport{5}{insertion point}[x-direction][y-direction][z-direction];|
+\STNLindexcommand{dsupport}
 
 \leftskip=14mm A fixed support with springs for a forked support is type $5$.
 
@@ -3432,6 +3491,7 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 
 \begingroup
 \lstinline[emph={\dhinge}]|\dhinge{type}{insertion point}[optional][optional][optional];|
+\STNLindexcommand{dhinge}
 
 \leftskip=7mm The above described bearings might be combined with the following joints. The library contains different types of joints. Beside the insertion point, several other parameters are available. However, the optional parameter are mainly dependent on the type of joint.
 
@@ -3439,6 +3499,7 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 
 \begingroup
 \hspace{7mm}\lstinline[emph={dhinge}]|\dhinge{1}{insertion point};|
+\STNLindexcommand{dhinge}\index{full joint}\index{joint!full}
 
 \leftskip=14mm The basic version of a joint is the type $1$. This is a full joint, which requires only an insertion point.
 
@@ -3469,6 +3530,7 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 
 \begingroup
 \hspace{7mm}\lstinline[emph={dhinge}]|\dhinge{2}{insertion point}[initial point][end point][orientation];|
+\STNLindexcommand{dhinge}\index{half hinge}\index{hinge!half}
 
 \leftskip=14mm In addition to the insertion point, for type $2$ - the half-hinge - the start and end point have to be specified, for the purpose of orientation. This information is marked as optional by $[~]$, but must be completed in order to generate such a half-hinge. The joint is inserted at the insertion point and stretches between the start and the end point. The input $[0]$ or no input in the orientation means that the half-hinge is placed inside. A $[1]$ in contrast means the exact opposite.
 
@@ -3499,6 +3561,7 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 
 \begingroup
 \hspace{7mm}\lstinline[emph={dhinge}]|\dhinge{3}{insertion point}[rotation];|
+\STNLindexcommand{dhinge}\index{forked hinge}\index{hinge!forked}
 
 \leftskip=14mm Type $3$ describes a forked hinge and has to be used with the commands \lstinline|\dsupport{3}| and/or \lstinline|\dsupport{5}|. As additional parameter the rotation of the fork can be chanced.
 
@@ -3525,6 +3588,7 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 
 \begingroup
 \hspace{7mm}\lstinline[emph={dhinge}]|\dhinge{4}{insertion point}[initial point][end point];|
+\STNLindexcommand{dhinge}
 
 \leftskip=14mm To achieve a stiffening of a corner, the Type $4$ is applied. In addition to the insertion point, type $4$ requires the input of the start and the end point, similar to the half hinge. This information is marked as optional, by $[~]$, but must be completed in order to generate such a stiff corner.
 
@@ -3562,6 +3626,7 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 
 \begingroup
 \lstinline[emph={dload}]|\dload{type}{insertion point}[rotation A][rotation B][load length][load distance];|
+\STNLindexcommand{dload}\index{single!load}\index{load!single}
 
 \leftskip=7mm The single load command includes both individual forces and moments. To place such an element it is necessary to define an insertion point. The orientation of the single loads and the moments are defined by spherical coordinates. As an optional parameter the length of the vector and the distance to the insertion point can be changed. Per default the distance to the beam axis is the radius of a joint.
 
@@ -3569,6 +3634,7 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 
 \begingroup
 \hspace{7mm}\lstinline[emph={dload}]|\dload{1}{insertion point}[rotation A][rotation B][load length][load distance];|
+\STNLindexcommand{dload}\index{single!force}\index{force!single}
 
 \leftskip=14mm The first type describes a single force. With the optional parameters the orientation can be changed. Rotation $A$ describes the angle from the zenith to the equator, and rotation $B$ the angle around the equator.
 
@@ -3607,6 +3673,7 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 
 \begingroup
 \hspace{7mm}\lstinline[emph={dload}]|\dload{2}{insertion point}[rotation A][rotation B][load length][load distance];|
+\STNLindexcommand{dload}
 
 \leftskip=14mm Type $2$, describes a force pointing away from the insertion point.
 
@@ -3630,6 +3697,7 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 \begingroup
 
 \hspace{7mm}\lstinline[emph={dload}]|\dload{3}{insertion point}[rotation A][rotation B][load length][load distance];|
+\STNLindexcommand{dload}
 
 \leftskip=14mm Type $3$ is similar to type $1$, and describes a moment pointing to the insertion point. The properties are the same as above.
 
@@ -3653,6 +3721,7 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 \begingroup
 
 \hspace{7mm}\lstinline[emph={dload}]|\dload{4}{insertion point}[rotation A][rotation B][load length][load distance];|
+\STNLindexcommand{dload}
 
 \leftskip=14mm Type $4$ is similar to type $2$, and describes a moment pointing away from the insertion point. The properties are the same as above.
 
@@ -3684,7 +3753,8 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 \begin{lstlisting}[emph={dlineload},backgroundcolor=\color{white}]
 \dlineload{type}{obligatory}[optional]{initial point}{end point}[optional][optional][optional]
 							[optional];
-\end{lstlisting}\vspace{-10mm}
+\end{lstlisting}
+\STNLindexcommand{dlineload}\vspace{-10mm}
 
 \leftskip=7mm In the library four types of line loads are available. These are determined by their type. Two points (start and end point) must be defined in advance, similar as with the beam and bar elements. The optional properties are mainly dependent on the type of the line load. The first four types of line loads are elements on a plane and the last one is an element in space (see \ref{sec:3dEbenenUndRaumlicheElemente}).
 
@@ -3694,7 +3764,12 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 \begin{lstlisting}[emph={dlineload},backgroundcolor=\color{white}]
 		\dlineload{1}{plane}[plane distance]{initial point}{end point}[initial force value]
 									[end force value][force interval];
-\end{lstlisting}\vspace{-10mm}
+\end{lstlisting}
+\STNLindexcommand{dlineload}%
+\index{force!linear!perpendicular}%
+\index{load!linear!perpendicular}%
+\index{linear load!perpendicular}%
+\vspace{-10mm}
 
 \leftskip=14mm Type $1$ is a linear load that is perpendicular to the beam axis. Besides the start and the end point also the corresponding coordinate plane has to be specified. Optionally, the sizes of the initial force and the final force can be adjusted. Is one of the parameters set to $[0]$, the result is a triangular load. The last parameter controls the distance between the individual forces.
 
@@ -3729,7 +3804,12 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 \begin{lstlisting}[emph={dlineload},backgroundcolor=\color{white}]
 		\dlineload{2}{plane}[plane distance]{initial point}{end point}[initial force value]
 									[end force value][force interval];
-\end{lstlisting}\vspace{-10mm}
+\end{lstlisting}
+\STNLindexcommand{dlineload}
+\index{force!linear!parallel}%
+\index{load!linear!parallel}%
+\index{linear load!parallel}%
+\vspace{-10mm}
 
 \leftskip=14mm For type $2$, the forces are parallel the corresponding global axis. The optional parameters are the same as for type $1$.
 
@@ -3764,7 +3844,8 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 \begin{lstlisting}[emph={dlineload},backgroundcolor=\color{white}]
 		\dlineload{3}{plane}[plane distance]{initial point}{end point}[initial force value]
 									[end force value][lineload distance from inital point][force interval];
-\end{lstlisting}\vspace{-10mm}
+\end{lstlisting}
+\STNLindexcommand{dlineload}\vspace{-10mm}
 
 \leftskip=14mm Type $3$ is a projection of the forces on the beam. In addition to the start and end force size, the vertical distance to the starting point can also be specified optionally.
 
@@ -3799,6 +3880,7 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 
 \begingroup
 \hspace{7mm}\lstinline[emph={dlineload}]|\dlineload{4}{plane}[plane distance]{initial point}{end point}[force interval][force length];|
+\STNLindexcommand{dlineload}
 
 \leftskip=14mm A line load along the bar axis is described by type $4$. In addition to the start and end points, the number of forces and its length can be changed optionally. This orientation depends on the chosen coordinate plane. To change the direction, start and end points must be exchanged.
 
@@ -3833,7 +3915,8 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 \begin{lstlisting}[emph={dlineload},backgroundcolor=\color{white}]
 		\dlineload{5}{rotation A}[rotation B]{initial point}{end point}[initial force value]
 									[end force value][force interval];
-\end{lstlisting}\vspace{-10mm}
+\end{lstlisting}
+\STNLindexcommand{dlineload}\vspace{-10mm}
 
 \leftskip=14mm Type $5$ is contrary to the line loads mentioned above, a spatial load and thus independent of the different coordinate planes. Type $5$ is similar to $1$ and $2$ a force, which is directed to the beam axis. The optional specification of the rotation angle allows to change the alignment of the line load, similar to the single load. Otherwise, the same parameters as above apply.
 
@@ -3868,6 +3951,7 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 
 \begingroup
 \hspace{7mm}\lstinline[emph={dlineload}]|\dlineload{6}{rotation A}[rotation B]{initial point}{end point}[force interval][force length];|
+\STNLindexcommand{dlineload}
 
 \leftskip=14mm Type $6$ describes as Type $4$, a line load along the rod axis. But instead of defining a plane, for the alignment of the line load, the orientation can be specified with the corresponding rotation angles (see above). Otherwise, the parameters are the same as by type $4$.
 
@@ -3910,7 +3994,8 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 \begin{lstlisting}[emph={dinternalforces},backgroundcolor=\color{white}]
 \dinternalforces{plane}[plane distance]{initial point}{end point}{initial value}{end value}
 								[parabola height][color][bend position];
-\end{lstlisting}\vspace{-7mm}
+\end{lstlisting}
+\STNLindexcommand{dinternalforces}\index{internal forces}\index{force!internal}\vspace{-7mm}
 
 \leftskip=7mm With this function, linear and quadratic curves internal forces can be displayed. The entries are made as repeatedly shown above. First, the start and end points must be determined. Thereafter, the start and end values must be entered. Optional the parabola down can be enter. If there is no entry or the entry is equal to $[0]$, than it is a linear function. Also optionally, the color can be determined. Here the most common colors are available and addressed with the color name. The last optional parameter is used to edit the parabola down and if necessary to adapt the plot to another function.
 
@@ -3954,7 +4039,8 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 \begin{lstlisting}[emph={ddimensioning},backgroundcolor=\color{white}]
 \ddimensioning{plane}[plane distance]{initial point}{end point}{distance from point of origin}
 							[measure][help line length];
-\end{lstlisting}\vspace{-7mm}
+\end{lstlisting}
+\STNLindexcommand{ddimensioning}\vspace{-7mm}
 
 \leftskip=7mm Basically, due to the right choice of the coordinate plane, all dimensions can be distinguished in the program. As with the line loads, also here the the start and end point is required. However, the distance between the the dimension line and the the corresponding points is not entered directly, but the dimension line refers to the coordinate origin. Therefore, it is necessary to specify the coordinate plane. Optionally a label can be inserted at any dimension line. Also some help lines for the dimension can be plotted.
 
@@ -4002,6 +4088,7 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 
 \begingroup
 \lstinline[emph={dnotation}]|\dnotation{type}{insertion point}{obligatory}[optional][optional][optional][optional];|
+\STNLindexcommand{dnotation}
 
 \leftskip=7mm With the element \lstinline|\dnotation| various kinds of labels can be inserted. Because different input parameters are required, these are explained in detail for the individual types. Furthermore, in all types the optional parameter \lstinline|orientation| is used. Here, the \tikzsym commands must be used, these are described in Section \ref{sec:OrientierungVonTextelementen}.
 
@@ -4009,6 +4096,7 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 
 \begingroup
 \hspace{7mm}\lstinline[emph={dnotation}]|\dnotation{1}{insertion point}{labelling}[orientation];|
+\STNLindexcommand{dnotation}
 
 \leftskip=14mm Type $1$ is a normal labeling. Only the insertion point and the corresponding text must be specified. The optional parameter orientation can be changed. The default setting is \lstinline|above right|, which means top right.
 
@@ -4030,6 +4118,7 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 
 \begingroup
 \hspace{7mm}\lstinline[emph={dnotation}]|\dnotation{2}{insertion point}{labelling}[orientation];|
+\STNLindexcommand{dnotation}
 
 \leftskip=14mm Type $2$ has besides the label additional a line to mark the appropriate place. 
 
@@ -4051,6 +4140,7 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 
 \begingroup
 \hspace{7mm}\lstinline[emph={dnotation}]|\dnotation{3}{initial point}{end point}[labelling][position][orientation];|
+\STNLindexcommand{dnotation}
 
 \leftskip=14mm Type $3$ is an extension of type $2$. As with the other line elements the start point and end point must be specified. The mark is located in the middle of the two points. An optional parameter is the position of the mark which can be changed.
 
@@ -4083,6 +4173,7 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 
 \begingroup
 \hspace{7mm}\lstinline[emph={dnotation}]|\dnotation{4}{initial point}{end point}[labelling][position][orientation][text orientation];|
+\STNLindexcommand{dnotation}
 
 \leftskip=14mm Type $4$ is placed on a line, like type $3$. Instead of a mark, the text is enclosed in a square. The other parameters are the same as in type $3$. In addition, with the last parameter, the text alignment can be changed. Is the parameter equal to  $[1]$, the text is placed parallel to the z-axis.
 
@@ -4115,6 +4206,7 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 
 \begingroup
 \hspace{7mm}\lstinline[emph={dnotation}]|\dnotation{5}{initial point}{end point}[labelling][position][orientation][text orientation];|
+\STNLindexcommand{dnotation}
 
 \leftskip=14mm Type $5$ corresponds to the types $3$ and $4$, but here only the text is displayed and no additional symbols. Thus, the same requirements as in the previous type can be applied.
 
@@ -4147,6 +4239,7 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 
 \begingroup
 \hspace{7mm}\lstinline[emph={dnotation}]|\dnotation{6}{insertion point}{labelling};|
+\STNLindexcommand{dnotation}
 
 \leftskip=14mm The last type $6$, is similar to the type $1$. Only in this case, the text is framed by a circle. Furthermore, no orientation of the text can be made.
 
@@ -4171,11 +4264,12 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 %		daddon
 %------------------------------------------------
 
-\subsection{Additional symbols}
+\subsection{Additional symbols}\index{addons!3D}
 \label{sec:3dZusaetzlicheSymbole}
 
 \begingroup
 \lstinline[emph={daddon}]|\daddon{type}{plane}[plane distance]{obligatory}{obligatory}{obligatory}[optional];|
+\STNLindexcommand{daddon}
 
 \leftskip=7mm Among these elements fall all symbols that you can not assign to the above introduced elements. Since these types of items require different input parameters, these are explained in detail for each individual types. However, all elements have in common that the corresponding coordinate plane must be specified (see \ref{sec:3dEbenenUndRaumlicheElemente}).
 
@@ -4183,6 +4277,7 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 
 \begingroup
 \hspace{7mm}\lstinline[emph={daddon}]|\daddon{1}{plane}[plane distance]{insertion point}{end point}{position};|
+\STNLindexcommand{daddon}\index{bar!parallel}
 
 \leftskip=14mm Type $1$ is a symbol for parallel bars. First the start and end points of the bar must be specified and then the positioning of the symbol must be set.
 
@@ -4220,6 +4315,7 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 
 \begingroup
 \hspace{7mm}\lstinline[emph={daddon}]|\daddon{2}{plane}[plane distance]{insertion point}{initial point}{end point}[orientation];|
+\STNLindexcommand{daddon}
 
 \leftskip=14mm Type $2$ represents the symbol of two originally bars. Here, also the insertion point must be specified in addition to the start and end points. The orientation of the symbol can be changed, by setting an optional parameter to $[-1]$
 
@@ -4254,6 +4350,7 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 
 \begingroup
 \hspace{7mm}\lstinline[emph={daddon}]|\daddon{3}{plane}[plane distance]{insertion point}{initial point}{end point}[orientation];|
+\STNLindexcommand{daddon}\index{angle symbol}
 
 \leftskip=14mm Type $3$ is the symbol for an arbitrary angle. The same approaches as for Type $2$ can be applied. With the optional parameter it can be distinguished between an acute angle or an obtuse angle. Depending on the case the parameter has to chanced to $[-1]$.
 
@@ -4419,6 +4516,7 @@ To group objects and assign features, there is the environment \lstinline|scope|
 	<enviroment contents>
 \end{scope}
 \end{lstlisting}
+\index{scope environment@\texttt{scope} environment}
 \vspace{-7mm}
 \begingroup
 \leftskip=7mm All \lstinline|<options>| are locally limited to those elements that are within the scope.
@@ -4456,6 +4554,7 @@ This following commands are not provided in the \tikzsym package, but they were 
 
 \begingroup
 \lstinline[emph={tikz,setcoords}]|/tikz/setcoords{x-angle}{y-angle}[x-direction][y-direction][z-direction][z-angle]|
+\STNLindexcommand{setcoords}
 
 \leftskip=7mm In order to choose an appropriate view, the coordinate system can be rotated and scaled. However, this must be done before the \lstinline|tikzpicture| environment is started. The angles are measured from the horizon.
 
@@ -4485,6 +4584,7 @@ This following commands are not provided in the \tikzsym package, but they were 
 
 \begingroup
 \lstinline[emph={tikz,setaxis}]|/tikz/setaxis{type}[optional][optional][optional][optional][optional][optional]|
+\STNLindexcommand{setaxis}
 
 
 \leftskip=7mm This command can change the orientation of the axes labeling. This applies to both global and local axes systems.
@@ -4493,6 +4593,7 @@ This following commands are not provided in the \tikzsym package, but they were 
 
 \begingroup
 \leftskip=7mm\lstinline[emph={setaxis}]|\setaxis{1}|
+\STNLindexcommand{setaxis}
 
 \leftskip=14mm Type $1$ sets the labeling back to the default settings. Thereby, global axes are labeled with $x$, $y$ and $z$, and local axes with $x^\prime$ $y^\prime$ und $z^\prime$.
 
@@ -4519,6 +4620,7 @@ This following commands are not provided in the \tikzsym package, but they were 
 
 \begingroup
 \leftskip=7mm\lstinline[emph={setaxis}]|\setaxis{2}|
+\STNLindexcommand{setaxis}
 
 \leftskip=14mm With type $2$ global axes are labeled with $X$, $Y$ and $Z$, and locale axes with $x$ $y$ and $z$.
 
@@ -4545,6 +4647,7 @@ This following commands are not provided in the \tikzsym package, but they were 
 
 \begingroup
 \leftskip=7mm\lstinline[emph={setaxis}]|\setaxis{3}[X-labelling][Y-labelling][Z-labelling][x-labelling][y-labelling][z-labelling]|
+\STNLindexcommand{setaxis}
 
 \leftskip=14mm Using type $3$ the labeling of the global and local axes can be chosen individually.
 
@@ -4571,6 +4674,7 @@ This following commands are not provided in the \tikzsym package, but they were 
 
 \begingroup
 \leftskip=7mm\lstinline[emph={setaxis}]|\setaxis{4}[x-orientation][y-orientation][z-orientation];|
+\STNLindexcommand{setaxis}
 
 \leftskip=14mm With type $4$ the orientation of the labels for the local and the global axes can be changed.
 
@@ -4603,10 +4707,12 @@ This following commands are not provided in the \tikzsym package, but they were 
 %------------------------------------------------
 
 \subsection{showpoint}
+\STNLindexcommand{setaxis}
 \label{sec:3dshowpoint}
 
 \begingroup
 \lstinline[emph={tikz,dscaling}]|/tikz/showpoint|
+\STNLindexcommand{showpoint}
 
 \leftskip=7mm With the command \lstinline|/showpoint|, the labels of the according points can be displayed. This allows an easier overview, especially for complex systems.
 
@@ -4642,6 +4748,7 @@ This following commands are not provided in the \tikzsym package, but they were 
 
 \begingroup
 \lstinline[emph={tikz,dscaling}]|/tikz/dscaling{type}{scalingParameter};|
+\STNLindexcommand{dscaling}
 
 \leftskip=7mm With this command the lengths of objects can be scaled.
 
@@ -4649,6 +4756,7 @@ This following commands are not provided in the \tikzsym package, but they were 
 
 \begingroup
 \leftskip=7mm\lstinline[emph={dscaling}]|/dscaling{1}{scalingParameter};|
+\index{length!scaling}\index{scaling!length}
 
 \leftskip=14mm The type $1$ command only scales the length of the system, i.e. scaling the distances between individual points. This enables the user to create larger system, but still be printable on paper without reducing to symbols size.
 
@@ -4681,6 +4789,7 @@ This following commands are not provided in the \tikzsym package, but they were 
 
 \begingroup
 \leftskip=7mm\lstinline[emph={dscaling}]|/dscaling{2}{scalingParameter};|
+\index{scaling!supports and hinges}
 
 \leftskip=14mm Type $2$ enables the scaling of supports and hinges.
 
@@ -4713,6 +4822,7 @@ This following commands are not provided in the \tikzsym package, but they were 
 
 \begingroup
 \leftskip=7mm\lstinline[emph={dscaling}]|/dscaling{3}{scalingParameter};|
+\index{scaling!axes system}
 
 \leftskip=14mm With type $3$ the axes system can be scaled.
 
@@ -4739,14 +4849,17 @@ This following commands are not provided in the \tikzsym package, but they were 
 
 \begingroup
 \leftskip=7mm\lstinline[emph={dscaling}]|/dscaling{4}{scalingParameter};|
+\index{scaling!single and line loads}
 
 \leftskip=14mm Type $4$ enables the scaling of single and line loads.
 
 \leftskip=7mm\lstinline[emph={dscaling}]|/dscaling{5}{scalingParameter};|
+\index{scaling!dimensioning}
 
 \leftskip=14mm Type $5$ enables the scaling of the dimensioning.
 
 \leftskip=7mm\lstinline[emph={dscaling}]|/dscaling{6}{scalingParameter};|
+\index{scaling!additional symbols}
 
 \leftskip=14mm Type $6$ enables the scaling of the additional symbols.
 
@@ -4757,7 +4870,7 @@ This following commands are not provided in the \tikzsym package, but they were 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \chapter{Tutorial}
-\label{sec:3dTutorial}
+\label{sec:3dTutorial}\index{tutorial!3D}
 
 In the following tutorial, the program code is only shown for the currently treated aspects, because of the limited space. However, at the end the full code is provided.
 
