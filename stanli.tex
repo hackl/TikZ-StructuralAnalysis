@@ -33,7 +33,7 @@
 
 \usepackage[%
   pdftex=true,
-  hypertexnames=false,
+  hypertexnames=true,
   plainpages=false,
   pdfpagelabels,
   pagebackref=false,
@@ -99,6 +99,10 @@ stringstyle=\ttfamily,
 emphstyle={\color{red}\bfseries},
 }
 
+% Add some basic infrastructure for index creation
+\newcommand{\STNLindexcommand}[1]{\index{#1@\texttt{\char`\\#1}}}
+\usepackage{makeidx}
+\makeindex
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% DOCUMENT
@@ -5338,7 +5342,7 @@ Now the point labeling can be switched off and the construction is finished.
 \end{lstlisting}\vspace{-7mm}
 \end{minipage}
 
-
+\footnotesize\printindex
 
 
 
