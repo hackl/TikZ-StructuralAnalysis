@@ -162,13 +162,13 @@ in a very short time: ::
      \lineload{2}{a}{b}[1][1][.5];
      \lineload{2}{b}{c};
 
-     \dimensioning{1}{a}{b}{-2.5}[$3,0$];
-     \dimensioning{1}{b}{c}{-2.5}[$8,0$];
-     \dimensioning{1}{c}{d}{-2.5}[$8,0$];
-     \dimensioning{1}{d}{e}{-2.5}[$3,0$];
-     \dimensioning{2}{f}{a}{-1}[$1,0$];
-     \dimensioning{2}{g}{f}{-1}[$2,0$];
-     \dimensioning{2}{a}{c}{-1}[$2,0$];
+     \dimensioning{1}{a}{b}{-2.5}[$3.0$];
+     \dimensioning{1}{b}{c}{-2.5}[$8.0$];
+     \dimensioning{1}{c}{d}{-2.5}[$8.0$];
+     \dimensioning{1}{d}{e}{-2.5}[$3.0$];
+     \dimensioning{2}{f}{a}{-1}[$1.0$];
+     \dimensioning{2}{g}{f}{-1}[$2.0$];
+     \dimensioning{2}{a}{c}{-1}[$2.0$];
 
      \influenceline{a}{e}{3}[.3];
 
@@ -237,13 +237,13 @@ in a very short time: ::
      \dlineload{5}{0}{h}{d}[.5][.5][.11];
      \dlineload{5}{0}{d}{j}[.5][.5][.11];
 
-     \ddimensioning{xy}{f}{g}{4.5}[$3~m$];
-     \ddimensioning{xy}{g}{h}{4.5}[$3~m$];
-     \ddimensioning{xy}{h}{i}{4.5}[$3~m$];
-     \ddimensioning{xy}{i}{j}{4.5}[$3~m$];
-     \ddimensioning{yx}{e}{j}{13}[$3~m$];
+     \ddimensioning{xy}{f}{g}{4.5}[$3$\,m];
+     \ddimensioning{xy}{g}{h}{4.5}[$3$\,m];
+     \ddimensioning{xy}{h}{i}{4.5}[$3$\,m];
+     \ddimensioning{xy}{i}{j}{4.5}[$3$\,m];
+     \ddimensioning{yx}{e}{j}{13}[$3$\,m];
 
-     \dnotation{1}{f}{$q=10~kN/m$}[above left=3mm];
+     \dnotation{1}{f}{$q=10$\,kN/m}[above left=3mm];
      \dnotation{1}{b}{$A$}[below left];
      \dnotation{1}{h}{$C$}[right=2mm];
      \dnotation{1}{d}{$B$}[below left];

@@ -156,13 +156,13 @@ emphstyle={\color{red}\bfseries},
 	\lineload{2}{a}{b}[1][1][.5];
 	\lineload{2}{b}{c};
 	
-	\dimensioning{1}{a}{b}{-2.5}[$3,0$];
-	\dimensioning{1}{b}{c}{-2.5}[$8,0$];
-	\dimensioning{1}{c}{d}{-2.5}[$8,0$];
-	\dimensioning{1}{d}{e}{-2.5}[$3,0$];
-	\dimensioning{2}{f}{a}{-1}[$1,0$];
-	\dimensioning{2}{g}{f}{-1}[$2,0$];
-	\dimensioning{2}{a}{c}{-1}[$2,0$];
+	\dimensioning{1}{a}{b}{-2.5}[$3.0$];
+	\dimensioning{1}{b}{c}{-2.5}[$8.0$];
+	\dimensioning{1}{c}{d}{-2.5}[$8.0$];
+	\dimensioning{1}{d}{e}{-2.5}[$3.0$];
+	\dimensioning{2}{f}{a}{-1}[$1.0$];
+	\dimensioning{2}{g}{f}{-1}[$2.0$];
+	\dimensioning{2}{a}{c}{-1}[$2.0$];
 	
 	\influenceline{a}{e}{3}[.3];
 	
@@ -218,13 +218,13 @@ emphstyle={\color{red}\bfseries},
 	\lineload{2}{a}{b}[1][1][.5];
 	\lineload{2}{b}{c};
 	
-	\dimensioning{1}{a}{b}{-2.5}[$3,0$];
-	\dimensioning{1}{b}{c}{-2.5}[$8,0$];
-	\dimensioning{1}{c}{d}{-2.5}[$8,0$];
-	\dimensioning{1}{d}{e}{-2.5}[$3,0$];
-	\dimensioning{2}{f}{a}{-1}[$1,0$];
-	\dimensioning{2}{g}{f}{-1}[$2,0$];
-	\dimensioning{2}{a}{c}{-1}[$2,0$];
+	\dimensioning{1}{a}{b}{-2.5}[$3.0$];
+	\dimensioning{1}{b}{c}{-2.5}[$8.0$];
+	\dimensioning{1}{c}{d}{-2.5}[$8.0$];
+	\dimensioning{1}{d}{e}{-2.5}[$3.0$];
+	\dimensioning{2}{f}{a}{-1}[$1.0$];
+	\dimensioning{2}{g}{f}{-1}[$2.0$];
+	\dimensioning{2}{a}{c}{-1}[$2.0$];
 	
 	\influenceline{a}{e}{3}[.3];
 	
@@ -886,7 +886,7 @@ For illustration a small example of a single force
 \end{lstlisting} 
 
 
-When entering size values the base unit is always predefined in $[cm]$.  Percentage values $\%$ are always specified as decimal values; for example, $100\% = 1.0 $ and $ 10 \% $ corresponds to $ 0.1 $.
+When entering size values the base unit is always predefined in $[\mathrm{cm}]$.  Percentage values $\%$ are always specified as decimal values; for example, $100\% = 1.0 $ and $ 10 \% $ corresponds to $ 0.1 $.
 
 Another important note is, that every \tikzsym command has to be completed with an semicolon ``;''. If this semicolon is not set, the command can not be performed, this leads finally to an error message by the compilation.
 
@@ -1644,16 +1644,16 @@ Here the angle is counted from the x-axis.
 			\point{b}{4}{0};
 			\beam{1}{a}{b};
 			\temperature{a}{b}{-.5}{.5}[.3][$T_i$][$T_a$];
-			\temperature{a}{b}{.2}{.7}[.6][$10°C$][$30°C$];
+			\temperature{a}{b}{.2}{.7}[.6][$10\,{}°$C][$30\,{}°$C];
 	\end{tikzpicture}
 \end{minipage}
-\begin{minipage}{0.61\linewidth}\begin{lstlisting}
+\begin{minipage}{0.63\linewidth}\begin{lstlisting}
 	\begin{tikzpicture}
 		\point{a}{0}{0};
 		\point{b}{4}{0};
 		\beam{1}{a}{b};
 		\temperature{a}{b}{-.5}{.5}[.3][$T_i$][$T_a$];
-		\temperature{a}{b}{.2}{.7}[.6][$10°C$][$30°C$];
+		\temperature{a}{b}{.2}{.7}[.6][$10\,{}°$C][$30\,{}°$C];
 	\end{tikzpicture}\end{lstlisting}\vspace{-7mm}
 \end{minipage}
 
@@ -1723,16 +1723,16 @@ Here the angle is counted from the x-axis.
 			\point{c}{4}{.5};
 			\beam{1}{a}{b}[0][1];
 			\beam{1}{b}{c}[1];
-			\dimensioning{1}{a}{b}{-.5}[$2~m$];
-			\dimensioning{1}{b}{c}{-.5}[$2~m$];
+			\dimensioning{1}{a}{b}{-.5}[$2$\,m];
+			\dimensioning{1}{b}{c}{-.5}[$2$\,m];
 	\end{tikzpicture}
 \end{minipage}
 \begin{minipage}{0.61\linewidth}\begin{lstlisting}
 	\begin{tikzpicture}
 		\point{a}{0}{0};	\point{b}{2}{1};	\point{c}{4}{.5};
 		\beam{1}{a}{b}[0][1];	\beam{1}{b}{c}[1];
-		\dimensioning{1}{a}{b}{-.5}[$2~m$];
-		\dimensioning{1}{b}{c}{-.5}[$2~m$];
+		\dimensioning{1}{a}{b}{-.5}[$2$\,m];
+		\dimensioning{1}{b}{c}{-.5}[$2$\,m];
 	\end{tikzpicture}\end{lstlisting}\vspace{-7mm}
 \end{minipage}
 
@@ -1748,7 +1748,7 @@ Here the angle is counted from the x-axis.
 			\point{a}{0}{0};
 			\point{b}{2}{1};
 			\beam{1}{a}{b};
-			\dimensioning{2}{a}{b}{-.5}[$1~m$];
+			\dimensioning{2}{a}{b}{-.5}[$1$\,m];
 	\end{tikzpicture}
 \end{minipage}
 \begin{minipage}{0.61\linewidth}\begin{lstlisting}
@@ -1756,7 +1756,7 @@ Here the angle is counted from the x-axis.
 		\point{a}{0}{0};
 		\point{b}{2}{1};
 		\beam{1}{a}{b};
-		\dimensioning{2}{a}{b}{-.5}[$1~m$];
+		\dimensioning{2}{a}{b}{-.5}[$1$\,m];
 	\end{tikzpicture}\end{lstlisting}\vspace{-7mm}
 \end{minipage}
 
@@ -2383,13 +2383,13 @@ In this tutorial, the basic principles of designing with \tikzsym and ``structur
 	\lineload{2}{a}{b}[1][1][.5];
 	\lineload{2}{b}{c};
 	
-	\dimensioning{1}{a}{b}{-2.5}[$3,0$];
-	\dimensioning{1}{b}{c}{-2.5}[$8,0$];
-	\dimensioning{1}{c}{d}{-2.5}[$8,0$];
-	\dimensioning{1}{d}{e}{-2.5}[$3,0$];
-	\dimensioning{2}{f}{a}{-1}[$1,0$];
-	\dimensioning{2}{g}{f}{-1}[$2,0$];
-	\dimensioning{2}{a}{c}{-1}[$2,0$];
+	\dimensioning{1}{a}{b}{-2.5}[$3.0$];
+	\dimensioning{1}{b}{c}{-2.5}[$8.0$];
+	\dimensioning{1}{c}{d}{-2.5}[$8.0$];
+	\dimensioning{1}{d}{e}{-2.5}[$3.0$];
+	\dimensioning{2}{f}{a}{-1}[$1.0$];
+	\dimensioning{2}{g}{f}{-1}[$2.0$];
+	\dimensioning{2}{a}{c}{-1}[$2.0$];
 	
 	\influenceline{a}{e}{3}[.3];
 	
@@ -2426,7 +2426,7 @@ In order to create the desired roof structure, a file has to be created first. I
 \subsection{First steps}
 \label{sec:ErsteSchritte}
 
-First, we have to specify corresponding points with the command \lstinline|\point|. On this basis, the remaining library elements are placed. Since the points are not shown in the graph, it is recommended to create a helping grid, to predict the distances and sizes. The basic size of a grid element is $1~cm $ by $1 ~cm $.
+First, we have to specify corresponding points with the command \lstinline|\point|. On this basis, the remaining library elements are placed. Since the points are not shown in the graph, it is recommended to create a helping grid, to predict the distances and sizes. The basic size of a grid element is $1\,\mathrm{cm}$ by $1\,\mathrm{cm}$.
 
 \begin{minipage}[c]{0.65\linewidth}
 	\begin{tikzpicture}[framed]
@@ -2440,7 +2440,7 @@ First, we have to specify corresponding points with the command \lstinline|\poin
 \end{tikzpicture}\end{lstlisting}\vspace{-7mm}
 \end{minipage}
 
-Here, it is obvious that the roof structure with a width of $ 22 ~cm $ does not fit on this page. In order not to change all the dimensions recalculating all distances, the command \lstinline|scaling| can be used. Hereby, the distances are scaled depending on the desired scaling factor. However, the symbols and the entries remain unchanged. 
+Here, it is obvious that the roof structure with a width of $22\,\mathrm{cm}$ does not fit on this page. In order not to change all the dimensions recalculating all distances, the command \lstinline|scaling| can be used. Hereby, the distances are scaled depending on the desired scaling factor. However, the symbols and the entries remain unchanged. 
 
 Note, since the help grid is a function of \tikzsym, the scaling command can not be used for the guides. If we recalculate the size of the grid we get following situation:
 
@@ -2688,13 +2688,13 @@ Actually, the roof is already finished and ready for use. However, for the purpo
 
 \end{minipage}
 \begin{minipage}[c]{0.45\linewidth}\begin{lstlisting}
-	\dimensioning{1}{a}{b}{-2.5}[$3,0$];
-	\dimensioning{1}{b}{c}{-2.5}[$8,0$];
-	\dimensioning{1}{c}{d}{-2.5}[$8,0$];
-	\dimensioning{1}{d}{e}{-2.5}[$3,0$];
-	\dimensioning{2}{f}{a}{-1}[$1,0$];
-	\dimensioning{2}{g}{f}{-1}[$2,0$];
-	\dimensioning{2}{a}{c}{-1}[$2,0$];
+	\dimensioning{1}{a}{b}{-2.5}[$3.0$];
+	\dimensioning{1}{b}{c}{-2.5}[$8.0$];
+	\dimensioning{1}{c}{d}{-2.5}[$8.0$];
+	\dimensioning{1}{d}{e}{-2.5}[$3.0$];
+	\dimensioning{2}{f}{a}{-1}[$1.0$];
+	\dimensioning{2}{g}{f}{-1}[$2.0$];
+	\dimensioning{2}{a}{c}{-1}[$2.0$];
 	
 	\influenceline{a}{e}{3}[.3];
 \end{lstlisting}\vspace{-7mm}
@@ -2735,13 +2735,13 @@ Actually, the roof is already finished and ready for use. However, for the purpo
 	\lineload{2}{a}{b}[1][1][.5];
 	\lineload{2}{b}{c};
 	
-	\dimensioning{1}{a}{b}{-2.5}[$3,0$];
-	\dimensioning{1}{b}{c}{-2.5}[$8,0$];
-	\dimensioning{1}{c}{d}{-2.5}[$8,0$];
-	\dimensioning{1}{d}{e}{-2.5}[$3,0$];
-	\dimensioning{2}{f}{a}{-1}[$1,0$];
-	\dimensioning{2}{g}{f}{-1}[$2,0$];
-	\dimensioning{2}{a}{c}{-1}[$2,0$];
+	\dimensioning{1}{a}{b}{-2.5}[$3.0$];
+	\dimensioning{1}{b}{c}{-2.5}[$8.0$];
+	\dimensioning{1}{c}{d}{-2.5}[$8.0$];
+	\dimensioning{1}{d}{e}{-2.5}[$3.0$];
+	\dimensioning{2}{f}{a}{-1}[$1.0$];
+	\dimensioning{2}{g}{f}{-1}[$2.0$];
+	\dimensioning{2}{a}{c}{-1}[$2.0$];
 	
 	\influenceline{a}{e}{3}[.3];
 		
@@ -2801,13 +2801,13 @@ Now the only missing parts are the names of nodes and bars, then roof constructi
 	\lineload{2}{a}{b}[1][1][.5];
 	\lineload{2}{b}{c};
 	
-	\dimensioning{1}{a}{b}{-2.5}[$3,0$];
-	\dimensioning{1}{b}{c}{-2.5}[$8,0$];
-	\dimensioning{1}{c}{d}{-2.5}[$8,0$];
-	\dimensioning{1}{d}{e}{-2.5}[$3,0$];
-	\dimensioning{2}{f}{a}{-1}[$1,0$];
-	\dimensioning{2}{g}{f}{-1}[$2,0$];
-	\dimensioning{2}{a}{c}{-1}[$2,0$];
+	\dimensioning{1}{a}{b}{-2.5}[$3.0$];
+	\dimensioning{1}{b}{c}{-2.5}[$8.0$];
+	\dimensioning{1}{c}{d}{-2.5}[$8.0$];
+	\dimensioning{1}{d}{e}{-2.5}[$3.0$];
+	\dimensioning{2}{f}{a}{-1}[$1.0$];
+	\dimensioning{2}{g}{f}{-1}[$2.0$];
+	\dimensioning{2}{a}{c}{-1}[$2.0$];
 	
 	\influenceline{a}{e}{3}[.3];
 	
@@ -2862,13 +2862,13 @@ Now the guides can be deleted and the scaling factor can be chosen so that the e
 	\lineload{2}{a}{b}[1][1][.5];
 	\lineload{2}{b}{c};
 	
-	\dimensioning{1}{a}{b}{-2.5}[$3,0$];
-	\dimensioning{1}{b}{c}{-2.5}[$8,0$];
-	\dimensioning{1}{c}{d}{-2.5}[$8,0$];
-	\dimensioning{1}{d}{e}{-2.5}[$3,0$];
-	\dimensioning{2}{f}{a}{-1}[$1,0$];
-	\dimensioning{2}{g}{f}{-1}[$2,0$];
-	\dimensioning{2}{a}{c}{-1}[$2,0$];
+	\dimensioning{1}{a}{b}{-2.5}[$3.0$];
+	\dimensioning{1}{b}{c}{-2.5}[$8.0$];
+	\dimensioning{1}{c}{d}{-2.5}[$8.0$];
+	\dimensioning{1}{d}{e}{-2.5}[$3.0$];
+	\dimensioning{2}{f}{a}{-1}[$1.0$];
+	\dimensioning{2}{g}{f}{-1}[$2.0$];
+	\dimensioning{2}{a}{c}{-1}[$2.0$];
 	
 	\influenceline{a}{e}{3}[.3];
 	
@@ -2924,13 +2924,13 @@ Now the guides can be deleted and the scaling factor can be chosen so that the e
 	\lineload{2}{a}{b}[1][1][.5];
 	\lineload{2}{b}{c};
 	
-	\dimensioning{1}{a}{b}{-2.5}[$3,0$];
-	\dimensioning{1}{b}{c}{-2.5}[$8,0$];
-	\dimensioning{1}{c}{d}{-2.5}[$8,0$];
-	\dimensioning{1}{d}{e}{-2.5}[$3,0$];
-	\dimensioning{2}{f}{a}{-1}[$1,0$];
-	\dimensioning{2}{g}{f}{-1}[$2,0$];
-	\dimensioning{2}{a}{c}{-1}[$2,0$];
+	\dimensioning{1}{a}{b}{-2.5}[$3.0$];
+	\dimensioning{1}{b}{c}{-2.5}[$8.0$];
+	\dimensioning{1}{c}{d}{-2.5}[$8.0$];
+	\dimensioning{1}{d}{e}{-2.5}[$3.0$];
+	\dimensioning{2}{f}{a}{-1}[$1.0$];
+	\dimensioning{2}{g}{f}{-1}[$2.0$];
+	\dimensioning{2}{a}{c}{-1}[$2.0$];
 	
 	\influenceline{a}{e}{3}[.3];
 	
@@ -2997,7 +2997,7 @@ For illustration a small example of a single force
 	\dload{type}{insertion point}[rotation A][rotation B][load length][load distance];
 \end{lstlisting} 
 
-When entering size values the base unit is always predefined in $[cm]$.  Percentage values $\%$ are always specified as decimal values; for example, $100\% = 1.0 $ and $ 10 \% $ corresponds to $ 0.1 $.
+When entering size values the base unit is always predefined in $[\mathrm{cm}]$.  Percentage values $\%$ are always specified as decimal values; for example, $100\% = 1.0 $ and $ 10 \% $ corresponds to $ 0.1 $.
 
 Another important note is, that every \tikzsym command has to be completed with an semicolon ``;''. If this semicolon is not set, the command can not be performed, this leads finally to an error message by the compilation.
 
@@ -3965,10 +3965,10 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 		\dpoint{c}{1.5}{3}{-1};
 		\dbeam{1}{a}{b}[0][1];
 		\dbeam{1}{b}{c};
-		\ddimensioning{yz}{a}{b}{.5}[$3m$];
-		\ddimensioning{zy}{a}{b}{3.3}[$1m$];
-		\ddimensioning{xz}[3]{b}{c}{.5}[$1.5m$][1.5];
-		\ddimensioning{xy}[-1]{b}{c}{0}[$1.5m$][3];
+		\ddimensioning{yz}{a}{b}{.5}[$3$\,m];
+		\ddimensioning{zy}{a}{b}{3.3}[$1$\,m];
+		\ddimensioning{xz}[3]{b}{c}{.5}[$1.5$\,m][1.5];
+		\ddimensioning{xy}[-1]{b}{c}{0}[$1.5$\,m][3];
 	\end{tikzpicture}
 \end{minipage}
 \begin{minipage}{0.61\linewidth}\begin{lstlisting}
@@ -3978,10 +3978,10 @@ Type $3$ describes a local axis in space. Contrary to type $2$ not the plane but
 		\dpoint{c}{1.5}{3}{-1};
 		\dbeam{1}{a}{b}[0][1];	
 		\dbeam{1}{b}{c};
-		\ddimensioning{yz}{a}{b}{.5}[$3m$];
-		\ddimensioning{zy}{a}{b}{3.3}[$1m$];
-		\ddimensioning{xz}[3]{b}{c}{.5}[$1.5m$][1.5];
-		\ddimensioning{xy}[-1]{b}{c}{0}[$1.5m$][3];
+		\ddimensioning{yz}{a}{b}{.5}[$3$\,m];
+		\ddimensioning{zy}{a}{b}{3.3}[$1$\,m];
+		\ddimensioning{xz}[3]{b}{c}{.5}[$1.5$\,m][1.5];
+		\ddimensioning{xy}[-1]{b}{c}{0}[$1.5$\,m][3];
 	\end{tikzpicture}\end{lstlisting}\vspace{-7mm}
 \end{minipage}
 
@@ -4804,13 +4804,13 @@ In this tutorial, the basic principles of designing 3D structures with \tikzsym 
 	\dlineload{5}{0}{h}{d}[.5][.5][.11];
 	\dlineload{5}{0}{d}{j}[.5][.5][.11];
 
-	\ddimensioning{xy}{f}{g}{4.5}[$3~m$];
-	\ddimensioning{xy}{g}{h}{4.5}[$3~m$];
-	\ddimensioning{xy}{h}{i}{4.5}[$3~m$];
-	\ddimensioning{xy}{i}{j}{4.5}[$3~m$];
-	\ddimensioning{yx}{e}{j}{13}[$3~m$];
+	\ddimensioning{xy}{f}{g}{4.5}[$3$\,m];
+	\ddimensioning{xy}{g}{h}{4.5}[$3$\,m];
+	\ddimensioning{xy}{h}{i}{4.5}[$3$\,m];
+	\ddimensioning{xy}{i}{j}{4.5}[$3$\,m];
+	\ddimensioning{yx}{e}{j}{13}[$3$\,m];
 
-	\dnotation{1}{f}{$q=10~kN/m$}[above left=3mm];
+	\dnotation{1}{f}{$q=10$\,kN/m}[above left=3mm];
 	\dnotation{1}{b}{$A$}[below left];
 	\dnotation{1}{h}{$C$}[right=2mm];
 	\dnotation{1}{d}{$B$}[below left];
@@ -5124,18 +5124,18 @@ Actually, the structural design is already finished and ready for use. However, 
 	\dlineload{5}{0}{h}{d}[.5][.5][.11];
 	\dlineload{5}{0}{d}{j}[.5][.5][.11];
 
-	\ddimensioning{xy}{f}{g}{4.5}[$3~m$];
-	\ddimensioning{xy}{g}{h}{4.5}[$3~m$];
-	\ddimensioning{xy}{h}{i}{4.5}[$3~m$];
-	\ddimensioning{xy}{i}{j}{4.5}[$3~m$];
-	\ddimensioning{yx}{e}{j}{13}[$3~m$];
+	\ddimensioning{xy}{f}{g}{4.5}[$3$\,m];
+	\ddimensioning{xy}{g}{h}{4.5}[$3$\,m];
+	\ddimensioning{xy}{h}{i}{4.5}[$3$\,m];
+	\ddimensioning{xy}{i}{j}{4.5}[$3$\,m];
+	\ddimensioning{yx}{e}{j}{13}[$3$\,m];
 \end{tikzpicture}
 
 \begin{lstlisting}
 % Dimensions
-	\ddimensioning{xy}{f}{g}{4.5}[$3~m$];				\ddimensioning{xy}{g}{h}{4.5}[$3~m$];
-	\ddimensioning{xy}{h}{i}{4.5}[$3~m$];				\ddimensioning{xy}{i}{j}{4.5}[$3~m$];
-	\ddimensioning{yx}{e}{j}{13}[$3~m$];
+	\ddimensioning{xy}{f}{g}{4.5}[$3$\,m];				\ddimensioning{xy}{g}{h}{4.5}[$3$\,m];
+	\ddimensioning{xy}{h}{i}{4.5}[$3$\,m];				\ddimensioning{xy}{i}{j}{4.5}[$3$\,m];
+	\ddimensioning{yx}{e}{j}{13}[$3$\,m];
 \end{lstlisting}\vspace*{-7mm}
 
 \vspace*{-5mm}
@@ -5187,13 +5187,13 @@ Now the only missing parts are the names of nodes and bars, then the constructio
 	\dlineload{5}{0}{h}{d}[.5][.5][.11];
 	\dlineload{5}{0}{d}{j}[.5][.5][.11];
 
-	\ddimensioning{xy}{f}{g}{4.5}[$3~m$];
-	\ddimensioning{xy}{g}{h}{4.5}[$3~m$];
-	\ddimensioning{xy}{h}{i}{4.5}[$3~m$];
-	\ddimensioning{xy}{i}{j}{4.5}[$3~m$];
-	\ddimensioning{yx}{e}{j}{13}[$3~m$];
+	\ddimensioning{xy}{f}{g}{4.5}[$3$\,m];
+	\ddimensioning{xy}{g}{h}{4.5}[$3$\,m];
+	\ddimensioning{xy}{h}{i}{4.5}[$3$\,m];
+	\ddimensioning{xy}{i}{j}{4.5}[$3$\,m];
+	\ddimensioning{yx}{e}{j}{13}[$3$\,m];
 
-	\dnotation{1}{f}{$q=10~kN/m$}[above left=3mm];
+	\dnotation{1}{f}{$q=10$\,kN/m}[above left=3mm];
 	\dnotation{1}{b}{$A$}[below left];
 	\dnotation{1}{h}{$C$}[right=2mm];
 	\dnotation{1}{d}{$B$}[below left];
@@ -5201,7 +5201,7 @@ Now the only missing parts are the names of nodes and bars, then the constructio
 
 \begin{lstlisting}
 % Labels
-	\dnotation{1}{f}{$q=10~kN/m$}[above left=3mm];			\dnotation{1}{b}{$A$}[below left];
+	\dnotation{1}{f}{$q=10$\,kN/m}[above left=3mm];			\dnotation{1}{b}{$A$}[below left];
 	\dnotation{1}{h}{$C$}[right=2mm];										\dnotation{1}{d}{$B$}[below left];
 \end{lstlisting}\vspace*{-7mm}
 
@@ -5252,13 +5252,13 @@ Now the point labeling can be switched off and the construction is finished.
 	\dlineload{5}{0}{h}{d}[.5][.5][.11];
 	\dlineload{5}{0}{d}{j}[.5][.5][.11];
 
-	\ddimensioning{xy}{f}{g}{4.5}[$3~m$];
-	\ddimensioning{xy}{g}{h}{4.5}[$3~m$];
-	\ddimensioning{xy}{h}{i}{4.5}[$3~m$];
-	\ddimensioning{xy}{i}{j}{4.5}[$3~m$];
-	\ddimensioning{yx}{e}{j}{13}[$3~m$];
+	\ddimensioning{xy}{f}{g}{4.5}[$3$\,m];
+	\ddimensioning{xy}{g}{h}{4.5}[$3$\,m];
+	\ddimensioning{xy}{h}{i}{4.5}[$3$\,m];
+	\ddimensioning{xy}{i}{j}{4.5}[$3$\,m];
+	\ddimensioning{yx}{e}{j}{13}[$3$\,m];
 
-	\dnotation{1}{f}{$q=10~kN/m$}[above left=3mm];
+	\dnotation{1}{f}{$q=10$\,kN/m}[above left=3mm];
 	\dnotation{1}{b}{$A$}[below left];
 	\dnotation{1}{h}{$C$}[right=2mm];
 	\dnotation{1}{d}{$B$}[below left];
@@ -5322,14 +5322,14 @@ Now the point labeling can be switched off and the construction is finished.
 	\dlineload{5}{0}{d}{j}[.5][.5][.11];
 
 % Dimensions
-	\ddimensioning{xy}{f}{g}{4.5}[$3~m$];
-	\ddimensioning{xy}{g}{h}{4.5}[$3~m$];
-	\ddimensioning{xy}{h}{i}{4.5}[$3~m$];
-	\ddimensioning{xy}{i}{j}{4.5}[$3~m$];
-	\ddimensioning{yx}{e}{j}{13}[$3~m$];
+	\ddimensioning{xy}{f}{g}{4.5}[$3$\,m];
+	\ddimensioning{xy}{g}{h}{4.5}[$3$\,m];
+	\ddimensioning{xy}{h}{i}{4.5}[$3$\,m];
+	\ddimensioning{xy}{i}{j}{4.5}[$3$\,m];
+	\ddimensioning{yx}{e}{j}{13}[$3$\,m];
 
 % Labels
-	\dnotation{1}{f}{$q=10~kN/m$}[above left=3mm];
+	\dnotation{1}{f}{$q=10$\,kN/m}[above left=3mm];
 	\dnotation{1}{b}{$A$}[below left];
 	\dnotation{1}{h}{$C$}[right=2mm];
 	\dnotation{1}{d}{$B$}[below left];
