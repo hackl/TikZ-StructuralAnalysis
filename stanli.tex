@@ -100,7 +100,11 @@ emphstyle={\color{red}\bfseries},
 }
 
 % Add some basic infrastructure for index creation
-\newcommand{\STNLindexcommand}[1]{\index{#1@\texttt{\char`\\#1}}}
+\newcommand{\STNLindexcommand}[2][]{\index{#2@\texttt{\char`\\#2}#1}}
+% Write command as \texttt{\command}, but sorted after command
+% Usage: \STNLindexcommand{command},
+%        \STNLindexcommand[|textbf]{command},
+%        \STNLindexcommand[|textit]{command}
 \usepackage{makeidx}
 \makeindex
 
