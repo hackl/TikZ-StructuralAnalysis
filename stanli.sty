@@ -249,6 +249,63 @@
 }
 
 %------------------------------------------------
+%		axis
+%------------------------------------------------
+%			\axis[1st axis length][2nd axis length]{point}{angle}{1st axis label}{2nd axis label}[1st label position][2nd label position]
+\newcommandx{\axis}[8][1=1, 2=1, 7=centered, 8=centered, usedefault]{
+  \tikzmath{
+    \axisAng = #4;
+    \axisHorXCoord = cos(\axisAng)*#1*\scalingParameter;
+    \axisHorYCoord = sin(\axisAng)*#1*\scalingParameter;    
+    \axisVertXCoord = -sin(\axisAng)*#2*\scalingParameter;
+    \axisVertYCoord = cos(\axisAng)*#2*\scalingParameter;          
+  }
+  \ifthenelse{\equal{#7}{centered}\AND\equal{#8}{centered}}
+  {
+    \ifthenelse{{\axisAng = 315}\OR{\axisAng > 315}\OR{\axisAng < 45}}
+    {
+      \tikzmath{
+        \axisHorLblPos = "below";
+        \axisVertLblPos = "left";
+      }        
+    }
+    {
+      \ifthenelse{{\axisAng = 45}\OR{\axisAng > 45}\AND{\axisAng < 135}}
+      {
+        \tikzmath{
+          \axisHorLblPos = "right";
+          \axisVertLblPos = "below";
+        }            
+      }
+      {
+        \ifthenelse{{\axisAng = 135}\OR{\axisAng > 135}\AND{\axisAng < 225}}
+        {
+          \tikzmath{
+            \axisHorLblPos = "above";
+            \axisVertLblPos = "right";
+          }               
+        }
+        {
+          \tikzmath{
+            \axisHorLblPos = "left";
+            \axisVertLblPos = "above";
+          }             
+        }
+      }    
+    }
+  }
+  {
+    \tikzmath{
+      \axisHorLblPos = "#7";
+      \axisVertLblPos = "#8";
+    }       
+  }
+  \draw[->,axisarrow] (#3) --++ (\axisHorXCoord,\axisHorYCoord)node[\axisHorLblPos] {#5}; 
+  \draw[->,axisarrow] (#3) --++ (\axisVertXCoord,\axisVertYCoord)node[\axisVertLblPos] {#6};
+  \fill (#3) circle (\normalLineWidth/2);
+}
+
+%------------------------------------------------
 %		beam
 %------------------------------------------------
 %			\beam{type}{initial point}{end point}[rounded initial point][rounded end point]
