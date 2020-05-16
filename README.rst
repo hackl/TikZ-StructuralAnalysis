@@ -61,7 +61,7 @@ Put the .sty file in the right directory and add it to the LaTeX file like: ::
 Note
 ----
 
-   The liberaries were submitted to `CTAN`_ and should be public available soon.
+   The liberaries is also available via `CTAN`_ !
 
 LaTeX Environment
 -----------------
@@ -265,4 +265,4 @@ List of References
 
 .. _`Graz University of Technology`: http://tugraz.at/
 
-.. _`CTAN`: https://www.ctan.org/
+.. _`CTAN`: https://ctan.org/pkg/stanli
