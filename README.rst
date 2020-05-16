@@ -6,7 +6,7 @@ TikZ Library for Structural Analysis
 :Authors: Jürgen Hackl
 :Contact: hackl.j@gmx.at
 :Web site: https://github.com/hackl/TikZ-StructuralAnalysis/
-:Documentation: http://www.latex-community.org/know-how/472-tikz-structural-analysis
+:Documentation: https://ctan.org/pkg/stanli
 :Copyright: This document has been placed in the public domain.
 :License: GNU General Public Licence.
 :Version: 2.0
@@ -185,7 +185,7 @@ in a very short time: ::
    \end{tikzpicture}
 
 
-.. image:: http://www.latex-community.org/articles/2d-roof.png
+.. image:: https://github.com/hackl/TikZ-StructuralAnalysis/blob/master/figure-01.png
 
 
 3D Support Construction
@@ -250,7 +250,7 @@ in a very short time: ::
 
    \end{tikzpicture}
 
-.. image:: http://www.latex-community.org/articles/3d-support-construction.png
+.. image:: https://github.com/hackl/TikZ-StructuralAnalysis/blob/master/figure-02.png
 
 List of References
 ==================
