@@ -333,15 +333,7 @@
 			{\fill (#3) circle (\hugeLineWidth/2);}
 	}{}
 
-	\ifthenelse{\equal{#1}{1ncf}}{		%  bending beam - no characteristic ﬁber
-		\draw [bendingbeam_line] (#2) -- (#3);
-		\ifthenelse{\equal{#4}{0}}{}
-			{\fill (#2) circle (\hugeLineWidth/2);}
-		\ifthenelse{\equal{#5}{0}}{}
-			{\fill (#3) circle (\hugeLineWidth/2);}
-	}{}
-
-	\ifthenelse{\equal{#1}{2}}{		%
+	\ifthenelse{\equal{#1}{2}}{		% Truss rod
 		\draw [bigLine] (#2) -- (#3);
 		\ifthenelse{\equal{#4}{0}}{}
 			{\fill (#2) circle (\bigLineWidth/2);}
@@ -349,12 +341,12 @@
 			{\fill (#3) circle (\bigLineWidth/2);}
 	}{}
 	
-	\ifthenelse{\equal{#1}{3}}{		%
+	\ifthenelse{\equal{#1}{3}}{		% Invisible (dashed) member
 		\draw [normalLine,dashed] (#2) -- (#3);
 	}{}
 	
-	\ifthenelse{\equal{#1}{4}}{		%
-		\draw [hugeLine] (#2) -- (#3);
+	\ifthenelse{\equal{#1}{4}}{		%  bending beam - no characteristic ﬁber
+		\draw [bendingbeam_line] (#2) -- (#3);
 		\ifthenelse{\equal{#4}{0}}{}
 			{\fill (#2) circle (\hugeLineWidth/2);}
 		\ifthenelse{\equal{#5}{0}}{}
