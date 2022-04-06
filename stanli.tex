@@ -750,7 +750,7 @@ Additional symbols (see \ref{sec:3dZusaetzlicheSymbole})
 
 The following work is a manual for a library of symbols for structural analysis. This library is based on the PGF/\tikzsym environment. Accordingly, commands from these packages are used. Nevertheless, comprehensive knowledge of \tikzsym is not necessary in order to use this library. If the referenced commands in this manual are not enough for the interested reader, the \tikzsym manual from Till Tantau is suggested.
 
-% Die folgende Arbeit stellt ein Manual für die im Bachelor Projekt erstellte Bibliothek von baustatischen Symbolen dar. Diese Bibliothek wurde mit dem System PGF/\tikzsym erstellt und enthält dementsprechende Befehle aus den betreffenden Packages. Jedoch ist eine umfassende Kenntnis von \tikzsym nicht notwendig um die Bibliothek bedienen zu können. Falls die hier erwähnte Befehle nicht ausreichen, wird dem interessierten Leser das \tikzsym Manual von Till Tantau nahe gelegt. %\cite{script:pgf}
+% Die folgende Arbeit stellt ein Manual fÃ¼r die im Bachelor Projekt erstellte Bibliothek von baustatischen Symbolen dar. Diese Bibliothek wurde mit dem System PGF/\tikzsym erstellt und enthÃ¤lt dementsprechende Befehle aus den betreffenden Packages. Jedoch ist eine umfassende Kenntnis von \tikzsym nicht notwendig um die Bibliothek bedienen zu kÃ¶nnen. Falls die hier erwÃ¤hnte Befehle nicht ausreichen, wird dem interessierten Leser das \tikzsym Manual von Till Tantau nahe gelegt. %\cite{script:pgf}
 
 
 \section{How to read this manual?}
@@ -1087,7 +1087,7 @@ Another important note is, that every \tikzsym command has to be completed with 
 	\begin{tikzpicture}[framed]
 			\draw[orange,dashed](0,0) -- (7mm,0mm)(0,0)--(30:	7mm);
 			\draw[orange,->] (.7,0) arc (0:30:7mm);
-			\node[orange] (x) at (1.1,.2) {$30°$};
+			\node[orange] (x) at (1.1,.2) {$30Â°$};
 			\point{a}{0}{0};
 			\support{1}{a}[30];
 	\end{tikzpicture}
@@ -1677,7 +1677,7 @@ Here the angle is counted from the x-axis.
 			\point{b}{4}{0};
 			\beam{1}{a}{b};
 			\temperature{a}{b}{-.5}{.5}[.3][$T_i$][$T_a$];
-			\temperature{a}{b}{.2}{.7}[.6][$10\,{}°$C][$30\,{}°$C];
+			\temperature{a}{b}{.2}{.7}[.6][$10\,{}Â°$C][$30\,{}Â°$C];
 	\end{tikzpicture}
 \end{minipage}
 \begin{minipage}{0.63\linewidth}\begin{lstlisting}
@@ -1686,7 +1686,7 @@ Here the angle is counted from the x-axis.
 		\point{b}{4}{0};
 		\beam{1}{a}{b};
 		\temperature{a}{b}{-.5}{.5}[.3][$T_i$][$T_a$];
-		\temperature{a}{b}{.2}{.7}[.6][$10\,{}°$C][$30\,{}°$C];
+		\temperature{a}{b}{.2}{.7}[.6][$10\,{}Â°$C][$30\,{}Â°$C];
 	\end{tikzpicture}\end{lstlisting}\vspace{-7mm}
 \end{minipage}
 
@@ -2145,7 +2145,7 @@ Here the angle is counted from the x-axis.
 %================================================
 
 \section{Useful  \tikzsym commands}
-\label{sec:NützlicheTikZBefehle}
+\label{sec:NÃ¼tzlicheTikZBefehle}
 
 %------------------------------------------------
 %		Orientierung von Textelementen
@@ -4949,7 +4949,7 @@ In order to create the desired structural design, a file has to be created first
 \usepackage{stanli}
 
 \begin{document}
-	\begin{tikzpicture}[corrds]
+	\begin{tikzpicture}[coords]
 		% here we construct our structure
 	\end{tikzpicture}
 \end{document}
@@ -4963,7 +4963,7 @@ Before starting the construction, relevant settings have to be made in advance. 
 \begin{lstlisting}
 \setcoords{-25}{10}[1][1.2]
 \setaxis{2}
-\begin{tikzpicture}[corrds]
+\begin{tikzpicture}[coords]
 	% here we construct our structure
 \end{tikzpicture}
 \end{lstlisting}\vspace{-7mm}
